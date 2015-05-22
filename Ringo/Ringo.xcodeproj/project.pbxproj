@@ -411,6 +411,7 @@
 				C7329E471B0ED66C009220D8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		C7329E481B0ED66C009220D8 /* Build configuration list for PBXNativeTarget "RingoTests" */ = {
 			isa = XCConfigurationList;
@@ -419,6 +420,7 @@
 				C7329E4A1B0ED66C009220D8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
