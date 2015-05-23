@@ -7,46 +7,46 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C7329E2C1B0ED66C009220D8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7329E2B1B0ED66C009220D8 /* AppDelegate.swift */; };
-		C7329E2E1B0ED66C009220D8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7329E2D1B0ED66C009220D8 /* ViewController.swift */; };
-		C7329E311B0ED66C009220D8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C7329E2F1B0ED66C009220D8 /* Main.storyboard */; };
-		C7329E331B0ED66C009220D8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C7329E321B0ED66C009220D8 /* Images.xcassets */; };
-		C7329E361B0ED66C009220D8 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = C7329E341B0ED66C009220D8 /* LaunchScreen.xib */; };
-		C7329E421B0ED66C009220D8 /* RingoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7329E411B0ED66C009220D8 /* RingoTests.swift */; };
+		C75DCDB51B112ACC001772CA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75DCDB41B112ACC001772CA /* AppDelegate.swift */; };
+		C75DCDB71B112ACC001772CA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75DCDB61B112ACC001772CA /* ViewController.swift */; };
+		C75DCDBA1B112ACC001772CA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C75DCDB81B112ACC001772CA /* Main.storyboard */; };
+		C75DCDBC1B112ACC001772CA /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C75DCDBB1B112ACC001772CA /* Images.xcassets */; };
+		C75DCDBF1B112ACC001772CA /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = C75DCDBD1B112ACC001772CA /* LaunchScreen.xib */; };
+		C75DCDCB1B112ACD001772CA /* Ringo_iOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75DCDCA1B112ACD001772CA /* Ringo_iOSTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		C7329E3C1B0ED66C009220D8 /* PBXContainerItemProxy */ = {
+		C75DCDC51B112ACD001772CA /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = C7329E1E1B0ED66C009220D8 /* Project object */;
+			containerPortal = C75DCDA71B112ACC001772CA /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = C7329E251B0ED66C009220D8;
-			remoteInfo = Ringo;
+			remoteGlobalIDString = C75DCDAE1B112ACC001772CA;
+			remoteInfo = "Ringo-iOS";
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		C7329E261B0ED66C009220D8 /* Ringo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Ringo.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		C7329E2A1B0ED66C009220D8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C7329E2B1B0ED66C009220D8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		C7329E2D1B0ED66C009220D8 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		C7329E301B0ED66C009220D8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		C7329E321B0ED66C009220D8 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		C7329E351B0ED66C009220D8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		C7329E3B1B0ED66C009220D8 /* RingoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RingoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		C7329E401B0ED66C009220D8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C7329E411B0ED66C009220D8 /* RingoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RingoTests.swift; sourceTree = "<group>"; };
+		C75DCDAF1B112ACC001772CA /* Ringo-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Ringo-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C75DCDB31B112ACC001772CA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C75DCDB41B112ACC001772CA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		C75DCDB61B112ACC001772CA /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		C75DCDB91B112ACC001772CA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		C75DCDBB1B112ACC001772CA /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		C75DCDBE1B112ACC001772CA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		C75DCDC41B112ACD001772CA /* Ringo-iOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Ringo-iOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C75DCDC91B112ACD001772CA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C75DCDCA1B112ACD001772CA /* Ringo_iOSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ringo_iOSTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		C7329E231B0ED66C009220D8 /* Frameworks */ = {
+		C75DCDAC1B112ACC001772CA /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C7329E381B0ED66C009220D8 /* Frameworks */ = {
+		C75DCDC11B112ACD001772CA /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -56,58 +56,58 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		C7329E1D1B0ED66C009220D8 = {
+		C75DCDA61B112ACC001772CA = {
 			isa = PBXGroup;
 			children = (
-				C7329E281B0ED66C009220D8 /* Ringo */,
-				C7329E3E1B0ED66C009220D8 /* RingoTests */,
-				C7329E271B0ED66C009220D8 /* Products */,
+				C75DCDB11B112ACC001772CA /* Ringo-iOS */,
+				C75DCDC71B112ACD001772CA /* Ringo-iOSTests */,
+				C75DCDB01B112ACC001772CA /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		C7329E271B0ED66C009220D8 /* Products */ = {
+		C75DCDB01B112ACC001772CA /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				C7329E261B0ED66C009220D8 /* Ringo.app */,
-				C7329E3B1B0ED66C009220D8 /* RingoTests.xctest */,
+				C75DCDAF1B112ACC001772CA /* Ringo-iOS.app */,
+				C75DCDC41B112ACD001772CA /* Ringo-iOSTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		C7329E281B0ED66C009220D8 /* Ringo */ = {
+		C75DCDB11B112ACC001772CA /* Ringo-iOS */ = {
 			isa = PBXGroup;
 			children = (
-				C7329E2B1B0ED66C009220D8 /* AppDelegate.swift */,
-				C7329E2D1B0ED66C009220D8 /* ViewController.swift */,
-				C7329E2F1B0ED66C009220D8 /* Main.storyboard */,
-				C7329E321B0ED66C009220D8 /* Images.xcassets */,
-				C7329E341B0ED66C009220D8 /* LaunchScreen.xib */,
-				C7329E291B0ED66C009220D8 /* Supporting Files */,
+				C75DCDB41B112ACC001772CA /* AppDelegate.swift */,
+				C75DCDB61B112ACC001772CA /* ViewController.swift */,
+				C75DCDB81B112ACC001772CA /* Main.storyboard */,
+				C75DCDBB1B112ACC001772CA /* Images.xcassets */,
+				C75DCDBD1B112ACC001772CA /* LaunchScreen.xib */,
+				C75DCDB21B112ACC001772CA /* Supporting Files */,
 			);
-			path = Ringo;
+			path = "Ringo-iOS";
 			sourceTree = "<group>";
 		};
-		C7329E291B0ED66C009220D8 /* Supporting Files */ = {
+		C75DCDB21B112ACC001772CA /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				C7329E2A1B0ED66C009220D8 /* Info.plist */,
+				C75DCDB31B112ACC001772CA /* Info.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		C7329E3E1B0ED66C009220D8 /* RingoTests */ = {
+		C75DCDC71B112ACD001772CA /* Ringo-iOSTests */ = {
 			isa = PBXGroup;
 			children = (
-				C7329E411B0ED66C009220D8 /* RingoTests.swift */,
-				C7329E3F1B0ED66C009220D8 /* Supporting Files */,
+				C75DCDCA1B112ACD001772CA /* Ringo_iOSTests.swift */,
+				C75DCDC81B112ACD001772CA /* Supporting Files */,
 			);
-			path = RingoTests;
+			path = "Ringo-iOSTests";
 			sourceTree = "<group>";
 		};
-		C7329E3F1B0ED66C009220D8 /* Supporting Files */ = {
+		C75DCDC81B112ACD001772CA /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				C7329E401B0ED66C009220D8 /* Info.plist */,
+				C75DCDC91B112ACD001772CA /* Info.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -115,60 +115,60 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		C7329E251B0ED66C009220D8 /* Ringo */ = {
+		C75DCDAE1B112ACC001772CA /* Ringo-iOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C7329E451B0ED66C009220D8 /* Build configuration list for PBXNativeTarget "Ringo" */;
+			buildConfigurationList = C75DCDCE1B112ACD001772CA /* Build configuration list for PBXNativeTarget "Ringo-iOS" */;
 			buildPhases = (
-				C7329E221B0ED66C009220D8 /* Sources */,
-				C7329E231B0ED66C009220D8 /* Frameworks */,
-				C7329E241B0ED66C009220D8 /* Resources */,
+				C75DCDAB1B112ACC001772CA /* Sources */,
+				C75DCDAC1B112ACC001772CA /* Frameworks */,
+				C75DCDAD1B112ACC001772CA /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = Ringo;
-			productName = Ringo;
-			productReference = C7329E261B0ED66C009220D8 /* Ringo.app */;
+			name = "Ringo-iOS";
+			productName = "Ringo-iOS";
+			productReference = C75DCDAF1B112ACC001772CA /* Ringo-iOS.app */;
 			productType = "com.apple.product-type.application";
 		};
-		C7329E3A1B0ED66C009220D8 /* RingoTests */ = {
+		C75DCDC31B112ACD001772CA /* Ringo-iOSTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C7329E481B0ED66C009220D8 /* Build configuration list for PBXNativeTarget "RingoTests" */;
+			buildConfigurationList = C75DCDD11B112ACD001772CA /* Build configuration list for PBXNativeTarget "Ringo-iOSTests" */;
 			buildPhases = (
-				C7329E371B0ED66C009220D8 /* Sources */,
-				C7329E381B0ED66C009220D8 /* Frameworks */,
-				C7329E391B0ED66C009220D8 /* Resources */,
+				C75DCDC01B112ACD001772CA /* Sources */,
+				C75DCDC11B112ACD001772CA /* Frameworks */,
+				C75DCDC21B112ACD001772CA /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				C7329E3D1B0ED66C009220D8 /* PBXTargetDependency */,
+				C75DCDC61B112ACD001772CA /* PBXTargetDependency */,
 			);
-			name = RingoTests;
-			productName = RingoTests;
-			productReference = C7329E3B1B0ED66C009220D8 /* RingoTests.xctest */;
+			name = "Ringo-iOSTests";
+			productName = "Ringo-iOSTests";
+			productReference = C75DCDC41B112ACD001772CA /* Ringo-iOSTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		C7329E1E1B0ED66C009220D8 /* Project object */ = {
+		C75DCDA71B112ACC001772CA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0630;
 				ORGANIZATIONNAME = "Gautam Mittal";
 				TargetAttributes = {
-					C7329E251B0ED66C009220D8 = {
+					C75DCDAE1B112ACC001772CA = {
 						CreatedOnToolsVersion = 6.3.2;
 					};
-					C7329E3A1B0ED66C009220D8 = {
+					C75DCDC31B112ACD001772CA = {
 						CreatedOnToolsVersion = 6.3.2;
-						TestTargetID = C7329E251B0ED66C009220D8;
+						TestTargetID = C75DCDAE1B112ACC001772CA;
 					};
 				};
 			};
-			buildConfigurationList = C7329E211B0ED66C009220D8 /* Build configuration list for PBXProject "Ringo" */;
+			buildConfigurationList = C75DCDAA1B112ACC001772CA /* Build configuration list for PBXProject "Ringo-iOS" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -176,29 +176,29 @@
 				en,
 				Base,
 			);
-			mainGroup = C7329E1D1B0ED66C009220D8;
-			productRefGroup = C7329E271B0ED66C009220D8 /* Products */;
+			mainGroup = C75DCDA61B112ACC001772CA;
+			productRefGroup = C75DCDB01B112ACC001772CA /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				C7329E251B0ED66C009220D8 /* Ringo */,
-				C7329E3A1B0ED66C009220D8 /* RingoTests */,
+				C75DCDAE1B112ACC001772CA /* Ringo-iOS */,
+				C75DCDC31B112ACD001772CA /* Ringo-iOSTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		C7329E241B0ED66C009220D8 /* Resources */ = {
+		C75DCDAD1B112ACC001772CA /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C7329E311B0ED66C009220D8 /* Main.storyboard in Resources */,
-				C7329E361B0ED66C009220D8 /* LaunchScreen.xib in Resources */,
-				C7329E331B0ED66C009220D8 /* Images.xcassets in Resources */,
+				C75DCDBA1B112ACC001772CA /* Main.storyboard in Resources */,
+				C75DCDBF1B112ACC001772CA /* LaunchScreen.xib in Resources */,
+				C75DCDBC1B112ACC001772CA /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C7329E391B0ED66C009220D8 /* Resources */ = {
+		C75DCDC21B112ACD001772CA /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -208,46 +208,46 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		C7329E221B0ED66C009220D8 /* Sources */ = {
+		C75DCDAB1B112ACC001772CA /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C7329E2E1B0ED66C009220D8 /* ViewController.swift in Sources */,
-				C7329E2C1B0ED66C009220D8 /* AppDelegate.swift in Sources */,
+				C75DCDB71B112ACC001772CA /* ViewController.swift in Sources */,
+				C75DCDB51B112ACC001772CA /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C7329E371B0ED66C009220D8 /* Sources */ = {
+		C75DCDC01B112ACD001772CA /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C7329E421B0ED66C009220D8 /* RingoTests.swift in Sources */,
+				C75DCDCB1B112ACD001772CA /* Ringo_iOSTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		C7329E3D1B0ED66C009220D8 /* PBXTargetDependency */ = {
+		C75DCDC61B112ACD001772CA /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = C7329E251B0ED66C009220D8 /* Ringo */;
-			targetProxy = C7329E3C1B0ED66C009220D8 /* PBXContainerItemProxy */;
+			target = C75DCDAE1B112ACC001772CA /* Ringo-iOS */;
+			targetProxy = C75DCDC51B112ACD001772CA /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		C7329E2F1B0ED66C009220D8 /* Main.storyboard */ = {
+		C75DCDB81B112ACC001772CA /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				C7329E301B0ED66C009220D8 /* Base */,
+				C75DCDB91B112ACC001772CA /* Base */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
-		C7329E341B0ED66C009220D8 /* LaunchScreen.xib */ = {
+		C75DCDBD1B112ACC001772CA /* LaunchScreen.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				C7329E351B0ED66C009220D8 /* Base */,
+				C75DCDBE1B112ACC001772CA /* Base */,
 			);
 			name = LaunchScreen.xib;
 			sourceTree = "<group>";
@@ -255,7 +255,7 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		C7329E431B0ED66C009220D8 /* Debug */ = {
+		C75DCDCC1B112ACD001772CA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -296,11 +296,10 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Debug;
 		};
-		C7329E441B0ED66C009220D8 /* Release */ = {
+		C75DCDCD1B112ACD001772CA /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -333,32 +332,31 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
-				TARGETED_DEVICE_FAMILY = 2;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
 		};
-		C7329E461B0ED66C009220D8 /* Debug */ = {
+		C75DCDCF1B112ACD001772CA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				INFOPLIST_FILE = Ringo/Info.plist;
+				INFOPLIST_FILE = "Ringo-iOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
 		};
-		C7329E471B0ED66C009220D8 /* Release */ = {
+		C75DCDD01B112ACD001772CA /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				INFOPLIST_FILE = Ringo/Info.plist;
+				INFOPLIST_FILE = "Ringo-iOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
 		};
-		C7329E491B0ED66C009220D8 /* Debug */ = {
+		C75DCDD21B112ACD001772CA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -370,14 +368,14 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = RingoTests/Info.plist;
+				INFOPLIST_FILE = "Ringo-iOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Ringo.app/Ringo";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Ringo-iOS.app/Ringo-iOS";
 			};
 			name = Debug;
 		};
-		C7329E4A1B0ED66C009220D8 /* Release */ = {
+		C75DCDD31B112ACD001772CA /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -385,44 +383,42 @@
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = RingoTests/Info.plist;
+				INFOPLIST_FILE = "Ringo-iOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Ringo.app/Ringo";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Ringo-iOS.app/Ringo-iOS";
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		C7329E211B0ED66C009220D8 /* Build configuration list for PBXProject "Ringo" */ = {
+		C75DCDAA1B112ACC001772CA /* Build configuration list for PBXProject "Ringo-iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				C7329E431B0ED66C009220D8 /* Debug */,
-				C7329E441B0ED66C009220D8 /* Release */,
+				C75DCDCC1B112ACD001772CA /* Debug */,
+				C75DCDCD1B112ACD001772CA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C7329E451B0ED66C009220D8 /* Build configuration list for PBXNativeTarget "Ringo" */ = {
+		C75DCDCE1B112ACD001772CA /* Build configuration list for PBXNativeTarget "Ringo-iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				C7329E461B0ED66C009220D8 /* Debug */,
-				C7329E471B0ED66C009220D8 /* Release */,
+				C75DCDCF1B112ACD001772CA /* Debug */,
+				C75DCDD01B112ACD001772CA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
 		};
-		C7329E481B0ED66C009220D8 /* Build configuration list for PBXNativeTarget "RingoTests" */ = {
+		C75DCDD11B112ACD001772CA /* Build configuration list for PBXNativeTarget "Ringo-iOSTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				C7329E491B0ED66C009220D8 /* Debug */,
-				C7329E4A1B0ED66C009220D8 /* Release */,
+				C75DCDD21B112ACD001772CA /* Debug */,
+				C75DCDD31B112ACD001772CA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = C7329E1E1B0ED66C009220D8 /* Project object */;
+	rootObject = C75DCDA71B112ACC001772CA /* Project object */;
 }

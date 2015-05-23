@@ -5,7 +5,7 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>6EA39A32-9D9D-422D-9EF1-DF4A690B2850</string>
+	<string>D264ED13-EC69-47D4-9C47-3E7BF6F9D0CE</string>
 	<key>IDESourceControlProjectName</key>
 	<string>project</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
@@ -14,7 +14,7 @@
 		<string>https://github.com/gmittal/ringo.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>Ringo/Ringo.xcodeproj/project.xcworkspace</string>
+	<string>Ringo-iOS/Ringo-iOS.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>F07BA2D04E1B41BCC4DCBAF74197F767BAD593D0</key>

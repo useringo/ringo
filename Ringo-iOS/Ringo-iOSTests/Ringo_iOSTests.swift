@@ -1,15 +1,15 @@
 //
-//  RingoTests.swift
-//  RingoTests
+//  Ringo_iOSTests.swift
+//  Ringo-iOSTests
 //
-//  Created by Gautam Mittal on 5/21/15.
+//  Created by Gautam Mittal on 5/23/15.
 //  Copyright (c) 2015 Gautam Mittal. All rights reserved.
 //
 
 import UIKit
 import XCTest
 
-class RingoTests: XCTestCase {
+class Ringo_iOSTests: XCTestCase {
     
     override func setUp() {
         super.setUp()

@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "C7329E251B0ED66C009220D8"
-               BuildableName = "Ringo.app"
-               BlueprintName = "Ringo"
-               ReferencedContainer = "container:Ringo.xcodeproj">
+               BlueprintIdentifier = "C75DCDAE1B112ACC001772CA"
+               BuildableName = "Ringo-iOS.app"
+               BlueprintName = "Ringo-iOS"
+               ReferencedContainer = "container:Ringo-iOS.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -28,10 +28,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "C7329E3A1B0ED66C009220D8"
-               BuildableName = "RingoTests.xctest"
-               BlueprintName = "RingoTests"
-               ReferencedContainer = "container:Ringo.xcodeproj">
+               BlueprintIdentifier = "C75DCDC31B112ACD001772CA"
+               BuildableName = "Ringo-iOSTests.xctest"
+               BlueprintName = "Ringo-iOSTests"
+               ReferencedContainer = "container:Ringo-iOS.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -46,20 +46,20 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "C7329E3A1B0ED66C009220D8"
-               BuildableName = "RingoTests.xctest"
-               BlueprintName = "RingoTests"
-               ReferencedContainer = "container:Ringo.xcodeproj">
+               BlueprintIdentifier = "C75DCDC31B112ACD001772CA"
+               BuildableName = "Ringo-iOSTests.xctest"
+               BlueprintName = "Ringo-iOSTests"
+               ReferencedContainer = "container:Ringo-iOS.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "C7329E251B0ED66C009220D8"
-            BuildableName = "Ringo.app"
-            BlueprintName = "Ringo"
-            ReferencedContainer = "container:Ringo.xcodeproj">
+            BlueprintIdentifier = "C75DCDAE1B112ACC001772CA"
+            BuildableName = "Ringo-iOS.app"
+            BlueprintName = "Ringo-iOS"
+            ReferencedContainer = "container:Ringo-iOS.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -76,10 +76,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "C7329E251B0ED66C009220D8"
-            BuildableName = "Ringo.app"
-            BlueprintName = "Ringo"
-            ReferencedContainer = "container:Ringo.xcodeproj">
+            BlueprintIdentifier = "C75DCDAE1B112ACC001772CA"
+            BuildableName = "Ringo-iOS.app"
+            BlueprintName = "Ringo-iOS"
+            ReferencedContainer = "container:Ringo-iOS.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -95,10 +95,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "C7329E251B0ED66C009220D8"
-            BuildableName = "Ringo.app"
-            BlueprintName = "Ringo"
-            ReferencedContainer = "container:Ringo.xcodeproj">
+            BlueprintIdentifier = "C75DCDAE1B112ACC001772CA"
+            BuildableName = "Ringo-iOS.app"
+            BlueprintName = "Ringo-iOS"
+            ReferencedContainer = "container:Ringo-iOS.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
