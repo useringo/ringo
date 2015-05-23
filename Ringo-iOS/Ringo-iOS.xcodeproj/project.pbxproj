@@ -11,8 +11,8 @@
 		C75DCDB71B112ACC001772CA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75DCDB61B112ACC001772CA /* ViewController.swift */; };
 		C75DCDBA1B112ACC001772CA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C75DCDB81B112ACC001772CA /* Main.storyboard */; };
 		C75DCDBC1B112ACC001772CA /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C75DCDBB1B112ACC001772CA /* Images.xcassets */; };
-		C75DCDBF1B112ACC001772CA /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = C75DCDBD1B112ACC001772CA /* LaunchScreen.xib */; };
 		C75DCDCB1B112ACD001772CA /* Ringo_iOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75DCDCA1B112ACD001772CA /* Ringo_iOSTests.swift */; };
+		C75DCDD51B112D2F001772CA /* SandboxViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75DCDD41B112D2F001772CA /* SandboxViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -32,10 +32,10 @@
 		C75DCDB61B112ACC001772CA /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		C75DCDB91B112ACC001772CA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		C75DCDBB1B112ACC001772CA /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		C75DCDBE1B112ACC001772CA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		C75DCDC41B112ACD001772CA /* Ringo-iOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Ringo-iOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C75DCDC91B112ACD001772CA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C75DCDCA1B112ACD001772CA /* Ringo_iOSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ringo_iOSTests.swift; sourceTree = "<group>"; };
+		C75DCDD41B112D2F001772CA /* SandboxViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SandboxViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,9 +79,9 @@
 			children = (
 				C75DCDB41B112ACC001772CA /* AppDelegate.swift */,
 				C75DCDB61B112ACC001772CA /* ViewController.swift */,
+				C75DCDD41B112D2F001772CA /* SandboxViewController.swift */,
 				C75DCDB81B112ACC001772CA /* Main.storyboard */,
 				C75DCDBB1B112ACC001772CA /* Images.xcassets */,
-				C75DCDBD1B112ACC001772CA /* LaunchScreen.xib */,
 				C75DCDB21B112ACC001772CA /* Supporting Files */,
 			);
 			path = "Ringo-iOS";
@@ -193,7 +193,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				C75DCDBA1B112ACC001772CA /* Main.storyboard in Resources */,
-				C75DCDBF1B112ACC001772CA /* LaunchScreen.xib in Resources */,
 				C75DCDBC1B112ACC001772CA /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -214,6 +213,7 @@
 			files = (
 				C75DCDB71B112ACC001772CA /* ViewController.swift in Sources */,
 				C75DCDB51B112ACC001772CA /* AppDelegate.swift in Sources */,
+				C75DCDD51B112D2F001772CA /* SandboxViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -242,14 +242,6 @@
 				C75DCDB91B112ACC001772CA /* Base */,
 			);
 			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		C75DCDBD1B112ACC001772CA /* LaunchScreen.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				C75DCDBE1B112ACC001772CA /* Base */,
-			);
-			name = LaunchScreen.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -340,6 +332,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				INFOPLIST_FILE = "Ringo-iOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -350,6 +343,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				INFOPLIST_FILE = "Ringo-iOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
