@@ -10,6 +10,9 @@ import UIKit
 
 class SandboxViewController: UIViewController {
 
+    @IBOutlet weak var buildButton: UIBarButtonItem!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 

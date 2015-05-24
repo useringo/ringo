@@ -99,6 +99,9 @@
                         <barButtonItem key="rightBarButtonItem" systemItem="play" id="NbN-48-fTj"/>
                     </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <connections>
+                        <outlet property="buildButton" destination="NbN-48-fTj" id="KUg-6E-cLW"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="m1Y-Kj-xPJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

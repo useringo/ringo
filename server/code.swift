@@ -1,1 +1,1 @@
-println("yo");
+println(2*1000);
