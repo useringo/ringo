@@ -87,8 +87,8 @@
                                 <rect key="frame" x="0.0" y="519" width="320" height="49"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <items>
-                                    <tabBarItem systemItem="search" id="pi2-46-ef2"/>
-                                    <tabBarItem systemItem="downloads" id="vWa-Cc-4cz"/>
+                                    <tabBarItem systemItem="more" id="pi2-46-ef2"/>
+                                    <tabBarItem badgeValue="New!" systemItem="downloads" id="vWa-Cc-4cz"/>
                                 </items>
                             </tabBar>
                         </subviews>
@@ -101,6 +101,7 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <outlet property="buildButton" destination="NbN-48-fTj" id="KUg-6E-cLW"/>
+                        <outlet property="codeTextIO" destination="S95-Fp-L4G" id="JV2-ed-Jme"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="m1Y-Kj-xPJ" userLabel="First Responder" sceneMemberID="firstResponder"/>

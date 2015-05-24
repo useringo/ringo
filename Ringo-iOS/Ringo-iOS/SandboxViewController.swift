@@ -12,6 +12,9 @@ class SandboxViewController: UIViewController {
 
     @IBOutlet weak var buildButton: UIBarButtonItem!
     
+    @IBOutlet weak var codeTextIO: UITextView!
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
