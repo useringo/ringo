@@ -9,33 +9,92 @@
 import UIKit
 
 class SandboxViewController: UIViewController {
+    
 
-    @IBOutlet weak var buildButton: UIBarButtonItem!
     
     @IBOutlet weak var codeTextIO: UITextView!
     
-    
+    @IBOutlet weak var outputIO: UITextView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        
+       
+        
     }
+    
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
+    
 
-    /*
-    // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    @IBAction func executeCode(sender: AnyObject) {
+  
+        
+        println("Executing code...");
+        
+        resignFirstResponder();
+        self.view.endEditing(true);
+        
+        
+        outputIO.text = "Compiling...";
+        
+        var code = codeTextIO.text;
+        
+        
+        
+        let request = NSMutableURLRequest(URL: NSURL(string: "http://gautam-mittal-wwdc.ngrok.com/build")!)
+        request.HTTPMethod = "POST"
+        let postString = "code=" + code;
+        request.HTTPBody = postString.dataUsingEncoding(NSUTF8StringEncoding)
+        let task = NSURLSession.sharedSession().dataTaskWithRequest(request) {
+            data, response, error in
+            
+            if error != nil {
+                println("error=\(error)");
+                
+                self.outputIO.text = "An error occurred. Please check your device's internet connection.";
+                
+                return
+            }
+            
+            println("response = \(response)")
+            
+            let responseString = NSString(data: data, encoding: NSUTF8StringEncoding)
+            println(responseString);
+            
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+               self.outputIO.text = String(responseString!);
+                
+            
+                
+            })
+            
+        }
+        
+        task.resume()
+        
+//        codeTextIO.text = resultsIO;
+        
+        
+        
     }
-    */
+    
+    
 
+
+    
+    
+//    // super hacky
+//    var tabTimer = NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: "timerDidFire:", userInfo: nil, repeats: true)
+//    
+//    func sayHello()
+//    {
+//        NSLog("hello World")
+//    }
 }

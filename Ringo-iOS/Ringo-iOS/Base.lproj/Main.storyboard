@@ -77,36 +77,39 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="println(&quot;Hello, world!&quot;);" translatesAutoresizingMaskIntoConstraints="NO" id="S95-Fp-L4G">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="354"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <color key="textColor" red="0.98518518519999998" green="0.98047138050000004" blue="0.98989898990000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="13"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardAppearance="alert"/>
                             </textView>
-                            <tabBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WC5-0h-hqk">
-                                <rect key="frame" x="0.0" y="519" width="320" height="49"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <items>
-                                    <tabBarItem systemItem="more" id="pi2-46-ef2"/>
-                                    <tabBarItem badgeValue="New!" systemItem="downloads" id="vWa-Cc-4cz"/>
-                                </items>
-                            </tabBar>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" editable="NO" text="Sandbox output will be displayed here." translatesAutoresizingMaskIntoConstraints="NO" id="fuU-7v-7Qs">
+                                <rect key="frame" x="0.0" y="354" width="320" height="214"/>
+                                <color key="backgroundColor" red="1" green="0.95434417132293092" blue="0.71793921138951933" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="textColor" red="0.54901960780000003" green="0.13725490200000001" blue="0.12941176469999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="13"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
+                            </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="Sandbox" id="0yT-jO-SmF">
                         <barButtonItem key="backBarButtonItem" title="Back" id="Fk5-B6-KBi"/>
-                        <barButtonItem key="rightBarButtonItem" systemItem="play" id="NbN-48-fTj"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="play" id="NbN-48-fTj">
+                            <connections>
+                                <action selector="executeCode:" destination="fo8-6Q-fiG" id="AZK-L9-FlX"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
-                        <outlet property="buildButton" destination="NbN-48-fTj" id="KUg-6E-cLW"/>
                         <outlet property="codeTextIO" destination="S95-Fp-L4G" id="JV2-ed-Jme"/>
+                        <outlet property="outputIO" destination="fuU-7v-7Qs" id="OSe-PQ-wHz"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="m1Y-Kj-xPJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1738" y="244"/>
+            <point key="canvasLocation" x="1745" y="246"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="riv-vm-FPn">
@@ -126,8 +129,40 @@
             </objects>
             <point key="canvasLocation" x="321" y="-433"/>
         </scene>
+        <!--Sandbox-->
+        <scene sceneID="ebH-6u-1yS">
+            <objects>
+                <viewController id="5lr-43-De6" customClass="SecondViewController" customModule="Ringo_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="m0f-uZ-J12"/>
+                        <viewControllerLayoutGuide type="bottom" id="tWp-Ns-YDb"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Gti-8L-4Ow">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="// Output goes here" translatesAutoresizingMaskIntoConstraints="NO" id="oI2-RF-MWb">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <color key="backgroundColor" red="0.96452632553262985" green="1" blue="0.66809045304423198" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="textColor" red="0.54901960780000003" green="0.13725490200000001" blue="0.12941176469999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="13"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardAppearance="alert"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Second" image="second" id="toT-ro-IJK"/>
+                    <navigationItem key="navigationItem" title="Sandbox" id="Qw6-bR-LMf">
+                        <barButtonItem key="backBarButtonItem" title="Back" id="k2m-Vu-WZo"/>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7bL-xB-PO2" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3038" y="550"/>
+        </scene>
     </scenes>
     <resources>
+        <image name="second" width="30" height="30"/>
         <image name="tmp-xcode-icon" width="1024" height="1024"/>
     </resources>
 </document>
