@@ -13,17 +13,158 @@
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" href="css/main.css">
         <script src="js/vendor/modernizr-2.8.3.min.js"></script>
+
+
+                <style>
+  /*      .content {
+            text-align: center;
+            margin-top: 10%;   
+            position:relative;
+            margin:auto;
+        }*/
+
+        html, body {
+        height: 100%;
+        overflow:hidden;
+        /*overflow: hidden;*/
+    }
+         .tapRoom {
+            font-family: 'Roboto';
+            font-weight: 100;
+            font-size: 20px;
+            position: absolute;
+            left: 15px;
+            top: -8px;
+   
+    
+        }
+        .header {
+            background-color:white;
+            width: 100%;
+            /*position:relative;*/
+            padding-top:20px;
+            padding-bottom:20px;
+            z-index: 100;
+            box-shadow: 0px 1px 1px 1px rgba(0, 0, 0, 0.2);
+        }
+        #tapper {
+            width: 240px;
+            -webkit-transition: all 0.05s linear;
+            -moz-transition: all 0.05s linear;
+            -o-transition: all 0.05s linear;
+            -ms-transition: all 0.05s linear;
+            position: absolute;
+            margin-left: auto;
+            margin-right: auto;
+            left: 0;
+            right: 0;
+        }
+        #tapper:active {
+            width: 220px;
+        }
+        * {
+            /*line-height: 1.5;*/
+            margin: 0;
+        }
+        html {
+            color: #888;
+     
+        }
+        .content {
+            left: 50%;
+            margin: -43px 0 0 -150px;
+            position: absolute;
+            top: 20%;
+            width: 300px;
+            font-family: 'Roboto';
+        }
+        h1 {
+            color: #555;
+            font-size: 60px;
+            font-weight: 100;
+            font-family: 'Roboto';
+        }
+        p {
+            line-height: 1.2;
+        }
+
+        textarea {
+            margin-top: 2px;
+            height: calc(100% - 42px);
+            height: -webkit-calc(100% - 42px);
+            resize: none;
+            border:none;
+            background-color:rgb(33, 34, 35);
+            color:white;
+            font-family:'Menlo';
+            width: 58%;
+            font-size: 11pt;
+            display: inline-block;
+            padding-left: 1%;
+            /*padding-top: 0.1%;*/
+            /*padding-top: 10px;*/
+            padding-right: 1%;
+            
+        }
+
+        #outputArea {
+            margin-top: 2px;
+            display: inline-block;
+            width:38%;
+            float:right;
+            font-family:'Courier';
+            color:#d14233;
+            background-color: rgb(251, 255, 165);
+            height: calc(100% - 42px);
+            height: -webkit-calc(100% - 42px);
+            font-size:11pt;
+            padding-left:1%;
+            padding-right:1%;
+        }
+
+        textarea:focus {
+            text-decoration: none;
+            outline: none;
+        }
+
+
+
+        @media only screen and (max-width: 270px) {
+            body {
+                margin: 10px auto;
+                position: static;
+                width: 95%;
+            }
+            h1 {
+                font-size: 1.5em;
+            }
+        }
+        </style>
+
+
     </head>
     <body>
         <!--[if lt IE 8]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
 
-        <!-- Add your site or application content here -->
-        <p>Hello world! This is HTML5 Boilerplate.</p>
+        <div class="header">
+            <h1 class="tapRoom">Ringo Sandbox</h1>
+        </div>
+        <!-- <div style="position:relative; background-color: rgb(251, 255, 165);"> -->
+        <textarea id="codeArea" spellcheck="false">// Type your Swift code here!</textarea>
+        <span id="outputArea">
+        // Output goes here
+        </span>
+     
+
+
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.3.min.js"><\/script>')</script>
+        <script type='text/javascript' src="http://cdnjs.cloudflare.com/ajax/libs/jquery-ajaxtransport-xdomainrequest/1.0.1/jquery.xdomainrequest.min.js"></script>
+        
+        <script type="text/javascript" src="http://livejs.com/live.js"></script>
         <script src="js/plugins.js"></script>
         <script src="js/main.js"></script>
 
