@@ -7,13 +7,16 @@ var express = require('express');
 var request = require('request');
 require('shelljs/global');
 
+var exec = require('child_process').exec;
+
 var app = express();
 
 app.use(bodyParser());
 
 var port = 3000;
 
-var uid_maker = new Firebase("https://hgy-sms-jmjypwax.firebaseio.com/");
+var uid_maker = new Firebase("https://hgy-sms-jmjypwax.firebaseio.com/"); // utilizing Firebase to generate unique keys :P
+
 
 
 // Run an Xcode sandbox
@@ -41,7 +44,9 @@ app.post('/build-sandbox', function (req, res) {
 });
 
 
-// Build an Xcode Project
+
+
+// Build an Xcode Project using the appetize.io on-screen simulator
 app.post('/build-project', function (req, res) {
   var projectID = req.body.id;
 
@@ -67,17 +72,23 @@ app.post('/build-project', function (req, res) {
 
 
 
+
+
+// This is where we want to store the generated Xcode projects
+cd('build-projects');
+
 // Request to make a new Xcode project
 app.post('/create-project', function(req, res) {
   var projectName = req.body.projectName;
   var project_uid = uid_maker.push().key();
+  project_uid = project_uid.substr(1, project_uid.length);
 
-  var projID = projectName + project_uid;
 
-  console.log(projID);
-
-  var exec_cmd = 'liftoff --no-git --no-open --no-cocoapods --strict-prompts -n TROLL -c C_NAME -a AUTHOR_NAME -i C_NAME.AUTHOR -p PREFIX';
-  exec(exec_cmd);
+  // creates a project with a unique id. The app that's trying to build the app will need to access the app via that unique ID from this point forward
+  var exec_cmd = 'liftoff --no-git --no-open --no-cocoapods --strict-prompts -n '+ project_uid +' -c C_NAME -a AUTHOR_NAME -i C_NAME.AUTHOR -p PREFIX';
+  exec(exec_cmd, function (err, out, stderror) {
+    console.log(out);
+  });
 
 
   res.send(project_uid);
@@ -85,9 +96,14 @@ app.post('/create-project', function(req, res) {
 });
 
 
+
+
+
+// Route that generates an ad-hoc IPA file for the user to download onto their device (is this against Apple's terms?)
 app.post('/create-ipa', function (req, res) {
 
 });
+
 
 
 // fire up the server!

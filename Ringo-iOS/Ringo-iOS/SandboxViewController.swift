@@ -27,7 +27,7 @@ class SandboxViewController: UIViewController {
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+
     }
     
     
@@ -79,22 +79,7 @@ class SandboxViewController: UIViewController {
         
         task.resume()
         
-//        codeTextIO.text = resultsIO;
-        
-        
-        
+
     }
     
-    
-
-
-    
-    
-//    // super hacky
-//    var tabTimer = NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: "timerDidFire:", userInfo: nil, repeats: true)
-//    
-//    func sayHello()
-//    {
-//        NSLog("hello World")
-//    }
-}
+    }
