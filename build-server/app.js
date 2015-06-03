@@ -84,6 +84,8 @@ app.post('/build-project', function (req, res) {
   // $ xcodebuild -sdk iphonesimulator
   // this generates the build directory where you can zip up the file to upload to appetize
 
+  // $ zip -r output.zip input_dir/
+  // Zips up a directory
 });
 
 
