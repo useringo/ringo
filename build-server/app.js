@@ -81,23 +81,8 @@ app.get('/get-project-contents', function(req, res) {
 app.post('/build-project', function (req, res) {
   var projectID = req.body.id;
 
-
-  // console.log((req.body.code).length);
-
-  if (req.body.code && (req.body.code).length != 0) {
-    fs.writeFile("code.swift", req.body.code, function(err) {
-      if(err) {
-          return console.log(err);
-      }
-
-     res.send(exec("swift code.swift").output); 
-
-      // console.log("The file was saved!");
-  }); 
-
-  } else {
-    res.send("Nothing to compile.");
-  }
+  // $ xcodebuild -sdk iphonesimulator
+  // this generates the build directory where you can zip up the file to upload to appetize
 
 });
 
@@ -107,6 +92,7 @@ app.post('/build-project', function (req, res) {
 
 // Route that generates an ad-hoc IPA file for the user to download onto their device (is this against Apple's terms?)
 app.post('/create-ipa', function (req, res) {
+  // $ ipa build
 
 });
 
