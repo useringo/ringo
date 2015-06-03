@@ -46,33 +46,6 @@ app.post('/build-sandbox', function (req, res) {
 
 
 
-// Build an Xcode Project using the appetize.io on-screen simulator
-app.post('/build-project', function (req, res) {
-  var projectID = req.body.id;
-
-
-	// console.log((req.body.code).length);
-
-  if (req.body.code && (req.body.code).length != 0) {
-  	fs.writeFile("code.swift", req.body.code, function(err) {
-	    if(err) {
-	        return console.log(err);
-	    }
-
-	   res.send(exec("swift code.swift").output); 
-
-	    // console.log("The file was saved!");
-	}); 
-
-  } else {
-  	res.send("Nothing to compile.");
-  }
-
-});
-
-
-
-
 
 // This is where we want to store the generated Xcode projects
 cd('build-projects');
@@ -92,6 +65,39 @@ app.post('/create-project', function(req, res) {
 
 
   res.send(project_uid);
+
+});
+
+
+
+// GET all of the files and their contents within an Xcode project
+app.get('/get-project-contents', function(req, res) {
+  var project_id = req.body.projectID;
+});
+
+
+
+// Build an Xcode Project using the appetize.io on-screen simulator
+app.post('/build-project', function (req, res) {
+  var projectID = req.body.id;
+
+
+  // console.log((req.body.code).length);
+
+  if (req.body.code && (req.body.code).length != 0) {
+    fs.writeFile("code.swift", req.body.code, function(err) {
+      if(err) {
+          return console.log(err);
+      }
+
+     res.send(exec("swift code.swift").output); 
+
+      // console.log("The file was saved!");
+  }); 
+
+  } else {
+    res.send("Nothing to compile.");
+  }
 
 });
 
