@@ -52,19 +52,39 @@ cd('build-projects');
 
 // Request to make a new Xcode project
 app.post('/create-project', function(req, res) {
+
+  // Figure out what directory the app is in
+  if (pwd() != '/Users/gautam/Desktop/git-repos/ringo/build-server/build-projects') {
+    cd('build-projects');
+     
+    if (pwd() != '/Users/gautam/Desktop/git-repos/ringo/build-server/build-projects') {
+      cd('../');
+    }
+  }
+
   var projectName = req.body.projectName;
   var project_uid = uid_maker.push().key();
   project_uid = project_uid.substr(1, project_uid.length);
 
+  res.setHeader('Content-Type', 'application/json');
 
-  // creates a project with a unique id. The app that's trying to build the app will need to access the app via that unique ID from this point forward
-  var exec_cmd = 'liftoff --no-git --no-open --no-cocoapods --strict-prompts -n '+ project_uid +' -c C_NAME -a AUTHOR_NAME -i C_NAME.AUTHOR -p PREFIX';
-  exec(exec_cmd, function (err, out, stderror) {
-    console.log(out);
+  // Using node's child_process.exec causes asynchronous issues... callbacks are my friend
+  exec('mkdir '+ project_uid, function (err, out, stderror) {
+      cd(project_uid);
+
+      // creates a project with a unique id. The app that's trying to build the app will need to access the app via that unique ID from this point forward
+      var exec_cmd = 'liftoff --no-git --no-open --no-cocoapods --strict-prompts -n '+ projectName +' -c C_NAME -a AUTHOR_NAME -i C_NAME.AUTHOR -p PREFIX';
+      exec(exec_cmd, function (err, out, stderror) {
+        console.log(out);
+
+    
+      });
+
+      res.send({"uid": project_uid});
+
   });
 
 
-  res.send(project_uid);
 
 });
 
