@@ -189,7 +189,12 @@ app.post('/build-project', function (req, res) {
       }); // end xcodebuild exec
 
 
+    /* SIMULATOR EMBED CODE:
+    
+      <iframe src="https://appetize.io/embed/<PUBLIC KEY>?device=iphone6&scale=75&autoplay=true&orientation=portrait&deviceColor=white" width="312px" height="653px" frameborder="0" scrolling="no"></iframe>
 
+
+    */
 
   }
 
