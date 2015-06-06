@@ -80,7 +80,7 @@ app.post('/create-project', function(req, res) {
             cd(project_uid);
 
             // creates a project with a unique id. The app that's trying to build the app will need to access the app via that unique ID from this point forward
-            var exec_cmd = 'liftoff --no-git --no-open --no-cocoapods --strict-prompts -n '+ projectName +' -c C_NAME -a AUTHOR_NAME -i C_NAME.AUTHOR -p PREFIX';
+            var exec_cmd = 'git clone http://www.github.com/gmittal/ringoTemplate && .././renameXcodeProject.sh ringoTemplate '+ projectName +' && rm -rf ringoTemplate';
             exec(exec_cmd, function (err, out, stderror) {
               console.log(out);
 
@@ -90,6 +90,8 @@ app.post('/create-project', function(req, res) {
             res.send({"uid": project_uid});
 
         });  
+  } else {
+    res.send({"Error": "Invalid parameters."});
   }
 
   
@@ -140,6 +142,8 @@ app.post('/build-project', function (req, res) {
       exec('xcodebuild -sdk iphonesimulator', function (err, out, stderror) {
         cd('build/Release-iphonesimulator');
         
+        console.log(out);
+
         var normalized = id_dir.split(' ').join('\\ ');
 
         console.log(normalized);
@@ -177,7 +181,18 @@ app.post('/build-project', function (req, res) {
                   // success
                   console.log(message.body);
 
-                  res.send({'simulatorURL': message.body.publicURL});
+                  var public_key = (message.body.publicURL).split("/")[4];
+                  console.log("Simulator Public Key: " + public_key);
+
+                  var screenEmbed = '<iframe src="https://appetize.io/embed/<PUBLIC KEY>?device=iphone6&scale=75&autoplay=false&orientation=portrait&deviceColor=white&screenOnly=true" width="282px" height="501px" frameborder="0" scrolling="no"></iframe>';
+                  var deviceEmbed = '<iframe src="https://appetize.io/embed/<PUBLIC KEY>?device=iphone6&scale=75&autoplay=true&orientation=portrait&deviceColor=white" width="312px" height="653px" frameborder="0" scrolling="no"></iframe>';
+
+                  res.send({'simulatorURL': message.body.publicURL, "screenOnlyEmbedCode": screenEmbed, "fullDeviceEmbedCode": deviceEmbed});
+
+                  
+
+
+
               }
           }); // end request
 
