@@ -1,5 +1,8 @@
 // Copyright 2015 Gautam Mittal
 
+var dotenv = require('dotenv');
+dotenv.load();
+
 var bodyParser = require('body-parser');
 var Firebase = require('firebase');
 var fs = require('fs');
@@ -12,11 +15,13 @@ var exec = require('child_process').exec;
 var app = express();
 
 app.use(bodyParser());
+app.use(express.static(__dirname + '/build-projects'));
 
 var port = 3000;
 
-var uid_maker = new Firebase("https://hgy-sms-jmjypwax.firebaseio.com/"); // utilizing Firebase to generate unique keys :P
+var uid_maker = new Firebase(process.env.FIREBASE); // utilizing Firebase to generate unique keys :P
 
+var build_serverURL = process.env.HOSTNAME;
 
 
 // Run an Xcode sandbox
@@ -62,27 +67,32 @@ app.post('/create-project', function(req, res) {
     }
   }
 
-  var projectName = req.body.projectName;
-  var project_uid = uid_maker.push().key();
-  project_uid = project_uid.substr(1, project_uid.length);
+  // only execute if they specify the required parameters
+  if (req.body.projectName) {
+        var projectName = req.body.projectName;
+        var project_uid = uid_maker.push().key();
+        project_uid = project_uid.substr(1, project_uid.length);
 
-  res.setHeader('Content-Type', 'application/json');
+        res.setHeader('Content-Type', 'application/json');
 
-  // Using node's child_process.exec causes asynchronous issues... callbacks are my friend
-  exec('mkdir '+ project_uid, function (err, out, stderror) {
-      cd(project_uid);
+        // Using node's child_process.exec causes asynchronous issues... callbacks are my friend
+        exec('mkdir '+ project_uid, function (err, out, stderror) {
+            cd(project_uid);
 
-      // creates a project with a unique id. The app that's trying to build the app will need to access the app via that unique ID from this point forward
-      var exec_cmd = 'liftoff --no-git --no-open --no-cocoapods --strict-prompts -n '+ projectName +' -c C_NAME -a AUTHOR_NAME -i C_NAME.AUTHOR -p PREFIX';
-      exec(exec_cmd, function (err, out, stderror) {
-        console.log(out);
+            // creates a project with a unique id. The app that's trying to build the app will need to access the app via that unique ID from this point forward
+            var exec_cmd = 'liftoff --no-git --no-open --no-cocoapods --strict-prompts -n '+ projectName +' -c C_NAME -a AUTHOR_NAME -i C_NAME.AUTHOR -p PREFIX';
+            exec(exec_cmd, function (err, out, stderror) {
+              console.log(out);
 
-    
-      });
+          
+            });
 
-      res.send({"uid": project_uid});
+            res.send({"uid": project_uid});
 
-  });
+        });  
+  }
+
+  
 
 
 
@@ -91,21 +101,98 @@ app.post('/create-project', function(req, res) {
 
 
 // GET all of the files and their contents within an Xcode project
-app.get('/get-project-contents', function(req, res) {
+app.post('/get-project-contents', function(req, res) {
   var project_id = req.body.projectID;
+
+  var id_dir = ls(project_id)[0];
+  var files = ls(project_id+"/"+id_dir+"/"+id_dir);
+
+  res.setHeader('Content-Type', 'application/json');
+
+  console.log(files);  
+
+  res.send({"files": files});
+
 });
 
 
 
 // Build an Xcode Project using the appetize.io on-screen simulator
 app.post('/build-project', function (req, res) {
-  var projectID = req.body.id;
+ 
 
-  // $ xcodebuild -sdk iphonesimulator
-  // this generates the build directory where you can zip up the file to upload to appetize
+  if (req.body.id) {
+      var projectID = req.body.id;
 
-  // $ zip -r output.zip input_dir/
-  // Zips up a directory
+      // $ xcodebuild -sdk iphonesimulator
+      // this generates the build directory where you can zip up the file to upload to appetize
+
+
+
+      var id_dir = ls(projectID)[0];
+      var project_dir = ls(projectID+"/"+id_dir);
+      // console.log(project_dir);
+
+      // go into the directory
+      cd(projectID+"/"+id_dir);
+
+
+      exec('xcodebuild -sdk iphonesimulator', function (err, out, stderror) {
+        cd('build/Release-iphonesimulator');
+        
+        var normalized = id_dir.split(' ').join('\\ ');
+
+        console.log(normalized);
+
+        exec('zip -r '+projectID+' '+normalized+".app", function (err, out, stderror) {
+          console.log(ls());
+          cd('../');
+          cd('../');
+          cd('../');
+          cd('../'); // enter build-projects once again
+          // console.log(ls());
+
+          var path = projectID + "/" + id_dir + "/build/Release-iphonesimulator/" + projectID + ".zip";
+          console.log(path);
+
+          var zip_dl_url = build_serverURL + "/" + path;
+
+
+          // use the 'request' module from npm
+          var request = require('request');
+          request.post({
+              url: 'https://api.appetize.io/v1/app/update',
+              json: {
+                  token : process.env.APPETIZE_TOKEN,
+                  url : zip_dl_url,
+                  platform : 'ios',
+              }
+          }, function(err, message, response) {
+              if (err) {
+                  // error
+                  console.log(err);
+                  res.send({'ERROR': err});
+
+              } else {
+                  // success
+                  console.log(message.body);
+
+                  res.send({'simulatorURL': message.body.publicURL});
+              }
+          }); // end request
+
+
+        }); // end zip exec
+        
+
+
+      }); // end xcodebuild exec
+
+
+
+
+  }
+
 });
 
 

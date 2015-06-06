@@ -15,6 +15,7 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.12.4",
+    "dotenv": "^1.1.0",
     "express": "^4.12.4",
     "firebase": "^2.2.5",
     "request": "^2.55.0",

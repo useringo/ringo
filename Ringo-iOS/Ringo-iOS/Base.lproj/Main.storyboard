@@ -129,40 +129,8 @@
             </objects>
             <point key="canvasLocation" x="321" y="-433"/>
         </scene>
-        <!--Sandbox-->
-        <scene sceneID="ebH-6u-1yS">
-            <objects>
-                <viewController id="5lr-43-De6" customClass="SecondViewController" customModule="Ringo_iOS" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="m0f-uZ-J12"/>
-                        <viewControllerLayoutGuide type="bottom" id="tWp-Ns-YDb"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="Gti-8L-4Ow">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="// Output goes here" translatesAutoresizingMaskIntoConstraints="NO" id="oI2-RF-MWb">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                                <color key="backgroundColor" red="0.96452632553262985" green="1" blue="0.66809045304423198" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="textColor" red="0.54901960780000003" green="0.13725490200000001" blue="0.12941176469999999" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="13"/>
-                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardAppearance="alert"/>
-                            </textView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="Second" image="second" id="toT-ro-IJK"/>
-                    <navigationItem key="navigationItem" title="Sandbox" id="Qw6-bR-LMf">
-                        <barButtonItem key="backBarButtonItem" title="Back" id="k2m-Vu-WZo"/>
-                    </navigationItem>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="7bL-xB-PO2" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3038" y="550"/>
-        </scene>
     </scenes>
     <resources>
-        <image name="second" width="30" height="30"/>
         <image name="tmp-xcode-icon" width="1024" height="1024"/>
     </resources>
 </document>
