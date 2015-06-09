@@ -1,5 +1,19 @@
 // Copyright 2015 Gautam Mittal
 
+/*
+
+  Dependencies:
+  NODE.JS + Xcode 6.3
+
+  $ sudo npm install && gem install nomad-cli
+
+
+
+
+
+*/
+
+
 var dotenv = require('dotenv');
 dotenv.load();
 
@@ -53,7 +67,23 @@ app.post('/build-sandbox', function (req, res) {
 
 
 // This is where we want to store the generated Xcode projects
-cd('build-projects');
+
+exec('cd build-projects', function (err, out, stderror) {
+  if (err) { // if error, assume that the directory is non-existent
+    console.log('build-projects directory does not exist! creating one instead.');
+
+    exec('mkdir build-projects', function (err, out, stderror) {
+      cd('build-projects');
+    });
+
+
+  } else {
+    console.log('build-projects directory was found.');
+  } // end if err
+
+
+});
+
 var buildProjects_path = '/Users/gautam/Desktop/git-repos/ringo/build-server/build-projects';
 
 
@@ -226,6 +256,12 @@ app.post('/build-project', function (req, res) {
 // Route that generates an ad-hoc IPA file for the user to download onto their device (is this against Apple's terms?)
 app.post('/create-ipa', function (req, res) {
   // $ ipa build
+
+  // take the app back to the build-projects directory, as another route may have thrown the build server into a project directory instead
+  cd(buildProjects_path);
+
+
+
 
 
 
