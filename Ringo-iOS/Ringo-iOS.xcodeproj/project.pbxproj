@@ -156,6 +156,7 @@
 		C75DCDA71B112ACC001772CA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 0700;
 				LastUpgradeCheck = 0630;
 				ORGANIZATIONNAME = "Gautam Mittal";
 				TargetAttributes = {
@@ -403,6 +404,7 @@
 				C75DCDD01B112ACD001772CA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		C75DCDD11B112ACD001772CA /* Build configuration list for PBXNativeTarget "Ringo-iOSTests" */ = {
 			isa = XCConfigurationList;
@@ -411,6 +413,7 @@
 				C75DCDD31B112ACD001772CA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

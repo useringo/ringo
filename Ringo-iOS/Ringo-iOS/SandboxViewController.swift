@@ -10,7 +10,7 @@ import UIKit
 
 class SandboxViewController: UIViewController {
     
-
+let screenSize: CGRect = UIScreen.mainScreen().bounds
     
     @IBOutlet weak var codeTextIO: UITextView!
     
@@ -18,6 +18,8 @@ class SandboxViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        print(screenSize.height);
         
        
         
@@ -36,7 +38,7 @@ class SandboxViewController: UIViewController {
     @IBAction func executeCode(sender: AnyObject) {
   
         
-        println("Executing code...");
+        print("Executing code...");
         
         resignFirstResponder();
         self.view.endEditing(true);
@@ -48,7 +50,7 @@ class SandboxViewController: UIViewController {
         
         
         
-        let request = NSMutableURLRequest(URL: NSURL(string: "http://gautam-mittal-wwdc.ngrok.com/build")!)
+        let request = NSMutableURLRequest(URL: NSURL(string: "http://4e2a4c9c.ngrok.io/build")!)
         request.HTTPMethod = "POST"
         let postString = "code=" + code;
         request.HTTPBody = postString.dataUsingEncoding(NSUTF8StringEncoding)
@@ -56,17 +58,17 @@ class SandboxViewController: UIViewController {
             data, response, error in
             
             if error != nil {
-                println("error=\(error)");
+                print("error=\(error)");
                 
                 self.outputIO.text = "An error occurred. Please check your device's internet connection.";
                 
                 return
             }
             
-            println("response = \(response)")
+            print("response = \(response)")
             
-            let responseString = NSString(data: data, encoding: NSUTF8StringEncoding)
-            println(responseString);
+            let responseString = NSString(data: data!, encoding: NSUTF8StringEncoding)
+            print(responseString);
             
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                self.outputIO.text = String(responseString!);
@@ -77,7 +79,7 @@ class SandboxViewController: UIViewController {
             
         }
         
-        task.resume()
+        task!.resume()
         
 
     }

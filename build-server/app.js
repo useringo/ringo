@@ -54,6 +54,9 @@ app.post('/build-sandbox', function (req, res) {
 
 // This is where we want to store the generated Xcode projects
 cd('build-projects');
+var buildProjects_path = '/Users/gautam/Desktop/git-repos/ringo/build-server/build-projects';
+
+
 
 // Request to make a new Xcode project
 app.post('/create-project', function(req, res) {
@@ -79,11 +82,12 @@ app.post('/create-project', function(req, res) {
         exec('mkdir '+ project_uid, function (err, out, stderror) {
             cd(project_uid);
 
+
             // creates a project with a unique id. The app that's trying to build the app will need to access the app via that unique ID from this point forward
-            var exec_cmd = 'git clone http://www.github.com/gmittal/ringoTemplate && .././renameXcodeProject.sh ringoTemplate '+ projectName +' && rm -rf ringoTemplate';
+            var exec_cmd = 'git clone http://www.github.com/gmittal/ringoTemplate && .././renameXcodeProject.sh ringoTemplate "'+ projectName +'" && rm -rf ringoTemplate';
             exec(exec_cmd, function (err, out, stderror) {
               console.log(out);
-
+              console.log('============================================== \n Successfully created '+project_uid+' at ' + new Date() + '\n');
           
             });
 
@@ -131,7 +135,7 @@ app.post('/build-project', function (req, res) {
 
 
 
-      var id_dir = ls(projectID)[0];
+      var id_dir = ls(projectID)[0]; // project name e.g. WWDC
       var project_dir = ls(projectID+"/"+id_dir);
       // console.log(project_dir);
 
@@ -141,6 +145,8 @@ app.post('/build-project', function (req, res) {
 
       exec('xcodebuild -sdk iphonesimulator', function (err, out, stderror) {
         cd('build/Release-iphonesimulator');
+
+
         
         console.log(out);
 
@@ -150,11 +156,9 @@ app.post('/build-project', function (req, res) {
 
         exec('zip -r '+projectID+' '+normalized+".app", function (err, out, stderror) {
           console.log(ls());
-          cd('../');
-          cd('../');
-          cd('../');
-          cd('../'); // enter build-projects once again
-          // console.log(ls());
+          cd(buildProjects_path); // enter build-projects once again (using absolute paths!)
+          
+          console.log(pwd());
 
           var path = projectID + "/" + id_dir + "/build/Release-iphonesimulator/" + projectID + ".zip";
           console.log(path);
