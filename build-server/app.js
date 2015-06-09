@@ -98,11 +98,10 @@ app.post('/create-project', function(req, res) {
     res.send({"Error": "Invalid parameters."});
   }
 
-  
-
-
 
 });
+
+
 
 
 
@@ -125,7 +124,8 @@ app.post('/get-project-contents', function(req, res) {
 
 // Build an Xcode Project using the appetize.io on-screen simulator
 app.post('/build-project', function (req, res) {
- 
+  // take the app back to the build-projects directory, as another route may have thrown the build server into a project directory instead
+  cd(buildProjects_path);
 
   if (req.body.id) {
       var projectID = req.body.id;
