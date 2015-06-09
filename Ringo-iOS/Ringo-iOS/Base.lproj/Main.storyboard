@@ -85,12 +85,16 @@
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardAppearance="alert"/>
                             </textView>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" editable="NO" text="Sandbox output will be displayed here." translatesAutoresizingMaskIntoConstraints="NO" id="fuU-7v-7Qs">
-                                <rect key="frame" x="0.0" y="354" width="320" height="214"/>
+                                <rect key="frame" x="0.0" y="354" width="320" height="126"/>
                                 <color key="backgroundColor" red="1" green="0.95434417132293092" blue="0.71793921138951933" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="textColor" red="0.54901960780000003" green="0.13725490200000001" blue="0.12941176469999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="13"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
                             </textView>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="K7t-f0-9lq">
+                                <rect key="frame" x="0.0" y="480" width="320" height="88"/>
+                                <color key="backgroundColor" red="1" green="0.95434417130000004" blue="0.71793921140000005" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>

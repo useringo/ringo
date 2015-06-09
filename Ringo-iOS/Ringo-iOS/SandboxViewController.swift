@@ -19,7 +19,8 @@ let screenSize: CGRect = UIScreen.mainScreen().bounds
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print(screenSize.height);
+//        print(screenSize.height);
+
         
        
         
