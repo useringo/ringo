@@ -3,9 +3,9 @@
 /*
 
   Dependencies:
-  NODE.JS + Xcode 6.3
+  NODE.JS + Xcode 6.3 + Homebrew
 
-  $ sudo npm install && gem install nomad-cli
+  $ sudo npm install && gem install nomad-cli && brew install wget
 
 
 
@@ -71,9 +71,16 @@ app.post('/build-sandbox', function (req, res) {
 exec('cd build-projects', function (err, out, stderror) {
   if (err) { // if error, assume that the directory is non-existent
     console.log('build-projects directory does not exist! creating one instead.');
+    console.log('downloading renameXcodeProject.sh...');
 
     exec('mkdir build-projects', function (err, out, stderror) {
       cd('build-projects');
+      
+      // download the great
+      exec('wget https://cdn.rawgit.com/gmittal/ringo/d63d7a40828f2d6a738cd2a109d7bcfd7a33d950/build-server/renameXcodeProject.sh', function (err, out, stderror) {
+        console.log(out);
+        console.log('Successfully downloaded renameXcodeProject.sh...');
+      });
     });
 
 
