@@ -117,6 +117,9 @@ app.post('/create-project', function(req, res) {
             var exec_cmd = 'git clone http://www.github.com/gmittal/ringoTemplate && .././renameXcodeProject.sh ringoTemplate "'+ projectName +'" && rm -rf ringoTemplate';
             exec(exec_cmd, function (err, out, stderror) {
               console.log(out);
+              console.log(err);
+
+
               console.log('============================================== \n Successfully created '+project_uid+' at ' + new Date() + '\n');
           
             });
@@ -218,8 +221,8 @@ app.post('/build-project', function (req, res) {
                   var public_key = (message.body.publicURL).split("/")[4];
                   console.log("Simulator Public Key: " + public_key);
 
-                  var screenEmbed = '<iframe src="https://appetize.io/embed/<PUBLIC KEY>?device=iphone6&scale=75&autoplay=false&orientation=portrait&deviceColor=white&screenOnly=true" width="282px" height="501px" frameborder="0" scrolling="no"></iframe>';
-                  var deviceEmbed = '<iframe src="https://appetize.io/embed/<PUBLIC KEY>?device=iphone6&scale=75&autoplay=true&orientation=portrait&deviceColor=white" width="312px" height="653px" frameborder="0" scrolling="no"></iframe>';
+                  var screenEmbed = '<iframe src="https://appetize.io/embed/'+public_key+'?device=iphone6&scale=75&autoplay=false&orientation=portrait&deviceColor=white&screenOnly=true" width="282px" height="501px" frameborder="0" scrolling="no"></iframe>';
+                  var deviceEmbed = '<iframe src="https://appetize.io/embed/'+public_key+'?device=iphone6&scale=75&autoplay=true&orientation=portrait&deviceColor=white" width="312px" height="653px" frameborder="0" scrolling="no"></iframe>';
 
                   res.send({'simulatorURL': message.body.publicURL, "screenOnlyEmbedCode": screenEmbed, "fullDeviceEmbedCode": deviceEmbed});
 
@@ -245,6 +248,8 @@ app.post('/build-project', function (req, res) {
 
     */
 
+  } else {
+    res.send({"Error": "Invalid parameters."});
   }
 
 });
@@ -259,7 +264,39 @@ app.post('/create-ipa', function (req, res) {
 
   // take the app back to the build-projects directory, as another route may have thrown the build server into a project directory instead
   cd(buildProjects_path);
+  
+  // json headers
+  res.setHeader('Content-Type', 'application/json');
 
+  if (req.body.id) {
+      var projectID = req.body.id;
+
+      var id_dir = ls(projectID)[0]; // project name e.g. WWDC
+      var project_dir = ls(projectID+"/"+id_dir);
+
+      // go into the directory
+      cd(projectID+"/"+id_dir);
+
+      exec('ipa build', function (err, out, stderror) {
+        
+        if (err) {
+
+        } else {
+          console.log('IPA for project '+ projectID + ' generated at '+ new Date());
+          var ipa_path = projectID +"/"+ id_dir + "/" + id_dir + ".ipa";
+          var ipa_dl_url = build_serverURL + "/" + ipa_path;
+
+          console.log(ipa_path);
+
+          res.send(200)  
+        }
+
+      });
+  } else {
+    res.send({"Error": "Invalid parameters."});
+  }
+
+  
 
 
 
