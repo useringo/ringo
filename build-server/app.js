@@ -323,7 +323,7 @@ app.post('/create-ipa', function (req, res) {
               var signed_dl_url = "itms-services://?action=download-manifest&url="+mainfest_plist_url;
 
               // raw_ipa_url is the link that directly downloads the IPA file, the signed_dl_url allows you to download the IPA file on an iOS device
-              res.send({"raw_ipa_url": ipa_dl_url, "signed_dl_url": }); 
+              res.send({"raw_ipa_url": ipa_dl_url, "signed_dl_url": signed_dl_url}); 
           
           }); 
 
