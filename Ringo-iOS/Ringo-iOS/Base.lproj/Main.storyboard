@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8101.14"/>
+        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
     </dependencies>
     <scenes>
         <!--Ringo-->
@@ -161,11 +162,14 @@
                     </view>
                     <navigationItem key="navigationItem" title="Sandbox" id="0yT-jO-SmF">
                         <barButtonItem key="backBarButtonItem" title="Back" id="Fk5-B6-KBi"/>
-                        <barButtonItem key="rightBarButtonItem" systemItem="play" id="NbN-48-fTj">
-                            <connections>
-                                <action selector="executeCode:" destination="fo8-6Q-fiG" id="AZK-L9-FlX"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="play" id="NbN-48-fTj">
+                                <connections>
+                                    <action selector="executeCode:" destination="fo8-6Q-fiG" id="AZK-L9-FlX"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="Item" id="GFy-64-JbV"/>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="iPad"/>
