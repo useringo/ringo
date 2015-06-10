@@ -79,7 +79,11 @@ exec('cd build-projects', function (err, out, stderror) {
       // download the great
       exec('wget https://cdn.rawgit.com/gmittal/ringo/d63d7a40828f2d6a738cd2a109d7bcfd7a33d950/build-server/renameXcodeProject.sh', function (err, out, stderror) {
         console.log(out);
-        console.log('Successfully downloaded renameXcodeProject.sh...');
+
+        exec('chmod 755 renameXcodeProject.sh', function (err, out, stderror) {
+          console.log('Successfully downloaded renameXcodeProject.sh...');
+        });
+
       });
     });
 
@@ -170,7 +174,7 @@ app.post('/build-project', function (req, res) {
   if (req.body.id) {
       var projectID = req.body.id;
 
-      // $ xcodebuild -sdk iphonesimulator
+      // $ xcodebuild -sdk iphonesimulator -project XCODEPROJ_PATH
       // this generates the build directory where you can zip up the file to upload to appetize
 
 
@@ -276,6 +280,8 @@ app.post('/create-ipa', function (req, res) {
   res.setHeader('Content-Type', 'application/json');
 
   if (req.body.id) {
+      console.log('Attempting to generate a .ipa file.');
+
       var projectID = req.body.id;
 
       var id_dir = ls(projectID)[0]; // project name e.g. WWDC
@@ -287,15 +293,49 @@ app.post('/create-ipa', function (req, res) {
       exec('ipa build', function (err, out, stderror) {
         
         if (err) {
-
+          res.send({"Error": "There was an error generating your IPA file."});
         } else {
+          console.log(out);
+          console.log("\n");
+
           console.log('IPA for project '+ projectID + ' generated at '+ new Date());
           var ipa_path = projectID +"/"+ id_dir + "/" + id_dir + ".ipa";
           var ipa_dl_url = build_serverURL + "/" + ipa_path;
 
-          console.log(ipa_path);
+          console.log(ipa_dl_url);
 
-          res.send(200)  
+          console.log('Generating manifest.plist...');
+
+          var manifest_plist_data = '<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd"><plist version="1.0"><dict><key>items</key><array><dict><key>assets</key><array><dict><key>kind</key><string>software-package</string><key>url</key><string>'+ ipa_dl_url +'</string></dict></array><key>metadata</key><dict><key>bundle-identifier</key><string>Ringo.'+ id_dir +'</string><key>bundle-version</key><string>1</string><key>kind</key><string>software</string><key>title</key><string>'+id_dir+'</string></dict></dict></array></dict></plist>';
+
+
+
+          fs.writeFile("manifest.plist", manifest_plist_data, function(err) {
+              if(err) {
+                  return console.log(err);
+              }
+
+              var mainfest_plist_url = build_serverURL + "/" + projectID +"/"+ id_dir + "/manifest.plist";
+              console.log(mainfest_plist_url);            
+
+              console.log('Successfully generated IPA manifest.plist.');
+
+              var signed_dl_url = "itms-services://?action=download-manifest&url="+mainfest_plist_url;
+
+              // raw_ipa_url is the link that directly downloads the IPA file, the signed_dl_url allows you to download the IPA file on an iOS device
+              res.send({"raw_ipa_url": ipa_dl_url, "signed_dl_url": }); 
+          
+          }); 
+
+
+
+           
+
+
+
+
+
+
         }
 
       });
