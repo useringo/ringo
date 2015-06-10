@@ -36,6 +36,8 @@ var port = 3000;
 var uid_maker = new Firebase(process.env.FIREBASE); // utilizing Firebase to generate unique keys :P
 
 var build_serverURL = process.env.HOSTNAME;
+var secure_serverURL = process.env.SECURE_HOSTNAME;
+
 
 
 // Run an Xcode sandbox
@@ -300,7 +302,7 @@ app.post('/create-ipa', function (req, res) {
 
           console.log('IPA for project '+ projectID + ' generated at '+ new Date());
           var ipa_path = projectID +"/"+ id_dir + "/" + id_dir + ".ipa";
-          var ipa_dl_url = build_serverURL + "/" + ipa_path;
+          var ipa_dl_url = secure_serverURL + "/" + ipa_path;
 
           console.log(ipa_dl_url);
 
@@ -315,7 +317,7 @@ app.post('/create-ipa', function (req, res) {
                   return console.log(err);
               }
 
-              var mainfest_plist_url = build_serverURL + "/" + projectID +"/"+ id_dir + "/manifest.plist";
+              var mainfest_plist_url = secure_serverURL + "/" + projectID +"/"+ id_dir + "/manifest.plist";
               console.log(mainfest_plist_url);            
 
               console.log('Successfully generated IPA manifest.plist.');
