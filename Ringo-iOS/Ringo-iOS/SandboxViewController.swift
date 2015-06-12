@@ -7,6 +7,7 @@
 //
 
 import UIKit
+//import SpriteKit
 //import Cocoa
 
 class SandboxViewController: UIViewController {
@@ -26,19 +27,27 @@ let screenSize: CGRect = UIScreen.mainScreen().bounds
     
     let defaults = NSUserDefaults.standardUserDefaults()
 
+
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+//        var tapGesture = UITapGestureRecognizer(target: self, action: "recursiveCodeCheck");
+//        self.view.addGestureRecognizer(tapGesture)
+        
         
 //        recursiveCodeCheck();
 //        codeTextIO.contentInset = UIEdgeInsetsMake(0.0, 20.0, 0.0, 20.0);
         
 //        print(screenSize.height);
-
-        var timer = NSTimer.scheduledTimerWithTimeInterval(0.05, target: self, selector: Selector("recursiveCodeCheck"), userInfo: nil, repeats: true)
+//
+        var timer = NSTimer.scheduledTimerWithTimeInterval(0.01, target: self, selector: Selector("recursiveCodeCheck"), userInfo: nil, repeats: true)
        
         
     }
+    
+    
     
     
     // like an update
@@ -114,7 +123,7 @@ let screenSize: CGRect = UIScreen.mainScreen().bounds
         
         
         
-        let request = NSMutableURLRequest(URL: NSURL(string: "http://4e2a4c9c.ngrok.io/build")!)
+        let request = NSMutableURLRequest(URL: NSURL(string: "http://17172eab.ngrok.io/build-sandbox")!)
         request.HTTPMethod = "POST"
         let postString = "code=" + code;
         request.HTTPBody = postString.dataUsingEncoding(NSUTF8StringEncoding)
@@ -153,25 +162,91 @@ let screenSize: CGRect = UIScreen.mainScreen().bounds
     @IBAction func saveSandbox(sender: AnyObject) {
         print("Attempting to save Xcode sandbox.");
         
-        let alert = UIAlertController(title: "Are you sure?", message: "This will permanently delete your account.", preferredStyle: UIAlertControllerStyle.Alert)
+        let alertController = UIAlertController(title: "Name this Sandbox", message: "You can come back to this Sandbox later if you save it.", preferredStyle: .Alert)
         
-//            let textfield = alert.addTextFieldWithConfigurationHandler()
-        
-//            alert.addTextFieldWithConfigurationHandler()//         alert.alertViewStyle = UIAlertViewStyle.PlainTextInput
-//        let textField = alert.textFieldAtIndex(0)
-        
-        let actionRight = UIAlertAction(title: "Yes", style: .Default) { action in
-            
-            
+        let confirmAction = UIAlertAction(title: "Save", style: .Default) { (_) in
+            if let field = alertController.textFields![0] as? UITextField {
+                // store your data
+                
+                print(field.text)
+                
+                
+                
+                if var data0 = self.defaults.dictionaryForKey("savedSandboxes") {
+                    print(data0)
+                    
+                    // make sure the user actually typed something in
+                    if (field.text == "") {
+                    
+                        print("I'M EMPTY");
+                        
+                      
+                            
+                        
+                        
+                    } else {
+                        data0[field.text!] = self.codeTextIO.text;
+                        
+                        self.defaults.setObject(data0, forKey: "savedSandboxes");
+                        self.defaults.synchronize()
+                        
+                        print(self.defaults.dictionaryForKey("savedSandboxes"));
+                    }
+                    
+                    
+                    
+                    
+                } else { // if the NSUSerDefault is empty
+                    print("not set")
+                    
+                    var data0 = ["code": "Hello"];
+                    data0 = [:]
+                    
+                    data0[field.text!] = self.codeTextIO.text;
+                    
+                    self.defaults.setObject(data0, forKey: "savedSandboxes");
+                    self.defaults.synchronize()
+                    
+//                    print(self.defaults.dictionaryForKey("savedSandboxes"));
+                    
+                }
+                
+    
+                
+                
+            } else {
+                print("Nothing gets saved");
+                
+                // user did not fill field
+            }
         }
-//        alert.addAction(actionLeft)
-        alert.addAction(actionRight)
-        self.presentViewController(alert, animated: true, completion: nil)
+        
+//        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (_) in }
+        
+        alertController.addTextFieldWithConfigurationHandler { (textField) in
+            textField.placeholder = "MyAwesomeSandbox"
+        }
+        
+        alertController.addAction(confirmAction)
+//        alertController.addAction(cancelAction)
+        
+        self.presentViewController(alertController, animated: true, completion: nil)
+        
+        
         
         
 //        defaults.setObject("Coding Explorer", forKey: "userNameKey")
         
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     
