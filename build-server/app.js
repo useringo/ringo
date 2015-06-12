@@ -53,7 +53,16 @@ app.post('/build-sandbox', function (req, res) {
 	        return console.log(err);
 	    }
 
-	   res.send(exec("swift code.swift").output); 
+      exec("swift code.swift", function (err, out, stderror) {
+        if (stderror) { // if user has buggy code, tell them what they did wrong
+          res.send(stderror);
+        } else { // if user doesn't, show them the given output
+          res.send(out);  
+        }
+        
+      });
+
+	    
 
 	    // console.log("The file was saved!");
 	}); 

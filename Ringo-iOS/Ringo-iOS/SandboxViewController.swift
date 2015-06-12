@@ -23,6 +23,10 @@ let screenSize: CGRect = UIScreen.mainScreen().bounds
     
     var tmpArr:NSMutableArray = [];
     
+    
+    let defaults = NSUserDefaults.standardUserDefaults()
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -56,12 +60,7 @@ let screenSize: CGRect = UIScreen.mainScreen().bounds
             tmpNum = Float(numberOfLines);
         }
         
-        
-        print(tmpArr)
-        
-        
-        
-        print(numberOfLines);
+    
 
         
         
@@ -82,7 +81,7 @@ let screenSize: CGRect = UIScreen.mainScreen().bounds
 //        print(lineNumbersView.contentOffset.y);
 //        print(codeTextIO.contentOffset.y);
         
-        print(numberOfLines);
+//        print(numberOfLines);
 //        print(intLineNumbers);
         
         lineNumbersView.contentOffset.y = codeTextIO.contentOffset.y;
@@ -148,5 +147,33 @@ let screenSize: CGRect = UIScreen.mainScreen().bounds
         
 
     }
+    
+    
+    
+    @IBAction func saveSandbox(sender: AnyObject) {
+        print("Attempting to save Xcode sandbox.");
+        
+        let alert = UIAlertController(title: "Are you sure?", message: "This will permanently delete your account.", preferredStyle: UIAlertControllerStyle.Alert)
+        
+//            let textfield = alert.addTextFieldWithConfigurationHandler()
+        
+//            alert.addTextFieldWithConfigurationHandler()//         alert.alertViewStyle = UIAlertViewStyle.PlainTextInput
+//        let textField = alert.textFieldAtIndex(0)
+        
+        let actionRight = UIAlertAction(title: "Yes", style: .Default) { action in
+            
+            
+        }
+//        alert.addAction(actionLeft)
+        alert.addAction(actionRight)
+        self.presentViewController(alert, animated: true, completion: nil)
+        
+        
+//        defaults.setObject("Coding Explorer", forKey: "userNameKey")
+        
+    }
+    
+    
+    
     
     }

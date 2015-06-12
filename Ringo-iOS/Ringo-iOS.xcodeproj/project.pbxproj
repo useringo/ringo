@@ -13,6 +13,7 @@
 		C75DCDBC1B112ACC001772CA /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C75DCDBB1B112ACC001772CA /* Images.xcassets */; };
 		C75DCDCB1B112ACD001772CA /* Ringo_iOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75DCDCA1B112ACD001772CA /* Ringo_iOSTests.swift */; };
 		C75DCDD51B112D2F001772CA /* SandboxViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75DCDD41B112D2F001772CA /* SandboxViewController.swift */; };
+		C7F427CF1B2B34B6008F0760 /* NDAViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7F427CE1B2B34B6008F0760 /* NDAViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +37,7 @@
 		C75DCDC91B112ACD001772CA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C75DCDCA1B112ACD001772CA /* Ringo_iOSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ringo_iOSTests.swift; sourceTree = "<group>"; };
 		C75DCDD41B112D2F001772CA /* SandboxViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SandboxViewController.swift; sourceTree = "<group>"; };
+		C7F427CE1B2B34B6008F0760 /* NDAViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NDAViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +82,7 @@
 				C75DCDB41B112ACC001772CA /* AppDelegate.swift */,
 				C75DCDB61B112ACC001772CA /* ViewController.swift */,
 				C75DCDD41B112D2F001772CA /* SandboxViewController.swift */,
+				C7F427CE1B2B34B6008F0760 /* NDAViewController.swift */,
 				C75DCDB81B112ACC001772CA /* Main.storyboard */,
 				C75DCDBB1B112ACC001772CA /* Images.xcassets */,
 				C75DCDB21B112ACC001772CA /* Supporting Files */,
@@ -212,6 +215,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C7F427CF1B2B34B6008F0760 /* NDAViewController.swift in Sources */,
 				C75DCDB71B112ACC001772CA /* ViewController.swift in Sources */,
 				C75DCDB51B112ACC001772CA /* AppDelegate.swift in Sources */,
 				C75DCDD51B112D2F001772CA /* SandboxViewController.swift in Sources */,

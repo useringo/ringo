@@ -27,8 +27,8 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kVG-qQ-wQf">
                                 <rect key="frame" x="94" y="596" width="363" height="65"/>
                                 <color key="backgroundColor" red="0.93754155589999999" green="0.92812947589999995" blue="0.91312641120000004" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="19"/>
-                                <state key="normal" title="Learn">
+                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="20"/>
+                                <state key="normal" title="Learning Resources">
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -79,18 +79,23 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Ringo" id="mxb-I9-Gzh">
-                        <barButtonItem key="backBarButtonItem" title="Back" id="ocS-Pm-08W"/>
-                        <barButtonItem key="rightBarButtonItem" style="plain" id="vtt-zI-xUf">
+                    <toolbarItems>
+                        <barButtonItem style="plain" id="vtt-zI-xUf">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" id="uT9-07-kCJ">
-                                <rect key="frame" x="982" y="11" width="22" height="22"/>
+                                <rect key="frame" x="20" y="11" width="22" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </button>
+                        </barButtonItem>
+                    </toolbarItems>
+                    <navigationItem key="navigationItem" title="Ringo" id="mxb-I9-Gzh">
+                        <barButtonItem key="backBarButtonItem" title="Back" id="ocS-Pm-08W"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="bookmarks" id="22a-YA-JZh">
                             <connections>
-                                <segue destination="URg-Pv-VGV" kind="show" id="plP-Go-LaG"/>
+                                <segue destination="URg-Pv-VGV" kind="push" id="uB0-n1-c7W"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="iPad"/>
                 </viewController>
@@ -98,10 +103,10 @@
             </objects>
             <point key="canvasLocation" x="736" y="440"/>
         </scene>
-        <!--Important-->
+        <!--About Ringo-->
         <scene sceneID="0dr-4s-Xat">
             <objects>
-                <viewController id="URg-Pv-VGV" sceneMemberID="viewController">
+                <viewController id="URg-Pv-VGV" customClass="NDAViewController" customModule="Ringo_iOS" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ysE-3n-AEp"/>
                         <viewControllerLayoutGuide type="bottom" id="KRh-1i-AKU"/>
@@ -110,17 +115,33 @@
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="tmp-xcode-icon" translatesAutoresizingMaskIntoConstraints="NO" id="7se-Sf-K7m">
+                                <rect key="frame" x="394" y="96" width="236" height="236"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Ringo" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="svn-2d-isR">
+                                <rect key="frame" x="455" y="326" width="115" height="58"/>
+                                <fontDescription key="fontDescription" type="system" weight="thin" pointSize="48"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Version 1.0.0 (beta)" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DMB-5A-CaY">
+                                <rect key="frame" x="440" y="388" width="145" height="21"/>
+                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.62" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="100" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iac-Ph-5zw">
-                                <rect key="frame" x="20" y="74" width="280" height="486"/>
-                                <string key="text">Ringo is not in any way affiliated or produced in collaboration with Apple Inc. Ringo is intended for building, experimenting, and learning about iOS development. This system may be used for production use, however, it is not recommended. We are not responsible for loss or damage of code in any way, and you will assume full responsibility while using this product.</string>
-                                <fontDescription key="fontDescription" type="italicSystem" pointSize="17"/>
+                                <rect key="frame" x="89" y="257" width="846" height="462"/>
+                                <string key="text">Ringo is not in any way affiliated or produced in collaboration with Apple Inc. Ringo is intended for building, experimenting, and learning about iOS development. We, the developers of Ringo, are not responsible for loss or damage of code in any way, and you will assume full responsibility while using this product.</string>
+                                <fontDescription key="fontDescription" type="italicSystem" pointSize="18"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Important" id="VR5-J4-guX"/>
+                    <navigationItem key="navigationItem" title="About Ringo" id="VR5-J4-guX"/>
+                    <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="iPad"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="c7e-sy-bpg" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -140,7 +161,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="println(&quot;Hello, world!&quot;); // Here is some example code" translatesAutoresizingMaskIntoConstraints="NO" id="S95-Fp-L4G">
-                                <rect key="frame" x="41" y="0.0" width="983" height="368"/>
+                                <rect key="frame" x="45" y="0.0" width="979" height="368"/>
                                 <color key="backgroundColor" red="0.23921570180000001" green="0.23921570180000001" blue="0.23921570180000001" alpha="1" colorSpace="deviceRGB"/>
                                 <color key="textColor" red="0.99425287356321834" green="0.9885057471264368" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="15"/>
@@ -151,21 +172,22 @@
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" editable="NO" text="Sandbox output will be displayed here." translatesAutoresizingMaskIntoConstraints="NO" id="fuU-7v-7Qs">
-                                <rect key="frame" x="41" y="368" width="983" height="400"/>
+                                <rect key="frame" x="0.0" y="369" width="1024" height="399"/>
                                 <color key="backgroundColor" red="0.22172969891710048" green="0.22172969891710048" blue="0.22172969891710048" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="textColor" red="0.95320455945731575" green="0.95209158659466719" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
                             </textView>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OHU-pz-j2W">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="right" translatesAutoresizingMaskIntoConstraints="NO" id="OHU-pz-j2W">
                                 <rect key="frame" x="0.0" y="0.0" width="42" height="368"/>
-                                <color key="backgroundColor" red="0.94501926943699732" green="0.94501926943699732" blue="0.94501926943699732" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.33021950402144773" green="0.33021950402144773" blue="0.33021950402144773" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="textColor" red="0.85965775804289546" green="0.85965775804289546" blue="0.85965775804289546" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="15"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bi3-bF-5Hp">
-                                <rect key="frame" x="0.0" y="368" width="42" height="400"/>
-                                <color key="backgroundColor" red="0.92941176470588238" green="0.92941176470588238" blue="0.92941176470588238" alpha="1" colorSpace="calibratedRGB"/>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="spa-gv-AcA">
+                                <rect key="frame" x="40" y="64" width="7" height="304"/>
+                                <color key="backgroundColor" red="0.18474572721179627" green="0.18474572721179627" blue="0.18474572721179627" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -178,7 +200,11 @@
                                     <action selector="executeCode:" destination="fo8-6Q-fiG" id="AZK-L9-FlX"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem systemItem="action" id="GFy-64-JbV"/>
+                            <barButtonItem systemItem="action" id="GFy-64-JbV">
+                                <connections>
+                                    <action selector="saveSandbox:" destination="fo8-6Q-fiG" id="heE-Tm-1Cp"/>
+                                </connections>
+                            </barButtonItem>
                         </rightBarButtonItems>
                     </navigationItem>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
