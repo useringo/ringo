@@ -41,6 +41,8 @@ var secure_serverURL = process.env.SECURE_HOSTNAME;
 
 
 // Run an Xcode sandbox
+// Try running a while true loop :P
+// This has automatic handling to prevent a user from running infinite loops, the system just stops the script from running after a while.
 app.post('/build-sandbox', function (req, res) {
   	console.log('Following sandbox executed at '+ new Date());
   	console.log(req.body.code);
