@@ -45,28 +45,52 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
     }
     
-    
+    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        events = currentUser["events"] as? [String]
+        if editingStyle == UITableViewCellEditingStyle.Delete {
+            events?.removeAtIndex(indexPath.row)
+            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
+            currentUser["events"] = events
+        }
+        
+        currentUser.saveInBackground()
+    }
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        var disk = defaults.objectForKey("savedSandboxes") as! NSDictionary;
-
-        print(disk)
-        
-        for n in disk {
-            print(n.key)
-            items.append(n.key as! String)
-            
-            
-        }
-        
         self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
         
         // Do any additional setup after loading the view, typically from a nib.
     }
+    
+    
+    
+    override func viewDidAppear(animated: Bool) {
+        if ((defaults.objectForKey("savedSandboxes")) != nil) {
+            
+            items = [];
+            
+            let disk = defaults.objectForKey("savedSandboxes") as! NSDictionary;
+            
+            print(disk)
+            
+            for n in disk {
+                print(n.key)
+                items.append(n.key as! String)
+                
+                
+            }
+        }
+        
+        
+        tableView.reloadData()
+        
+        
+    }
 
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
