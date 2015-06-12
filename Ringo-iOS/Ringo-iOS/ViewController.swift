@@ -41,19 +41,57 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
-        print("You selected cell #\(indexPath.row)!")
-        
+        let selectedCell = tableView.cellForRowAtIndexPath(indexPath)
+//        UITableViewCell *selectedCell = [tableView cellForRowAtIndexPath:indexPath];
+        print("You selected cell #\(selectedCell?.textLabel?.text)!")
+        performSegueWithIdentifier("toComp", sender: self)
     }
     
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        events = currentUser["events"] as? [String]
+        
+//        events = currentUser["events"] as? [String]
         if editingStyle == UITableViewCellEditingStyle.Delete {
-            events?.removeAtIndex(indexPath.row)
+            var deletedCell = tableView.cellForRowAtIndexPath(indexPath)
+            items.removeAtIndex(indexPath.row)
+            
+            
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
-            currentUser["events"] = events
+            
+            if var data = self.defaults.objectForKey("savedSandboxes") as? NSDictionary {
+                var mutableData = NSMutableDictionary(dictionary: data)
+                mutableData.removeObjectForKey((deletedCell?.textLabel?.text)!);
+                
+                self.defaults.setObject(mutableData, forKey: "savedSandboxes");
+                self.defaults.synchronize()
+                
+                
+            }
+            
+            
+            
+//            let deleteKey = deletedCell?.textLabel?.text;
+//
+//            print(deletedCell?.textLabel?.text)
+//            
+//            if let text = deletedCell?.textLabel?.text {
+//                print(text);
+//                data.removeObjectForKey(text);
+//            }
+            
+            
+            
+//            data[(deletedCell?.textLabel?.text)!] = nil; // delete the key
+            
+            
+            
+            
+//            data[tableView[indexPath.row]];
+            
+            
+//            currentUser["events"] = events
         }
         
-        currentUser.saveInBackground()
+//        currentUser.saveInBackground()
     }
     
     
@@ -89,7 +127,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         
     }
-
+    
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

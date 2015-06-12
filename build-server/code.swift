@@ -1,5 +1,6 @@
 println("Hello, world!"); // Here is some example code
 
-
-
-println("nodejs is the only real dev lang")
+let i = 0;
+while i == 0 {
+	println("YOOOOO")
+}
