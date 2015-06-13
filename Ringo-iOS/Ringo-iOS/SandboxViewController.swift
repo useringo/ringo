@@ -33,6 +33,24 @@ let screenSize: CGRect = UIScreen.mainScreen().bounds
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        if (defaults.objectForKey("fileKEY") != nil) {
+            var filename = defaults.objectForKey("fileKEY")
+            
+            var data = defaults.objectForKey("savedSandboxes") as! NSDictionary
+            print(data.objectForKey(filename!))
+            
+            
+            codeTextIO.text = data.objectForKey(filename!) as! String
+            
+            recursiveCodeCheck()
+           
+        }
+        
+        
+        var timer = NSTimer.scheduledTimerWithTimeInterval(0.01, target: self, selector: Selector("recursiveCodeCheck"), userInfo: nil, repeats: true)
+        
+        
+        
 //        var tapGesture = UITapGestureRecognizer(target: self, action: "recursiveCodeCheck");
 //        self.view.addGestureRecognizer(tapGesture)
         
@@ -42,7 +60,7 @@ let screenSize: CGRect = UIScreen.mainScreen().bounds
         
 //        print(screenSize.height);
 //
-        var timer = NSTimer.scheduledTimerWithTimeInterval(0.01, target: self, selector: Selector("recursiveCodeCheck"), userInfo: nil, repeats: true)
+        
        
         
     }
@@ -57,6 +75,9 @@ let screenSize: CGRect = UIScreen.mainScreen().bounds
      
         
         var numberOfLines = codeTextIO.contentSize.height / font.lineHeight;
+        
+        print(numberOfLines);
+        
         
         if Float(numberOfLines) != tmpNum {
             

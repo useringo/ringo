@@ -39,13 +39,25 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
     }
     
+    
+    
+    
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         let selectedCell = tableView.cellForRowAtIndexPath(indexPath)
 //        UITableViewCell *selectedCell = [tableView cellForRowAtIndexPath:indexPath];
         print("You selected cell #\(selectedCell?.textLabel?.text)!")
+        
+        defaults.setValue(selectedCell?.textLabel?.text, forKey: "fileKEY");
+        defaults.synchronize()
+        
         performSegueWithIdentifier("toComp", sender: self)
     }
+    
+    
+    
+    
+    
     
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         
@@ -106,6 +118,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     
     override func viewDidAppear(animated: Bool) {
+        defaults.setObject(nil, forKey: "fileKEY")
+        defaults.synchronize()
+        
         if ((defaults.objectForKey("savedSandboxes")) != nil) {
             
             items = [];
