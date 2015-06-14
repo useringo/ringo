@@ -17,6 +17,7 @@
 var dotenv = require('dotenv');
 dotenv.load();
 
+var async = require('async');
 var bodyParser = require('body-parser');
 var Firebase = require('firebase');
 var fs = require('fs');
@@ -164,7 +165,9 @@ app.post('/create-project', function(req, res) {
 
 // GET all of the files and their contents within an Xcode project
 app.post('/get-project-contents', function(req, res) {
-  var project_id = req.body.projectID;
+  var project_id = req.body.id;
+
+  cd(buildProjects_path)
 
   var id_dir = ls(project_id)[0];
   var files = ls(project_id+"/"+id_dir+"/"+id_dir);
@@ -173,7 +176,52 @@ app.post('/get-project-contents', function(req, res) {
 
   console.log(files);  
 
-  res.send({"files": files});
+  var filesContents = []; // final array of json data
+
+
+  async.series([function() {
+      // iterate through the files
+      for (var i = 0; i < files.length; i++) {
+        var file = files[i];
+        console.log(file);
+
+        if (file != "Images.xcassets" || file != "Base.lproj") {
+
+          console.log(project_id+"/"+id_dir+"/"+id_dir+"/"+file)
+
+          fs.readFile(project_id+"/"+id_dir+"/"+id_dir+"/"+file, 'utf8', function (err, data) {
+            if (err) {
+              return console.log(err);
+            }
+
+
+
+            var contentForFile = {};
+            contentForFile["name"] = file;
+
+            console.log(data);
+            contentForFile["data"] = data;
+
+            filesContents.push(contentForFile);
+
+            console.log(filesContents)
+
+          });
+
+
+
+
+        }
+      }
+
+
+  }, function() {
+
+    res.send({"files": filesContents});
+
+
+  }]);
+
 
 });
 

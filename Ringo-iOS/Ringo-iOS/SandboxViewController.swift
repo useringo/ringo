@@ -41,8 +41,6 @@ let screenSize: CGRect = UIScreen.mainScreen().bounds
             
             
             codeTextIO.text = data.objectForKey(filename!) as! String
-            
-            recursiveCodeCheck()
            
         }
         
@@ -51,52 +49,26 @@ let screenSize: CGRect = UIScreen.mainScreen().bounds
         
         
         
-//        var tapGesture = UITapGestureRecognizer(target: self, action: "recursiveCodeCheck");
-//        self.view.addGestureRecognizer(tapGesture)
         
         
-//        recursiveCodeCheck();
-//        codeTextIO.contentInset = UIEdgeInsetsMake(0.0, 20.0, 0.0, 20.0);
-        
-//        print(screenSize.height);
-//
-        
-       
+    
         
     }
     
-    
+
     
     
     // like an update
     func recursiveCodeCheck() {
-        var font = UIFont.systemFontOfSize(15.0);
 
-     
-        
-        var numberOfLines = codeTextIO.contentSize.height / font.lineHeight;
-        
-        print(numberOfLines);
-        
-        
-        if Float(numberOfLines) != tmpNum {
-            
-            if Float(numberOfLines) > tmpNum {
-                tmpArr.addObject("TMP");
-            } else {
-                tmpArr.removeLastObject();
-            }
-            
-            tmpNum = Float(numberOfLines);
-        }
-        
     
-
+        var rows = round( (codeTextIO.contentSize.height - codeTextIO.textContainerInset.top - codeTextIO.textContainerInset.bottom) / codeTextIO.font!.lineHeight );
         
+        print(rows);
         
         var lineNumContent = String();
 
-        for var i = 0; i < tmpArr.count; i++ {
+        for var i = 0; i < Int(rows); i++ {
             if (i == 0) {
                 lineNumContent += String(i+1);
             } else {
@@ -106,16 +78,9 @@ let screenSize: CGRect = UIScreen.mainScreen().bounds
         }
     
         lineNumbersView.text = lineNumContent;
-        
-//        lineNumbersView.contentSize.height
-//        print(lineNumbersView.contentOffset.y);
-//        print(codeTextIO.contentOffset.y);
-        
-//        print(numberOfLines);
-//        print(intLineNumbers);
-        
+     
         lineNumbersView.contentOffset.y = codeTextIO.contentOffset.y;
-        
+
         
     }
     
