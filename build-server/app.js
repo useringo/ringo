@@ -172,6 +172,10 @@ app.post('/get-project-contents', function(req, res) {
   var id_dir = ls(project_id)[0];
   var files = ls(project_id+"/"+id_dir+"/"+id_dir);
 
+  files.remove('Images.xcassets');
+  files.remove('Base.lproj');
+
+
   res.setHeader('Content-Type', 'application/json');
 
   console.log(files);  
@@ -179,15 +183,13 @@ app.post('/get-project-contents', function(req, res) {
   var filesContents = []; // final array of json data
 
 
-  async.series([function() {
-      // iterate through the files
-      for (var i = 0; i < files.length; i++) {
+    var i = 0;
+
+    loopFiles();
+
+    function loopFiles() {
         var file = files[i];
         console.log(file);
-
-        if (file != "Images.xcassets" || file != "Base.lproj") {
-
-          console.log(project_id+"/"+id_dir+"/"+id_dir+"/"+file)
 
           fs.readFile(project_id+"/"+id_dir+"/"+id_dir+"/"+file, 'utf8', function (err, data) {
             if (err) {
@@ -199,28 +201,30 @@ app.post('/get-project-contents', function(req, res) {
             var contentForFile = {};
             contentForFile["name"] = file;
 
-            console.log(data);
+            // console.log(data);
             contentForFile["data"] = data;
 
             filesContents.push(contentForFile);
 
-            console.log(filesContents)
+            // console.log(filesContents)
+
+            if (i < files.length) {
+              
+              console.log(i);
+              loopFiles();
+              i++;
+            } else {
+
+              console.log("HELLO")
+              res.send({"files": filesContents});
+            }
 
           });
 
 
+    }
 
-
-        }
-      }
-
-
-  }, function() {
-
-    res.send({"files": filesContents});
-
-
-  }]);
+    
 
 
 });
@@ -423,5 +427,17 @@ var server = app.listen(port, function () {
   console.log('Example app listening at http://%s:%s', host, port);
 
 });
+
+
+Array.prototype.remove = function() {
+    var what, a = arguments, L = a.length, ax;
+    while (L && this.length) {
+        what = a[--L];
+        while ((ax = this.indexOf(what)) !== -1) {
+            this.splice(ax, 1);
+        }
+    }
+    return this;
+};
 
 
