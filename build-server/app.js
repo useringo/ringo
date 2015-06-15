@@ -182,52 +182,56 @@ app.post('/get-project-contents', function(req, res) {
 
   var filesContents = []; // final array of json data
 
+  var i = 0;
 
-    var i = 0;
+  loopFiles();
 
-    loopFiles();
+  function loopFiles() {
+      var file = files[i];
+      console.log(file);
 
-    function loopFiles() {
-        var file = files[i];
-        console.log(file);
-
-          fs.readFile(project_id+"/"+id_dir+"/"+id_dir+"/"+file, 'utf8', function (err, data) {
-            if (err) {
-              return console.log(err);
-            }
-
+        fs.readFile(project_id+"/"+id_dir+"/"+id_dir+"/"+file, 'utf8', function (err, data) {
+          if (err) {
+            return console.log(err);
+          }
 
 
-            var contentForFile = {};
-            contentForFile["name"] = file;
 
-            // console.log(data);
-            contentForFile["data"] = data;
+          var contentForFile = {};
+          contentForFile["name"] = file;
 
-            filesContents.push(contentForFile);
+          // console.log(data);
+          contentForFile["data"] = data;
 
-            // console.log(filesContents)
+          filesContents.push(contentForFile);
 
-            if (i < files.length) {
-              
-              console.log(i);
-              loopFiles();
-              i++;
-            } else {
+          // console.log(filesContents)
 
-              console.log("HELLO")
-              res.send({"files": filesContents});
-            }
+          if (i < files.length) {
+            
+            console.log(i);
+            loopFiles();
+            i++;
+          } else {
 
-          });
+            console.log("HELLO")
+            res.send({"files": filesContents});
+          }
+
+        });
 
 
-    }
-
-    
-
+  }
 
 });
+
+
+
+// allows you to add a new Xcode image asset to the project asset catalog (requires PNG file)
+app.post('/add-image-xcasset', function (req, res) {
+
+});
+
 
 
 
