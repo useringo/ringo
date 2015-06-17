@@ -228,6 +228,7 @@ app.post('/get-project-contents', function(req, res) {
 
 // allows you to add a new Xcode image asset to the project asset catalog (requires PNG file)
 app.post('/add-image-xcasset', function (req, res) {
+  cd(buildProjects_path); // always need this
 
 });
 
