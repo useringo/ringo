@@ -108,7 +108,7 @@ exec('cd build-projects', function (err, out, stderror) {
 
 });
 
-var buildProjects_path = '/Users/gautam/Desktop/git-repos/ringo/build-server/build-projects';
+var buildProjects_path = process.env.BUILD_PROJECTS_PATH;
 
 
 
