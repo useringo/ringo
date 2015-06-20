@@ -1,5 +1,3 @@
-println("Hello, world!"); // Here is some example code
+// Type your Swift code here!
 
-
-
-println("Hello, world")
+println("Hello, world");

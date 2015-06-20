@@ -31,6 +31,12 @@ var app = express();
 app.use(bodyParser());
 app.use(express.static(__dirname + '/build-projects'));
 
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
 var port = 3000;
 
 var uid_maker = new Firebase(process.env.FIREBASE); // utilizing Firebase to generate unique keys :P

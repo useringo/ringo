@@ -14,7 +14,7 @@ $('#codeArea').keydown(function(){
 });
 
 
-var contentType ="application/x-www-form-urlencoded; charset=utf-8";
+// var contentType ="application/x-www-form-urlencoded; charset=utf-8";
 
 //user is "finished typing," do something
 function doneTyping () {
@@ -22,14 +22,13 @@ function doneTyping () {
 
     $.ajax({
 	  type: "POST",
-	  url: "http://gautam-mittal-wwdc.ngrok.com/build",
-	  data: "code="+code,
-	  success: function(data) {
-	  	alert(data);
+	  url: "http://6ae2a7b7.ngrok.io/build-sandbox",
+	  data: {"code": code},
+	  error: function(err) { // I have no clue why, but the response gets passed through the error method
+	  	console.log(err);
+	  	$("#outputArea").text(err.responseText);
 	  },
 	  dataType: 'json',
-	  // crossDomain: true,
-	  contentType:contentType,
 	});
 
 }
