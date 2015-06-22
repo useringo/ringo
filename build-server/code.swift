@@ -1,4 +1,3 @@
-println("Hello, world")
-
-
-let i 
+for n in 1...10000 {
+    println("hi");
+}

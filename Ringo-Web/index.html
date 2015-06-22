@@ -26,6 +26,7 @@
         html, body {
         height: 100%;
         overflow:hidden;
+        background-color: rgb(39, 40, 34);
         /*overflow: hidden;*/
     }
          .tapRoom {
@@ -39,13 +40,15 @@
     
         }
         .header {
-            background-color:white;
+            background-color:rgb(220, 220, 220);
             width: 100%;
             /*position:relative;*/
+
             padding-top:20px;
             padding-bottom:20px;
             z-index: 100;
             box-shadow: 0px 1px 1px 1px rgba(0, 0, 0, 0.2);
+            position: relative;
         }
         #tapper {
             width: 240px;
@@ -96,8 +99,8 @@
             left: 0;
             /*height: calc(100%-50px);*/
             width: 70%; 
-            height: calc(100% - 40px);
-            height: -webkit-calc(100% - 40px);
+            height: calc(100% - 42px);
+            height: -webkit-calc(100% - 42px);
         }
 
         textarea {
@@ -129,16 +132,50 @@
             background-color: rgb(69, 69, 69);
             height: calc(100% - 40px);
             height: -webkit-calc(100% - 40px);
-            font-size:11pt;
+            font-size:10pt;
             padding-top: 1%;
             padding-left:1%;
             padding-right:1%;
+            /*padding-bottom: 1%;*/
             overflow: scroll;
         }
 
         textarea:focus {
             text-decoration: none;
             outline: none;
+        }
+
+        .status {
+            background-color: rgb(251, 251, 251);
+            height: 60%;
+            width: 510px;
+            position:absolute;
+            top: 9px;
+            border-radius: 5px;
+            margin: 0 auto;
+          left: 0;
+          right: 0;
+          -webkit-transition: all 0.1s linear;
+          -moz-transition: all 0.1s linear;
+          -o-transition: all 0.1s linear;
+          -ms-transition: all 0.1s linear;
+
+        }
+
+        .status img {
+            height: 75%;
+        }
+
+        #statusValue {
+            color:black;
+            font-weight: bold;
+            margin-left: 10px;
+            font-size: 9pt;
+        }
+
+        #statusTime {
+            color:black;
+            font-size: 9pt;
         }
 
 
@@ -163,7 +200,8 @@
         <![endif]-->
 
         <div class="header">
-            <h1 class="tapRoom">Ringo Sandbox</h1>
+            <h1 class="tapRoom">Project Ringo</h1>
+            <div class="status"><span id="statusValue">Ready</span> <span style="color:black; font-size: 9pt;">|</span> <span id="statusTime">Now</span></div>
         </div>
 
 
@@ -188,6 +226,7 @@
         <script type='text/javascript' src="http://cdnjs.cloudflare.com/ajax/libs/jquery-ajaxtransport-xdomainrequest/1.0.1/jquery.xdomainrequest.min.js"></script>
         
         <script type="text/javascript" src="http://livejs.com/live.js"></script>
+        <script type="text/javascript" src="http://momentjs.com/downloads/moment.min.js"></script>
         <script src="js/plugins.js"></script>
         
         <script src="//cdnjs.cloudflare.com/ajax/libs/ace/1.1.9/ace.js" type="text/javascript" charset="utf-8"></script>

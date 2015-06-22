@@ -13,12 +13,15 @@ $('#editor').keydown(function(){
     clearTimeout(typingTimer);
 });
 
+$("#statusTime").text(moment().calendar());
 
 // var contentType ="application/x-www-form-urlencoded; charset=utf-8";
 
 //user is "finished typing," do something
 function doneTyping () {
     var code = editor.getValue();
+
+    $("#statusValue").html('<img src="img/loading.gif" />&nbsp;&nbsp;Compiling');
 
     $.ajax({
 	  type: "POST",
@@ -27,8 +30,12 @@ function doneTyping () {
 	  error: function(err) { // I have no clue why, but the response gets passed through the error method
 	  	console.log(err);
 
+	  	$("#statusValue").text("Ready");
+	  	$("#statusTime").text(moment().calendar());
+
 	  	$("#outputArea").text(err.responseText);
 	  	$("#outputArea").html($("#outputArea").text().split("\n").join("<br />"));
+	  	$("#outputArea").append("<br /><br />");
 	  },
 	  dataType: 'json',
 	});
