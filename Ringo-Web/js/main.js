@@ -3,13 +3,13 @@ var typingTimer;                //timer identifier
 var doneTypingInterval = 1000;  //time in ms, 5 second for example
 
 //on keyup, start the countdown
-$('#codeArea').keyup(function(){
+$('#editor').keyup(function(){
     clearTimeout(typingTimer);
     typingTimer = setTimeout(doneTyping, doneTypingInterval);
 });
 
 //on keydown, clear the countdown 
-$('#codeArea').keydown(function(){
+$('#editor').keydown(function(){
     clearTimeout(typingTimer);
 });
 
@@ -18,15 +18,17 @@ $('#codeArea').keydown(function(){
 
 //user is "finished typing," do something
 function doneTyping () {
-    var code = document.getElementById("codeArea").value;
+    var code = editor.getValue();
 
     $.ajax({
 	  type: "POST",
-	  url: "http://6ae2a7b7.ngrok.io/build-sandbox",
+	  url: "http://0dfebfb6.ngrok.io/build-sandbox",
 	  data: {"code": code},
 	  error: function(err) { // I have no clue why, but the response gets passed through the error method
 	  	console.log(err);
+
 	  	$("#outputArea").text(err.responseText);
+	  	$("#outputArea").html($("#outputArea").text().split("\n").join("<br />"));
 	  },
 	  dataType: 'json',
 	});

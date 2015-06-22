@@ -88,6 +88,18 @@
             line-height: 1.2;
         }
 
+                #editor { 
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            /*height: calc(100%-50px);*/
+            width: 70%; 
+            height: calc(100% - 40px);
+            height: -webkit-calc(100% - 40px);
+        }
+
         textarea {
             margin-top: 2px;
             height: calc(100% - 42px);
@@ -110,16 +122,18 @@
         #outputArea {
             margin-top: 2px;
             display: inline-block;
-            width:38%;
+            width:28%;
             float:right;
-            font-family:'Courier';
-            color:#d14233;
-            background-color: rgb(251, 255, 165);
-            height: calc(100% - 42px);
-            height: -webkit-calc(100% - 42px);
+            font-family:'Helvetica Neue';
+            color:white;
+            background-color: rgb(69, 69, 69);
+            height: calc(100% - 40px);
+            height: -webkit-calc(100% - 40px);
             font-size:11pt;
+            padding-top: 1%;
             padding-left:1%;
             padding-right:1%;
+            overflow: scroll;
         }
 
         textarea:focus {
@@ -151,11 +165,20 @@
         <div class="header">
             <h1 class="tapRoom">Ringo Sandbox</h1>
         </div>
+
+
+        <div id="editor"></div>
+
+        <div id="outputArea">    
+
+        </div>
+
+
         <!-- <div style="position:relative; background-color: rgb(251, 255, 165);"> -->
-        <textarea id="codeArea" spellcheck="false">// Type your Swift code here!</textarea>
-        <span id="outputArea">
+        <!-- <textarea id="codeArea" spellcheck="false">// Type your Swift code here!</textarea> -->
+  <!--       <span id="outputArea">
         // Output goes here
-        </span>
+        </span> -->
      
 
 
@@ -166,6 +189,15 @@
         
         <script type="text/javascript" src="http://livejs.com/live.js"></script>
         <script src="js/plugins.js"></script>
+        
+        <script src="//cdnjs.cloudflare.com/ajax/libs/ace/1.1.9/ace.js" type="text/javascript" charset="utf-8"></script>
+        <script>
+            var editor = ace.edit("editor");
+            editor.setTheme("ace/theme/monokai");
+            editor.getSession().setMode("ace/mode/rust");
+
+            editor.resize()
+        </script>
         <script src="js/main.js"></script>
 
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
