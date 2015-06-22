@@ -15,7 +15,7 @@
         <script src="js/vendor/modernizr-2.8.3.min.js"></script>
 
 
-                <style>
+        <style>
   /*      .content {
             text-align: center;
             margin-top: 10%;   
@@ -96,9 +96,11 @@
             bottom: 0;
             right: 0;
             bottom: 0;
-            left: 0;
+            left: 100px;
             /*height: calc(100%-50px);*/
-            width: 70%; 
+            width: 70%;
+            /*width: -webkit-calc(70%-100px);*/
+            /*width: calc(70%-100px); */
             height: calc(100% - 42px);
             height: -webkit-calc(100% - 42px);
         }
@@ -125,7 +127,8 @@
         #outputArea {
             margin-top: 2px;
             display: inline-block;
-            width:28%;
+            width:-webkit-calc(28% - 100px);
+            width:calc(28% - 100px);
             float:right;
             font-family:'Helvetica Neue';
             color:white;
@@ -178,6 +181,17 @@
             font-size: 9pt;
         }
 
+        #fileMenu {
+            width: 100px;
+            height: 100%;
+            /*height: -webkit-calc(100%-38px);*/
+            /*height: calc(100%-38px);*/
+            background: white;
+            position: absolute;
+            left:0;
+            z-index: 10000;
+        }
+
 
 
         @media only screen and (max-width: 270px) {
@@ -204,6 +218,7 @@
             <div class="status"><span id="statusValue">Ready</span> <span style="color:black; font-size: 9pt;">|</span> <span id="statusTime">Now</span></div>
         </div>
 
+        <div id="fileMenu">hi</div>
 
         <div id="editor"></div>
 

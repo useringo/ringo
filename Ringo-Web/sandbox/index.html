@@ -1,0 +1,252 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="apple-touch-icon" href="apple-touch-icon.png">
+        <!-- Place favicon.ico in the root directory -->
+
+        <link rel="stylesheet" href="css/normalize.css">
+        <link rel="stylesheet" href="css/main.css">
+        <script src="js/vendor/modernizr-2.8.3.min.js"></script>
+
+
+        <style>
+  /*      .content {
+            text-align: center;
+            margin-top: 10%;   
+            position:relative;
+            margin:auto;
+        }*/
+
+        html, body {
+        height: 100%;
+        overflow:hidden;
+        background-color: rgb(39, 40, 34);
+        /*overflow: hidden;*/
+    }
+         .tapRoom {
+            font-family: 'Roboto';
+            font-weight: 100;
+            font-size: 20px;
+            position: absolute;
+            left: 15px;
+            top: -8px;
+   
+    
+        }
+        .header {
+            background-color:rgb(220, 220, 220);
+            width: 100%;
+            /*position:relative;*/
+
+            padding-top:20px;
+            padding-bottom:20px;
+            z-index: 100;
+            box-shadow: 0px 1px 1px 1px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+        #tapper {
+            width: 240px;
+            -webkit-transition: all 0.05s linear;
+            -moz-transition: all 0.05s linear;
+            -o-transition: all 0.05s linear;
+            -ms-transition: all 0.05s linear;
+            position: absolute;
+            margin-left: auto;
+            margin-right: auto;
+            left: 0;
+            right: 0;
+        }
+        #tapper:active {
+            width: 220px;
+        }
+        * {
+            /*line-height: 1.5;*/
+            margin: 0;
+        }
+        html {
+            color: #888;
+     
+        }
+        .content {
+            left: 50%;
+            margin: -43px 0 0 -150px;
+            position: absolute;
+            top: 20%;
+            width: 300px;
+            font-family: 'Roboto';
+        }
+        h1 {
+            color: #555;
+            font-size: 60px;
+            font-weight: 100;
+            font-family: 'Roboto';
+        }
+        p {
+            line-height: 1.2;
+        }
+
+                #editor { 
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            /*height: calc(100%-50px);*/
+            width: 70%; 
+            height: calc(100% - 42px);
+            height: -webkit-calc(100% - 42px);
+        }
+
+        textarea {
+            margin-top: 2px;
+            height: calc(100% - 42px);
+            height: -webkit-calc(100% - 42px);
+            resize: none;
+            border:none;
+            background-color:rgb(33, 34, 35);
+            color:white;
+            font-family:'Menlo';
+            width: 58%;
+            font-size: 11pt;
+            display: inline-block;
+            padding-left: 1%;
+            /*padding-top: 0.1%;*/
+            /*padding-top: 10px;*/
+            padding-right: 1%;
+            
+        }
+
+        #outputArea {
+            margin-top: 2px;
+            display: inline-block;
+            width:28%;
+            float:right;
+            font-family:'Helvetica Neue';
+            color:white;
+            background-color: rgb(69, 69, 69);
+            height: calc(100% - 40px);
+            height: -webkit-calc(100% - 40px);
+            font-size:10pt;
+            padding-top: 1%;
+            padding-left:1%;
+            padding-right:1%;
+            /*padding-bottom: 1%;*/
+            overflow: scroll;
+        }
+
+        textarea:focus {
+            text-decoration: none;
+            outline: none;
+        }
+
+        .status {
+            background-color: rgb(251, 251, 251);
+            height: 60%;
+            width: 510px;
+            position:absolute;
+            top: 9px;
+            border-radius: 5px;
+            margin: 0 auto;
+          left: 0;
+          right: 0;
+          -webkit-transition: all 0.1s linear;
+          -moz-transition: all 0.1s linear;
+          -o-transition: all 0.1s linear;
+          -ms-transition: all 0.1s linear;
+
+        }
+
+        .status img {
+            height: 75%;
+        }
+
+        #statusValue {
+            color:black;
+            font-weight: bold;
+            margin-left: 10px;
+            font-size: 9pt;
+        }
+
+        #statusTime {
+            color:black;
+            font-size: 9pt;
+        }
+
+
+
+        @media only screen and (max-width: 270px) {
+            body {
+                margin: 10px auto;
+                position: static;
+                width: 95%;
+            }
+            h1 {
+                font-size: 1.5em;
+            }
+        }
+        </style>
+
+
+    </head>
+    <body>
+        <!--[if lt IE 8]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+
+        <div class="header">
+            <h1 class="tapRoom">Project Ringo</h1>
+            <div class="status"><span id="statusValue">Ready</span> <span style="color:black; font-size: 9pt;">|</span> <span id="statusTime">Now</span></div>
+        </div>
+
+
+        <div id="editor"></div>
+
+        <div id="outputArea">    
+
+        </div>
+
+
+        <!-- <div style="position:relative; background-color: rgb(251, 255, 165);"> -->
+        <!-- <textarea id="codeArea" spellcheck="false">// Type your Swift code here!</textarea> -->
+  <!--       <span id="outputArea">
+        // Output goes here
+        </span> -->
+     
+
+
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.3.min.js"><\/script>')</script>
+        <script type='text/javascript' src="http://cdnjs.cloudflare.com/ajax/libs/jquery-ajaxtransport-xdomainrequest/1.0.1/jquery.xdomainrequest.min.js"></script>
+        
+        <script type="text/javascript" src="http://livejs.com/live.js"></script>
+        <script type="text/javascript" src="http://momentjs.com/downloads/moment.min.js"></script>
+        <script src="js/plugins.js"></script>
+        
+        <script src="//cdnjs.cloudflare.com/ajax/libs/ace/1.1.9/ace.js" type="text/javascript" charset="utf-8"></script>
+        <script>
+            var editor = ace.edit("editor");
+            editor.setTheme("ace/theme/monokai");
+            editor.getSession().setMode("ace/mode/rust");
+
+            editor.resize()
+        </script>
+        <script src="js/main.js"></script>
+
+        <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+        <script>
+            (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+            function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+            e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+            e.src='https://www.google-analytics.com/analytics.js';
+            r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+            ga('create','UA-XXXXX-X','auto');ga('send','pageview');
+        </script>
+    </body>
+</html>
