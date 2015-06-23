@@ -25,7 +25,7 @@ function doneTyping () {
 
     $.ajax({
 	  type: "POST",
-	  url: "http://0dfebfb6.ngrok.io/build-sandbox",
+	  url: "http://66737bb1.ngrok.io/build-sandbox",
 	  data: {"code": code},
 	  error: function(err) { // I have no clue why, but the response gets passed through the error method
 	  	console.log(err);
