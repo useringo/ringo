@@ -3,7 +3,7 @@ var typingTimer;                //timer identifier
 var doneTypingInterval = 1000;  //time in ms, 5 second for example
 
 // VERY TERMPORARY
-var project_id = prompt("Type your Ringo Project ID");
+var project_id = "JsXa3C3BxIPUomUwLk5"; //prompt("Type your Ringo Project ID");
 var files = [];
 
 loadFiles(); // load the file menu
@@ -30,24 +30,6 @@ $("#statusTime").text(moment().calendar());
 function doneTyping () {
     var code = editor.getValue();
 
-    $("#statusValue").html('<img src="img/loading.gif" />&nbsp;&nbsp;Compiling');
-
-    $.ajax({
-	  type: "POST",
-	  url: "http://66737bb1.ngrok.io/build-sandbox",
-	  data: {"code": code},
-	  error: function(err) { // I have no clue why, but the response gets passed through the error method
-	  	console.log(err);
-
-	  	$("#statusValue").text("Ready");
-	  	$("#statusTime").text(moment().calendar());
-
-	  	$("#outputArea").text(err.responseText);
-	  	$("#outputArea").html($("#outputArea").text().split("\n").join("<br />"));
-	  	$("#outputArea").append("<br /><br />");
-	  },
-	  dataType: 'json',
-	});
 
 }
 
@@ -81,5 +63,28 @@ function loadFiles() {
 		dataType: "json"
 	});
 
-
 }
+
+
+
+// run the app on the iOS simulator
+$("#runButton").click(function() {
+	$.ajax({
+		type: 'POST',
+		url: 'http://66737bb1.ngrok.io/build-project',
+		data: {"id": project_id},
+		error: function (err) {
+			console.log(err);
+		}, 
+		success: function (data) {
+			console.log(data);
+			$("#outputArea").html(data.fullDeviceEmbedCode);
+
+
+		},
+		dataType: "json"
+	});
+
+
+});
+

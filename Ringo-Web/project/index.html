@@ -200,6 +200,33 @@
 
         }
 
+        #runButton {
+            height: 65%;
+            border-radius: 4px;
+            background-color:rgb(251, 251, 251);
+            width: 40px;
+            position:absolute;
+            top: 6px;
+            right: 10px;
+        }
+
+        #runButton:active {
+            background-color: rgb(227, 227, 227);
+        }
+
+        .arrow-right {
+            position:absolute;
+            left:0;
+            right:0;
+            margin: 0 auto;
+            margin-top: 5px;
+            width: 0; 
+            height: 0; 
+            border-top: 8px solid transparent;
+            border-bottom: 8px solid transparent;
+            
+            border-left: 16px solid black;
+        }
 
 
         @media only screen and (max-width: 270px) {
@@ -225,8 +252,7 @@
             <h1 class="tapRoom">Project Ringo</h1>
             <div class="status"><span id="statusValue">Ready</span> <span style="color:black; font-size: 9pt;">|</span> <span id="statusTime">Now</span></div>
 
-            <div id="runButton">
-            </div>
+            <div id="runButton"><div class="arrow-right"></div></div>
         </div>
 
         <div id="fileMenu"></div>
