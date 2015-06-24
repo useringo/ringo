@@ -6,6 +6,8 @@ var doneTypingInterval = 1000;  //time in ms, 5 second for example
 var project_id = "JsXa3C3BxIPUomUwLk5"; //prompt("Type your Ringo Project ID");
 var files = [];
 
+var currentFile = "";
+
 loadFiles(); // load the file menu
 
 // need to come up with a better way of asking for project ID
@@ -31,6 +33,7 @@ function doneTyping () {
     var code = editor.getValue();
 
 
+
 }
 
 
@@ -53,10 +56,12 @@ function loadFiles() {
 
 				console.log(data.files[i].name);
 
-				$("#fileMenu").append(data.files[i].name + "<br />")
+				$("#fileMenu").append('<div name="'+ data.files[i].name +'" onclick=\"javascript: currentFile = $(this).attr(\'name\'); $(\'#fileMenu div\').css({\'background-color\': \'transparent\'}); $(this).css({\'background-color\': \'rgb(14, 101, 227)\', \'font-weight\':\'bold\', \'color\':\'white\'}); \">'+start_and_end(data.files[i].name) + '</div>');
 			}
 
 			editor.setValue(files[0].data);
+			currentFile = files[0].name;
+
 
 
 		},
@@ -69,6 +74,9 @@ function loadFiles() {
 
 // run the app on the iOS simulator
 $("#runButton").click(function() {
+	$("#statusValue").html('<img src="img/loading.gif" />&nbsp;&nbsp;Building');
+	$("#outputArea").html('<center>Building your application...</center>');
+
 	$.ajax({
 		type: 'POST',
 		url: 'http://66737bb1.ngrok.io/build-project',
@@ -78,7 +86,11 @@ $("#runButton").click(function() {
 		}, 
 		success: function (data) {
 			console.log(data);
-			$("#outputArea").html(data.fullDeviceEmbedCode);
+
+			$("#statusValue").text("Ready");
+		  	$("#statusTime").text(moment().calendar());
+
+			$("#outputArea").html("<center>"+ data.fullDeviceEmbedCode +"</center>");
 
 
 		},
@@ -87,4 +99,23 @@ $("#runButton").click(function() {
 
 
 });
+
+
+$("#fileMenu").click(function() {
+	console.log(currentFile);
+});
+
+
+// Truncating strings, but Mac style
+function start_and_end(str) {
+  if (str.length > 20) {
+    return str.substr(0, 10) + '...' + str.substr(str.length-7, str.length);
+  }
+  return str;
+}
+
+
+
+
+
 
