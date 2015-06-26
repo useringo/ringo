@@ -168,17 +168,66 @@ app.post('/create-project', function(req, res) {
 
 
 
+
+// Save the files with updated content -- assumes end user has already made a request to /get-project-contents
+app.post('/update-project-contents', function (req, res) {
+  var project_id = req.body.id;
+  var files = req.body.files;
+
+
+
+  console.log(files.length + " files need to be saved.");
+
+  cd(buildProjects_path);
+
+  var id_dir = ls(project_id)[0];
+
+  var j = 0;
+
+  writeFiles();
+
+  function writeFiles() {
+    var file = files[j];
+
+    fs.writeFile(project_id+"/"+id_dir+"/"+id_dir+"/"+file.name, file.data, function (err) {
+      if (err) {
+        return console.log(err);
+      }
+
+      console.log(file.name +" was saved.");
+
+      if (j < files.length-1) {
+        j++;
+        writeFiles();
+      } else {
+        res.send("Complete");
+      }
+
+    });
+
+  } // end writeFiles()
+
+  
+});
+
+
+
+
+
+
+
 // GET all of the files and their contents within an Xcode project
 app.post('/get-project-contents', function(req, res) {
   var project_id = req.body.id;
 
-  cd(buildProjects_path)
+  cd(buildProjects_path);
 
   var id_dir = ls(project_id)[0];
   var files = ls(project_id+"/"+id_dir+"/"+id_dir);
 
   files.remove('Images.xcassets');
   files.remove('Base.lproj');
+  files.remove('GameScene.sks');
 
 
   res.setHeader('Content-Type', 'application/json');

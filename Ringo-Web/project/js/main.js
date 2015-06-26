@@ -3,7 +3,7 @@ var typingTimer;                //timer identifier
 var doneTypingInterval = 1000;  //time in ms, 5 second for example
 
 // VERY TERMPORARY
-var project_id = "JsXa3C3BxIPUomUwLk5"; //prompt("Type your Ringo Project ID");
+var project_id = "JshVywO_sL_2Ra2lN5m"; //prompt("Type your Ringo Project ID");
 var files = [];
 
 var currentFile = "";
@@ -32,6 +32,32 @@ $("#statusTime").text(moment().calendar());
 function doneTyping () {
     var code = editor.getValue();
 
+    for (var k = 0; k < files.length; k++) {
+    	var filedata = files[k];
+    	if (filedata.name == currentFile) {
+    		filedata.data = code;
+    	}
+    }
+
+	$.ajax({
+		type: 'POST',
+		url: 'http://594294c0.ngrok.io/update-project-contents',
+		data: {"id": project_id, "files": files},
+		error: function (err) {
+			console.log(err);
+		}, 
+		success: function (data) {
+			console.log(data);
+
+			// $("#statusValue").text("Ready");
+		  	// $("#statusTime").text(moment().calendar());
+
+			// $("#outputArea").html("<center>"+ data.fullDeviceEmbedCode +"</center>");
+
+
+		},
+		dataType: "json"
+	});
 
 
 }
@@ -40,7 +66,7 @@ function doneTyping () {
 function loadFiles() {
 	$.ajax({
 		type: 'POST',
-		url: 'http://66737bb1.ngrok.io/get-project-contents',
+		url: 'http://594294c0.ngrok.io/get-project-contents',
 		data: {"id": project_id},
 		error: function (err) {
 			console.log(err);
@@ -60,6 +86,7 @@ function loadFiles() {
 			}
 
 			editor.setValue(files[0].data);
+			editor.scrollToLine(0);
 			currentFile = files[0].name;
 
 
@@ -79,7 +106,7 @@ $("#runButton").click(function() {
 
 	$.ajax({
 		type: 'POST',
-		url: 'http://66737bb1.ngrok.io/build-project',
+		url: 'http://594294c0.ngrok.io/build-project',
 		data: {"id": project_id},
 		error: function (err) {
 			console.log(err);
@@ -116,6 +143,8 @@ function updateEditor() {
 			editor.setValue(files[j].data);
 		}
 	}
+
+	editor.scrollToLine(0);
 }
 
 // Truncating strings, but Mac style
