@@ -335,7 +335,7 @@ app.post('/build-project', function (req, res) {
 
 
           // check if the build succeeded
-          if (out.indexOf("** BUILD SUCCEEDED **") > -1) {
+          if (xcode_out.indexOf("** BUILD SUCCEEDED **") > -1) {
 
               // use the 'request' module from npm
               var request = require('request');
