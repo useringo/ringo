@@ -311,12 +311,12 @@ app.post('/build-project', function (req, res) {
       cd(projectID+"/"+id_dir);
 
 
-      exec('xcodebuild -sdk iphonesimulator', function (err, out, stderror) {
+      exec('xcodebuild -sdk iphonesimulator', function (err, xcode_out, stderror) {
         cd('build/Release-iphonesimulator');
 
 
         
-        console.log(out);
+        console.log(xcode_out);
 
         var normalized = id_dir.split(' ').join('\\ ');
 
@@ -334,39 +334,49 @@ app.post('/build-project', function (req, res) {
           var zip_dl_url = build_serverURL + "/" + path;
 
 
-          // use the 'request' module from npm
-          var request = require('request');
-          request.post({
-              url: 'https://api.appetize.io/v1/app/update',
-              json: {
-                  token : process.env.APPETIZE_TOKEN,
-                  url : zip_dl_url,
-                  platform : 'ios',
-              }
-          }, function(err, message, response) {
-              if (err) {
-                  // error
-                  console.log(err);
-                  res.send({'ERROR': err});
+          // check if the build succeeded
+          if (out.indexOf("** BUILD SUCCEEDED **") > -1) {
 
-              } else {
-                  // success
-                  console.log(message.body);
+              // use the 'request' module from npm
+              var request = require('request');
+              request.post({
+                  url: 'https://api.appetize.io/v1/app/update',
+                  json: {
+                      token : process.env.APPETIZE_TOKEN,
+                      url : zip_dl_url,
+                      platform : 'ios',
+                  }
+              }, function(err, message, response) {
+                  if (err) {
+                      // error
+                      console.log(err);
+                      res.send({'ERROR': err});
 
-                  var public_key = (message.body.publicURL).split("/")[4];
-                  console.log("Simulator Public Key: " + public_key);
+                  } else {
+                      // success
+                      console.log(message.body);
 
-                  var screenEmbed = '<iframe src="https://appetize.io/embed/'+public_key+'?device=iphone6&scale=75&autoplay=false&orientation=portrait&deviceColor=white&screenOnly=true" width="282px" height="501px" frameborder="0" scrolling="no"></iframe>';
-                  var deviceEmbed = '<iframe src="https://appetize.io/embed/'+public_key+'?device=iphone6&scale=75&autoplay=true&orientation=portrait&deviceColor=white" width="312px" height="653px" frameborder="0" scrolling="no"></iframe>';
+                      var public_key = (message.body.publicURL).split("/")[4];
+                      console.log("Simulator Public Key: " + public_key);
 
-                  res.send({'simulatorURL': message.body.publicURL, "screenOnlyEmbedCode": screenEmbed, "fullDeviceEmbedCode": deviceEmbed});
+                      var screenEmbed = '<iframe src="https://appetize.io/embed/'+public_key+'?device=iphone6&scale=75&autoplay=false&orientation=portrait&deviceColor=white&screenOnly=true" width="282px" height="501px" frameborder="0" scrolling="no"></iframe>';
+                      var deviceEmbed = '<iframe src="https://appetize.io/embed/'+public_key+'?device=iphone6&scale=75&autoplay=true&orientation=portrait&deviceColor=white" width="312px" height="653px" frameborder="0" scrolling="no"></iframe>';
 
-                  
+                      res.send({'simulatorURL': message.body.publicURL, "screenOnlyEmbedCode": screenEmbed, "fullDeviceEmbedCode": deviceEmbed, "console": out});
+
+                      
 
 
 
-              }
-          }); // end request
+                  }
+              }); // end request
+          } else {// end if build succeeded
+            res.send({"BUILD_FAILED": xcode_out});
+            // console.log(out);
+
+
+          }
+
 
 
         }); // end zip exec

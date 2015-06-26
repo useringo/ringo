@@ -119,6 +119,13 @@ $("#runButton").click(function() {
 
 			$("#outputArea").html("<center>"+ data.fullDeviceEmbedCode +"</center>");
 
+			if (data.BUILD_FAILED) {
+				$("#statusValue").text("Failed");
+				$("#outputArea").text(data.BUILD_FAILED);
+				var normalized = ($("#outputArea").text()).split("\n").join("<br />");
+				$("#outputArea").html("<span style=\"color:red; font-weight:bold;\">BUILD FAILED</span><br /><div>" + normalized + "</div><br /><br />");
+
+			}
 
 		},
 		dataType: "json"

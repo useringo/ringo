@@ -142,6 +142,8 @@
             padding-right:1%;
             /*padding-bottom: 1%;*/
             overflow: scroll;
+            /*overflow-y:scroll;*/
+            word-wrap: break-word;
         }
 
         textarea:focus {
@@ -159,6 +161,7 @@
             margin: 0 auto;
           left: 0;
           right: 0;
+          font-family: 'Helvetica';
           -webkit-transition: all 0.1s linear;
           -moz-transition: all 0.1s linear;
           -o-transition: all 0.1s linear;
@@ -174,6 +177,7 @@
             color:black;
             font-weight: bold;
             margin-left: 10px;
+            /*margin-top: 10px;*/
             font-size: 9pt;
         }
 
@@ -183,9 +187,10 @@
         }
 
         #fileMenu {
-            width: -webkit-calc(150px - 10px);
-            width: calc(150px - 10px);
-            padding:5px;
+            font-family: 'Roboto';
+            width:150px; /* -webkit-calc(150px - 10px); */
+            /*width: calc(150px - 10px);*/
+            /*padding:5px;*/
             /*height: 100%;*/
             height: -webkit-calc(100% - 10px);
             height: calc(100% - 10px);
@@ -213,7 +218,11 @@
 
         #fileMenu div {
             /*width: 100%;*/
-            border-radius: 2px;
+            border-radius: 0px;
+            padding-left: 4px;
+            padding-right: 4px;
+            width: -webkit-calc(100% - 8px);
+            width: calc(100% - 8px);
             /*border-bottom: 1px solid red;*/
 
         }
