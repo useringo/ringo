@@ -9,6 +9,9 @@ var files = [];
 
 var currentFile = "";
 
+var currentData = editor.getValue();
+
+
 loadFiles(); // load the file menu
 
 // need to come up with a better way of asking for project ID
@@ -33,32 +36,38 @@ $("#statusTime").text(moment().calendar());
 function doneTyping () {
     var code = editor.getValue();
 
-    for (var k = 0; k < files.length; k++) {
-    	var filedata = files[k];
-    	if (filedata.name == currentFile) {
-    		filedata.data = code;
-    	}
-    }
+    if (code != currentData) {
 
-	$.ajax({
-		type: 'POST',
-		url: 'http://594294c0.ngrok.io/update-project-contents',
-		data: {"id": project_id, "files": files},
-		error: function (err) {
-			console.log(err);
-		}, 
-		success: function (data) {
-			console.log(data);
+    	currentData = code;
 
-			// $("#statusValue").text("Ready");
-		  	// $("#statusTime").text(moment().calendar());
+	    for (var k = 0; k < files.length; k++) {
+	    	var filedata = files[k];
+	    	if (filedata.name == currentFile) {
+	    		filedata.data = code;
+	    	}
+	    }
 
-			// $("#outputArea").html("<center>"+ data.fullDeviceEmbedCode +"</center>");
+		$.ajax({
+			type: 'POST',
+			url: 'http://594294c0.ngrok.io/update-project-contents',
+			data: {"id": project_id, "files": files},
+			error: function (err) {
+				console.log(err);
+			}, 
+			success: function (data) {
+				console.log(data);
+
+				// $("#statusValue").text("Ready");
+			  	// $("#statusTime").text(moment().calendar());
+
+				// $("#outputArea").html("<center>"+ data.fullDeviceEmbedCode +"</center>");
 
 
-		},
-		dataType: "json"
-	});
+			},
+			dataType: "json"
+		});
+
+	}
 
 
 }
