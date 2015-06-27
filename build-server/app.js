@@ -402,6 +402,24 @@ app.post('/build-project', function (req, res) {
 
 
 
+// allow user to grab project information such as name, bundle ID, etc.
+app.get('/get-project-details/:app_id', function (req, res) {
+  cd(buildProjects_path);
+
+  res.setHeader('Content-Type', 'application/json');
+
+
+
+  var projectID = req.param('app_id');
+  var projectName = ls(projectID)[0]; // project name e.g. WWDC
+
+  res.send({"project": {"name": projectName}});
+
+});
+
+
+
+
 
 // Route that generates an ad-hoc IPA file for the user to download onto their device (is this against Apple's terms?)
 app.post('/create-ipa', function (req, res) {

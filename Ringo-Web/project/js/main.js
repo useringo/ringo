@@ -101,6 +101,23 @@ function loadFiles() {
 
 // run the app on the iOS simulator
 $("#runButton").click(function() {
+	buildProject();
+
+});
+
+
+// enable keyboard shortcuts
+var listener = new window.keypress.Listener();
+
+// use alt-R to do the same thing as the #runButton
+listener.simple_combo("alt r", function() {
+    console.log("used keyboard shortcut to start buildProject()");
+
+    buildProject();
+});
+
+
+function buildProject() {
 	$("#statusValue").html('<img src="img/loading.gif" />&nbsp;&nbsp;Building');
 	$("#outputArea").html('<center>Building your application...</center>');
 
@@ -130,9 +147,9 @@ $("#runButton").click(function() {
 		},
 		dataType: "json"
 	});
+}
 
 
-});
 
 
 $("#fileMenu").click(function() {
