@@ -89,6 +89,12 @@ function loadFiles() {
 			editor.scrollToLine(0);
 			currentFile = files[0].name;
 
+			$.get('http://594294c0.ngrok.io/get-project-details/'+project_id, function (data) {
+				console.log(data)
+
+				$("#fileMenu").prepend("<div style=\"margin-top: 5px;\"><b><img height=\"20pt\" style=\"vertical-align:middle;margin-top: -5px;\" src=\"img/folder-icon.svg\" />&nbsp;"+ data.project.name +"</b></div>")
+			});
+
 
 
 		},

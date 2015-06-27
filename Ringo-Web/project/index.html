@@ -35,7 +35,7 @@
             font-weight: 100;
             font-size: 20px;
             position: absolute;
-            left: 15px;
+            right: 15px;
             top: -8px;
    
     
@@ -156,7 +156,7 @@
             height: 60%;
             width: 510px;
             position:absolute;
-            top: 9px;
+            top: 8px;
             border-radius: 5px;
             margin: 0 auto;
           left: 0;
@@ -168,6 +168,40 @@
           -ms-transition: all 0.1s linear;
 
         }
+
+        .scheme {
+            background-color: rgb(251, 251, 251);
+            height: 65%;
+            /*width: 200px;*/
+            position:absolute;
+            top: 6px;
+            border-radius: 5px;
+            margin: 0 auto;
+          left: 110px;
+          /*right: 0;*/
+          font-family: 'Helvetica';
+          -webkit-transition: all 0.1s linear;
+          -moz-transition: all 0.1s linear;
+          -o-transition: all 0.1s linear;
+          -ms-transition: all 0.1s linear;
+
+        }
+
+        .scheme #appName {
+            color:black;
+            font-weight: bold;
+            margin-left: 10px;
+            /*margin-top: 10px;*/
+            font-size: 9pt;
+
+        }
+
+        .scheme #deviceTarget {
+            color:black;
+            font-size: 9pt;
+            margin-right: 10px;
+        }
+
 
         .status img {
             height: 75%;
@@ -213,7 +247,17 @@
             width: 40px;
             position:absolute;
             top: 6px;
-            right: 10px;
+            left: 10px;
+        }
+
+        #stopButton {
+            height: 65%;
+            border-radius: 4px;
+            background-color:rgb(251, 251, 251);
+            width: 40px;
+            position:absolute;
+            top: 6px;
+            left: 60px;
         }
 
         #fileMenu div {
@@ -231,6 +275,10 @@
             background-color: rgb(227, 227, 227);
         }
 
+        #stopButton:active {
+            /*background-color: rgb(227, 227, 227);*/ /* change to rgb(227, ...) when runButton clicked */
+        }
+
         .arrow-right {
             position:absolute;
             left:0;
@@ -245,6 +293,17 @@
             border-left: 16px solid black;
         }
 
+
+        .stop-box {
+            background-color:grey; /* change to black when run button is clicked */
+            height: 16px;
+            width: 16px;
+            top: 5px;
+            left:0;
+            right:0;
+            margin: 0 auto;
+            position:absolute;
+        }
 
         @media only screen and (max-width: 270px) {
             body {
@@ -270,6 +329,10 @@
             <div class="status"><span id="statusValue">Ready</span> <span style="color:black; font-size: 9pt;">|</span> <span id="statusTime">Now</span></div>
 
             <div id="runButton"><div class="arrow-right"></div></div>
+            <div id="stopButton"><div class="stop-box disabled"></div></div>
+
+            <div class="scheme"><span id="appName">helloWorld</span>&nbsp;&raquo;&nbsp;<span id="deviceTarget">iPhone 6</span></div>
+
         </div>
 
         <div id="fileMenu"></div>
