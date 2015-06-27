@@ -4,6 +4,7 @@ var doneTypingInterval = 1000;  //time in ms, 5 second for example
 
 // VERY TERMPORARY
 var project_id = "JshVywO_sL_2Ra2lN5m"; //prompt("Type your Ringo Project ID");
+var project_name = "";
 var files = [];
 
 var currentFile = "";
@@ -92,6 +93,9 @@ function loadFiles() {
 			$.get('http://594294c0.ngrok.io/get-project-details/'+project_id, function (data) {
 				console.log(data)
 
+				project_name = data.project.name;
+
+				$("#appName").text(project_name);
 				$("#fileMenu").prepend("<div style=\"margin-top: 5px;\"><b><img height=\"20pt\" style=\"vertical-align:middle;margin-top: -5px;\" src=\"img/folder-icon.svg\" />&nbsp;"+ data.project.name +"</b></div>")
 			});
 
