@@ -311,7 +311,20 @@ app.post('/build-project', function (req, res) {
       cd(projectID+"/"+id_dir);
 
 
-      exec('xcodebuild -sdk iphonesimulator', function (err, xcode_out, stderror) {
+
+      // various methods of filtering through the success build logs
+      // $ xcodebuild -sdk iphonesimulator -configuration Debug -verbose > /dev/null
+
+
+      // various methods of filtering the error logs
+
+      // $ xcodebuild -sdk iphonesimulator -configuration Debug -verbose | egrep '^(/.+:[0-9+:[0-9]+:.(error|warning):|fatal|===)' -
+      // $ xcodebuild -sdk iphonesimulator -configuration Debug -verbose | grep -A 5 error:
+
+
+
+
+      exec('xcodebuild -sdk iphonesimulator -configuration Debug -verbose', function (err, xcode_out, stderror) {
         cd('build/Release-iphonesimulator');
 
 
