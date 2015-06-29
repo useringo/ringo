@@ -142,6 +142,8 @@ function buildProject() {
 	$("#statusValue").html('<img src="img/loading.gif" />&nbsp;&nbsp;Building');
 	$("#outputArea").html('<center>Building your application...</center>');
 
+	doneTyping();
+
 	$.ajax({
 		type: 'POST',
 		url: hostname +'/build-project',
