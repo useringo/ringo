@@ -2,6 +2,8 @@
 var typingTimer;                //timer identifier
 var doneTypingInterval = 1000;  //time in ms, 5 second for example
 
+var hostname = "http://594294c0.ngrok.io"
+
 // VERY TERMPORARY
 var project_id = "JshVywO_sL_2Ra2lN5m"; //prompt("Type your Ringo Project ID");
 var project_name = "";
@@ -49,7 +51,7 @@ function doneTyping () {
 
 		$.ajax({
 			type: 'POST',
-			url: 'http://594294c0.ngrok.io/update-project-contents',
+			url: hostname+'/update-project-contents',
 			data: {"id": project_id, "files": files},
 			error: function (err) {
 				console.log(err);
@@ -76,7 +78,7 @@ function doneTyping () {
 function loadFiles() {
 	$.ajax({
 		type: 'POST',
-		url: 'http://594294c0.ngrok.io/get-project-contents',
+		url: hostname+'/get-project-contents',
 		data: {"id": project_id},
 		error: function (err) {
 			console.log(err);
@@ -99,7 +101,7 @@ function loadFiles() {
 			editor.scrollToLine(0);
 			currentFile = files[0].name;
 
-			$.get('http://594294c0.ngrok.io/get-project-details/'+project_id, function (data) {
+			$.get(hostname+'/get-project-details/'+project_id, function (data) {
 				console.log(data)
 
 				project_name = data.project.name;
@@ -142,7 +144,7 @@ function buildProject() {
 
 	$.ajax({
 		type: 'POST',
-		url: 'http://594294c0.ngrok.io/build-project',
+		url: hostname +'/build-project',
 		data: {"id": project_id},
 		error: function (err) {
 			console.log(err);
