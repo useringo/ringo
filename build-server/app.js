@@ -100,7 +100,7 @@ exec('cd build-projects', function (err, out, stderror) {
         console.log(out);
 
         exec('chmod 755 renameXcodeProject.sh', function (err, out, stderror) {
-          console.log('Successfully downloaded renameXcodeProject.sh...');
+          console.log('Successfully downloaded renameXcodeProject.sh at ' + new Date());
         });
 
       });
@@ -108,7 +108,7 @@ exec('cd build-projects', function (err, out, stderror) {
 
 
   } else {
-    console.log('build-projects directory was found.');
+    console.log('build-projects directory was found at '+ new Date());
   } // end if err
 
 
@@ -194,7 +194,7 @@ app.post('/update-project-contents', function (req, res) {
         return console.log(err);
       }
 
-      console.log(file.name +" was saved.");
+      console.log(file.name +" was saved at "+ new Date());
 
       if (j < files.length-1) {
         j++;
@@ -529,6 +529,7 @@ var server = app.listen(port, function () {
 });
 
 
+// remove array objects
 Array.prototype.remove = function() {
     var what, a = arguments, L = a.length, ax;
     while (L && this.length) {
