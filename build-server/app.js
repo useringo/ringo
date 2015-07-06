@@ -13,6 +13,8 @@
 */
 
 
+// might be useful to refer to this: http://stackoverflow.com/questions/4079280/javascript-communication-between-browser-tabs-windows, when thinking about implementing a simulator which opens in an external window
+
 var dotenv = require('dotenv');
 dotenv.load();
 
@@ -482,10 +484,10 @@ app.post('/create-ipa', function (req, res) {
       // go into the directory
       cd(projectID+"/"+id_dir);
 
-      exec('ipa build', function (err, out, stderror) {
+      exec('ipa build -c Release', function (err, out, stderror) {
         
         if (err) {
-          res.send({"Error": "There was an error generating your IPA file."});
+          res.send({"Error": "There was an error generating your IPA file. Please double check that there are no syntax errors or other issues with your code."});
         } else {
           console.log(out);
           console.log("\n");
@@ -494,7 +496,7 @@ app.post('/create-ipa', function (req, res) {
           var ipa_path = projectID +"/"+ id_dir + "/" + id_dir + ".ipa";
           var ipa_dl_url = secure_serverURL + "/" + ipa_path;
 
-          console.log(ipa_dl_url);
+          console.log(ipa_dl_url.cyan);
 
           console.log('Generating manifest.plist...');
 
@@ -513,6 +515,7 @@ app.post('/create-ipa', function (req, res) {
               console.log('Successfully generated IPA manifest.plist.');
 
               var signed_dl_url = "itms-services://?action=download-manifest&url="+mainfest_plist_url;
+              console.log(signed_dl_url.cyan);
 
               // raw_ipa_url is the link that directly downloads the IPA file, the signed_dl_url allows you to download the IPA file on an iOS device
               res.send({"raw_ipa_url": ipa_dl_url, "signed_dl_url": signed_dl_url}); 

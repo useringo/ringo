@@ -41,7 +41,7 @@
     
         }
         .header {
-            background-color:rgb(220, 220, 220);
+            background-color:#1976D2; /*rgb(220, 220, 220);*/
             width: 100%;
             /*position:relative;*/
 
@@ -270,6 +270,18 @@
           -webkit-box-shadow: 0px 0.5px 0px 0px;
         }
 
+        #ipaDLButton {
+            height: 65%;
+            border-radius: 4px;
+            background-color:rgb(251, 251, 251);
+            width: 40px;
+            position:absolute;
+            top: 6px;
+            right: 10px;
+            box-shadow: 0px 0.5px 0px 0px;
+          -webkit-box-shadow: 0px 0.5px 0px 0px;
+        }
+
         #fileMenu div {
             /*width: 100%;*/
             border-radius: 0px;
@@ -282,6 +294,10 @@
         }
 
         #runButton:active {
+            background-color: rgb(227, 227, 227);
+        }
+
+        #ipaDLButton:active {
             background-color: rgb(227, 227, 227);
         }
 
@@ -315,6 +331,33 @@
             position:absolute;
         }
 
+        .triangle-down {
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 10px solid black;
+            left:0;
+            right:0;
+            margin: 0 auto;
+            top: 13px;
+            position: absolute;
+        }
+
+        .dl-box {
+            height: 10px;
+            width: 10px;
+            left:0;
+            margin: 0 auto;
+            right:0;
+            top: 3px;
+            position:absolute;
+            background-color: black;
+        }
+
+
+
+
         @media only screen and (max-width: 270px) {
             body {
                 margin: 10px auto;
@@ -334,12 +377,15 @@
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
 
+
         <div class="header">
-            <h1 class="tapRoom">Project Ringo</h1>
+            <!-- <h1 class="tapRoom">Project Ringo</h1> -->
             <div class="status"><span id="statusValue">Ready</span> <span style="color:black; font-size: 9pt;">|</span> <span id="statusTime">Now</span></div>
 
             <div id="runButton"><div class="arrow-right"></div></div>
             <div id="stopButton"><div class="stop-box disabled"></div></div>
+
+            <div id="ipaDLButton"><div class="triangle-down"></div><div class="dl-box"></div></div>
 
             <div class="scheme"><span id="appName">Loading...</span>&nbsp;&raquo; <span id="deviceTarget"><img src="img/iPhone-4-icon.svg" style="display: inline-block; height: 10pt;margin-top: -2px;"/> iPhone 6</span></div>
 
