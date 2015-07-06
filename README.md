@@ -1,4 +1,4 @@
-# りんご
+# りんご (Ringo)
 Wouldn't it be cool if we had the ability to build native mobile apps that normally require expensive hardware and advanced software, all in the browser?
 
 
