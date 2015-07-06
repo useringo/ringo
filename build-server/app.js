@@ -43,20 +43,34 @@ app.use(function(req, res, next) {
 
 var port = 3000;
 
-// initialize the ngrok tunnel
-ngrok.connect(port, function (err, url) {
-  console.log("Tunnel open: " + url.red + " at "+ new Date());
-
-  process.env["SECURE_HOSTNAME"] = url;
-
-
-});
-
-var uid_maker = new Firebase(process.env.FIREBASE); // utilizing Firebase to generate unique keys :P
 
 var build_serverURL = process.env.HOSTNAME;
 var secure_serverURL = process.env.SECURE_HOSTNAME;
 
+// initialize the ngrok tunnel
+ngrok.connect(port, function (err, url) {
+  console.log("Tunnel open: " + url.red + " at "+ new Date());
+
+  // rewrite the env variables
+  process.env["SECURE_HOSTNAME"] = url;
+  process.env["HOSTNAME"] = url.replace('https', 'http');
+
+  build_serverURL = process.env.HOSTNAME;
+  secure_serverURL = process.env.SECURE_HOSTNAME;
+
+
+});
+
+
+var uid_maker = new Firebase(process.env.FIREBASE); // utilizing Firebase to generate unique keys :P
+
+
+app.get('/get-secure-tunnel', function (req, res) {
+  res.setHeader('Content-Type', 'application/json');
+
+  // send the tunnel url upon request
+  res.send({"tunnel_url": process.env.HOSTNAME});
+});
 
 
 // Run an Xcode sandbox
@@ -64,7 +78,7 @@ var secure_serverURL = process.env.SECURE_HOSTNAME;
 // This has automatic handling to prevent a user from running infinite loops, the system just stops the script from running after a while.
 app.post('/build-sandbox', function (req, res) {
   	console.log('Following sandbox executed at '+ new Date());
-  	console.log(req.body.code);
+  	console.log(req.body.code.orange);
 
 	// console.log((req.body.code).length);
 
@@ -84,8 +98,6 @@ app.post('/build-sandbox', function (req, res) {
       });
 
 	    
-
-	    // console.log("The file was saved!");
 	}); 
 
   } else {
@@ -331,18 +343,18 @@ app.post('/build-project', function (req, res) {
 
       // various methods of filtering the error logs
 
-      // $ xcodebuild -sdk iphonesimulator -configuration Debug -verbose | egrep '^(/.+:[0-9+:[0-9]+:.(error|warning):|fatal|===)' -
-      // $ xcodebuild -sdk iphonesimulator -configuration Debug -verbose | grep -A 5 error:
+      // $ xcodebuild -sdk iphonesimulator -configuration Release -verbose | egrep '^(/.+:[0-9+:[0-9]+:.(error|warning):|fatal|===)' -
+      // $ xcodebuild -sdk iphonesimulator -configuration Release -verbose | grep -A 5 error:
 
 
 
 
-      exec('xcodebuild -sdk iphonesimulator -configuration Debug -verbose', function (err, xcode_out, stderror) {
+      exec('xcodebuild -sdk iphonesimulator -configuration Release -verbose', function (err, xcode_out, stderror) {
         cd('build/Release-iphonesimulator');
 
 
         
-        console.log(xcode_out);
+        console.log(xcode_out.green);
 
         var normalized = id_dir.split(' ').join('\\ ');
 
@@ -383,7 +395,7 @@ app.post('/build-project', function (req, res) {
                       console.log(message.body);
 
                       var public_key = (message.body.publicURL).split("/")[4];
-                      console.log("Simulator Public Key: " + public_key);
+                      console.log("Simulator Public Key: " + public_key.yellow);
 
                       var screenEmbed = '<iframe src="https://appetize.io/embed/'+public_key+'?device=iphone6&scale=75&autoplay=false&orientation=portrait&deviceColor=white&screenOnly=true" width="282px" height="501px" frameborder="0" scrolling="no"></iframe>';
                       var deviceEmbed = '<iframe src="https://appetize.io/embed/'+public_key+'?device=iphone6&scale=75&autoplay=true&orientation=portrait&deviceColor=white" width="312px" height="653px" frameborder="0" scrolling="no"></iframe>';

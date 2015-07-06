@@ -2,7 +2,7 @@
 var typingTimer;                //timer identifier
 var doneTypingInterval = 1000;  //time in ms, 5 second for example
 
-var hostname = "http://63d94d9b.ngrok.io"
+var hostname = "http://79605d26.ngrok.com"
 
 // VERY TERMPORARY
 var project_id = "JshVywO_sL_2Ra2lN5m"; //prompt("Type your Ringo Project ID");
@@ -142,34 +142,75 @@ function buildProject() {
 	$("#statusValue").html('<img src="img/loading.gif" />&nbsp;&nbsp;Building');
 	$("#outputArea").html('<center>Building your application...</center>');
 
-	doneTyping();
+	// save files, then build	
+	    var code = editor.getValue();
 
-	$.ajax({
-		type: 'POST',
-		url: hostname +'/build-project',
-		data: {"id": project_id},
-		error: function (err) {
-			console.log(err);
-		}, 
-		success: function (data) {
-			console.log(data);
+	    if (code != currentData) {
 
-			$("#statusValue").text("Ready");
-		  	$("#statusTime").text(moment().calendar());
+	    	currentData = code;
 
-			$("#outputArea").html("<center>"+ data.fullDeviceEmbedCode +"</center>");
+		    for (var k = 0; k < files.length; k++) {
+		    	var filedata = files[k];
+		    	if (filedata.name == currentFile) {
+		    		filedata.data = code;
+		    	}
+		    }
 
-			if (data.BUILD_FAILED) {
-				$("#statusValue").text("Failed");
-				$("#outputArea").text(data.BUILD_FAILED);
-				var normalized = ($("#outputArea").text()).split("\n").join("<br />");
-				$("#outputArea").html("<span style=\"color:red; font-weight:bold;\">BUILD FAILED</span><br /><div>" + normalized + "</div><br /><br />");
+			$.ajax({
+				type: 'POST',
+				url: hostname+'/update-project-contents',
+				data: {"id": project_id, "files": files},
+				error: function (err) {
+					console.log(err);
+					console.log("Saving files prior to building...");
 
-			}
+					// after successfully saving the files, build for simulator
+						$.ajax({
+							type: 'POST',
+							url: hostname +'/build-project',
+							data: {"id": project_id},
+							error: function (err) {
+								console.log(err);
+							}, 
+							success: function (data) {
+								console.log(data);
 
-		},
-		dataType: "json"
-	});
+								$("#statusValue").text("Ready");
+							  	$("#statusTime").text(moment().calendar());
+
+								$("#outputArea").html("<center>"+ data.fullDeviceEmbedCode +"</center>");
+
+								if (data.BUILD_FAILED) {
+									$("#statusValue").text("Failed");
+									$("#outputArea").text(data.BUILD_FAILED);
+									var normalized = ($("#outputArea").text()).split("\n").join("<br />");
+									$("#outputArea").html("<span style=\"color:red; font-weight:bold;\">BUILD FAILED</span><br /><div>" + normalized + "</div><br /><br />");
+
+								}
+
+							},
+							dataType: "json"
+						});
+
+
+
+				}, 
+				success: function (data) {
+					console.log(data);
+
+
+					
+
+				},
+				dataType: "json"
+			});
+
+		}
+
+
+
+
+
 }
 
 
