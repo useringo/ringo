@@ -18,6 +18,7 @@ dotenv.load();
 
 var async = require('async');
 var bodyParser = require('body-parser');
+var colors = require('colors');
 var Firebase = require('firebase');
 var fs = require('fs');
 var express = require('express');
@@ -25,6 +26,9 @@ var request = require('request');
 require('shelljs/global');
 
 var exec = require('child_process').exec;
+
+// open the localhost tunnel to the rest of the world!
+var ngrok = require('ngrok');
 
 var app = express();
 
@@ -38,6 +42,15 @@ app.use(function(req, res, next) {
 });
 
 var port = 3000;
+
+// initialize the ngrok tunnel
+ngrok.connect(port, function (err, url) {
+  console.log("Tunnel open: " + url.red + " at "+ new Date());
+
+  process.env["SECURE_HOSTNAME"] = url;
+
+
+});
 
 var uid_maker = new Firebase(process.env.FIREBASE); // utilizing Firebase to generate unique keys :P
 
