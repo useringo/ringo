@@ -2,6 +2,8 @@
 var typingTimer;                //timer identifier
 var doneTypingInterval = 1000;  //time in ms, 5 second for example
 
+var hostname = "https://2e9ab5a8.ngrok.com"
+
 //on keyup, start the countdown
 $('#editor').keyup(function(){
     clearTimeout(typingTimer);
@@ -25,7 +27,7 @@ function doneTyping () {
 
     $.ajax({
 	  type: "POST",
-	  url: "http://66737bb1.ngrok.io/build-sandbox",
+	  url: hostname + "/build-sandbox",
 	  data: {"code": code},
 	  error: function(err) { // I have no clue why, but the response gets passed through the error method
 	  	console.log(err);
@@ -41,3 +43,23 @@ function doneTyping () {
 	});
 
 }
+
+
+
+
+
+
+var marker;
+
+marker = null;
+
+require(["ace/range"], function(range) {
+  return marker = editor.getSession().addMarker(new range.Range(7, 0, 7, 2000), "warning", "line", true);
+});
+
+setTimeout(function() {
+  return editor.getSession().removeMarker(marker);
+}, 3000);
+
+
+

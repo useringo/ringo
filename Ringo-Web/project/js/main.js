@@ -2,7 +2,7 @@
 var typingTimer;                //timer identifier
 var doneTypingInterval = 1000;  //time in ms, 5 second for example
 
-var hostname = "https://1338e207.ngrok.com"
+var hostname = "https://2e9ab5a8.ngrok.com"
 
 // VERY TERMPORARY
 var project_id = "JshVywO_sL_2Ra2lN5m"; //prompt("Type your Ringo Project ID");
@@ -109,7 +109,7 @@ function loadFiles() {
 				$("#appName").text(project_name);
 				$("#fileMenu").prepend("<div style=\"margin-top: 5px;\"><b><img height=\"20pt\" style=\"vertical-align:middle;margin-top: -5px;\" src=\"img/folder-icon.svg\" />&nbsp;"+ data.project.name +"</b></div>")
 			
-				buildProject();
+				// buildProject();
 
 			});
 
@@ -135,22 +135,24 @@ var listener = new window.keypress.Listener();
 
 // use alt-R to do the same thing as the #runButton
 listener.simple_combo("alt r", function() {
-    console.log("used keyboard shortcut to start buildProject()");
+    // console.log("used keyboard shortcut to start buildProject()");
 
     buildProject();
 });
 
 
 function buildProject() {
-	$("#statusValue").html('<img src="img/loading.gif" />&nbsp;&nbsp;Building');
-	$("#outputArea").html('<center>Building your application...</center>');
+	
 
 	// save files, then build	
 	    var code = editor.getValue();
 
-	    if (code != currentData) {
+	    // if (code != currentData) {
 
-	    	currentData = code;
+	    	$("#statusValue").html('<img src="img/loading.gif" />&nbsp;&nbsp;Building');
+			$("#outputArea").html('<center>Building your application...</center>');
+
+	    	// currentData = code;
 
 		    for (var k = 0; k < files.length; k++) {
 		    	var filedata = files[k];
@@ -208,7 +210,7 @@ function buildProject() {
 				dataType: "json"
 			});
 
-		}
+		// }
 
 
 

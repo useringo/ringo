@@ -1,1 +1,1 @@
-lkjlkjhj;kj;lj;lj;lj;lj;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+println("hello, world")
