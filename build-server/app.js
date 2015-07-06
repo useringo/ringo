@@ -349,7 +349,7 @@ app.post('/build-project', function (req, res) {
 
 
 
-      exec('xcodebuild -sdk iphonesimulator -configuration Release -verbose', function (err, xcode_out, stderror) {
+      exec('xcodebuild -sdk iphonesimulator -configuration Release -verbose | grep -A 5 error:', function (err, xcode_out, stderror) {
         cd('build/Release-iphonesimulator');
 
 
@@ -358,22 +358,24 @@ app.post('/build-project', function (req, res) {
 
         var normalized = id_dir.split(' ').join('\\ ');
 
-        console.log(normalized);
+        // console.log(normalized);
 
         exec('zip -r '+projectID+' '+normalized+".app", function (err, out, stderror) {
-          console.log(ls());
+          // console.log(ls());
           cd(buildProjects_path); // enter build-projects once again (using absolute paths!)
           
-          console.log(pwd());
+          // console.log(pwd());
 
           var path = projectID + "/" + id_dir + "/build/Release-iphonesimulator/" + projectID + ".zip";
-          console.log(path);
+          // console.log(path);
 
           var zip_dl_url = build_serverURL + "/" + path;
+          console.log(".zip of simulator executable: " + zip_dl_url.cyan);
 
+          console.log(typeof xcode_out)
 
           // check if the build succeeded
-          if (xcode_out.indexOf("** BUILD SUCCEEDED **") > -1) {
+          if (xcode_out == "") { //.indexOf("** BUILD SUCCEEDED **") > -1) {
 
               // use the 'request' module from npm
               var request = require('request');
