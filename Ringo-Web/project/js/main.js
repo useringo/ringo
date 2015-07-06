@@ -97,7 +97,7 @@ function loadFiles() {
 				$("#fileMenu").append('<div name="'+ data.files[i].name +'" onclick=\"javascript: currentFile = $(this).attr(\'name\'); $(\'#fileMenu div\').css({\'background-color\': \'transparent\', \'font-weight\': \'normal\', \'color\': \'black\'}); $(this).css({\'background-color\': \'rgb(14, 101, 227)\', \'font-weight\':\'bold\', \'color\':\'white\'}); updateEditor();\">'+start_and_end(data.files[i].name) + '</div>');
 			}
 
-			editor.setValue(files[0].data);
+			editor.setValue(files[0].data, -1);
 			editor.scrollToLine(0);
 			currentFile = files[0].name;
 
@@ -228,7 +228,7 @@ $("#fileMenu").click(function() {
 function updateEditor() {
 	for (var j = 0; j < files.length; j++) {
 		if (files[j].name == currentFile) {
-			editor.setValue(files[j].data);
+			editor.setValue(files[j].data, -1);
 		}
 	}
 
