@@ -194,6 +194,27 @@ app.post('/create-project', function(req, res) {
 
 
 
+// download your project code in a ZIP file
+app.get('/download-project/:id', function (req, res) {
+  cd(buildProjects_path + "/"+req.param('id'));
+
+  // cd(req.param('id'));
+
+
+  var name = ls()[0];
+
+  exec('zip -r '+name+'.zip . -x ".*" -x "*/.*"', function (err, out, stderror) {
+    console.log(out.cyan);
+
+    res.sendFile(buildProjects_path+"/"+req.param('id')+"/"+name+".zip");
+
+
+  });
+
+
+});
+
+
 
 
 // Save the files with updated content -- assumes end user has already made a request to /get-project-contents
