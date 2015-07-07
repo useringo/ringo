@@ -34,7 +34,9 @@ var ngrok = require('ngrok');
 
 var app = express();
 
-app.use(bodyParser());
+app.use(bodyParser({limit: '50mb'}));
+// console.log('Limit file size: '+limit);
+
 app.use(express.static(__dirname + '/build-projects'));
 
 app.use(function(req, res, next) {
@@ -171,7 +173,7 @@ app.post('/create-project', function(req, res) {
 
 
             // creates a project with a unique id. The app that's trying to build the app will need to access the app via that unique ID from this point forward
-            var exec_cmd = 'git clone http://www.github.com/gmittal/ringoTemplate && .././renameXcodeProject.sh ringoTemplate "'+ projectName +'" && rm -rf ringoTemplate';
+            var exec_cmd = 'git clone https://github.com/MHaroonBaig/Swift-Beautify && .././renameXcodeProject.sh Picker "'+ projectName +'" && rm -rf Picker';
             exec(exec_cmd, function (err, out, stderror) {
               console.log(out);
               console.log(err);

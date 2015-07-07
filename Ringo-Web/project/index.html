@@ -283,6 +283,18 @@
           -webkit-box-shadow: 0px 0.5px 0px 0px;
         }
 
+        #ULButton {
+            height: 65%;
+            border-radius: 4px;
+            background-color:rgb(251, 251, 251);
+            width: 40px;
+            position:absolute;
+            top: 6px;
+            right: 60px;
+            box-shadow: 0px 0.5px 0px 0px;
+            -webkit-box-shadow: 0px 0.5px 0px 0px;
+        }
+
         #fileMenu div {
             /*width: 100%;*/
             border-radius: 0px;
@@ -299,6 +311,10 @@
         }
 
         #ipaDLButton:active {
+            background-color: rgb(227, 227, 227);
+        }
+
+        #ULButton:active {
             background-color: rgb(227, 227, 227);
         }
 
@@ -345,6 +361,19 @@
             position: absolute;
         }
 
+        .triangle-up {
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-bottom: 10px solid black;
+            left:0;
+            right:0;
+            margin: 0 auto;
+            bottom: 13px;
+            position: absolute;
+        }
+
         .dl-box {
             height: 10px;
             width: 10px;
@@ -352,6 +381,17 @@
             margin: 0 auto;
             right:0;
             top: 3px;
+            position:absolute;
+            background-color: black;
+        }
+
+        .ul-box {
+            height: 10px;
+            width: 10px;
+            left:0;
+            margin: 0 auto;
+            right:0;
+            bottom: 3px;
             position:absolute;
             background-color: black;
         }
@@ -386,6 +426,7 @@
             <div id="runButton"><div class="arrow-right"></div></div>
             <div id="stopButton"><div class="stop-box disabled"></div></div>
 
+            <div id="ULButton"><div class="triangle-up"></div><div class="ul-box"></div></div>
             <div id="ipaDLButton"><div class="triangle-down"></div><div class="dl-box"></div></div>
 
             <div class="scheme"><span id="appName">Loading...</span>&nbsp;&raquo; <span id="deviceTarget"><img src="img/iPhone-4-icon.svg" style="display: inline-block; height: 10pt;margin-top: -2px;"/> iPhone 6</span></div>
