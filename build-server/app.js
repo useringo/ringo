@@ -232,6 +232,16 @@ app.post('/update-project-contents', function (req, res) {
 
   var id_dir = ls(project_id)[0];
 
+  var xc_projName = ""; // suprisingly enough, people like to name their repository name differently than their .xcodeproj name
+  
+  for (var z = 0; z < ls(project_id + "/" + id_dir).length; z++) {
+    if (ls(project_id + "/" + id_dir)[z].indexOf('.xcodeproj') > -1) {
+      xc_projName = ls(project_id + "/" + id_dir)[z].replace('.xcodeproj', '');
+    }
+  }
+
+  console.log(('Xcode Project File Name: ' + xc_projName).red);
+
   var j = 0;
 
   writeFiles();
@@ -239,7 +249,7 @@ app.post('/update-project-contents', function (req, res) {
   function writeFiles() {
     var file = files[j];
 
-    fs.writeFile(project_id+"/"+id_dir+"/"+id_dir+"/"+file.name, file.data, function (err) {
+    fs.writeFile(project_id+"/"+id_dir+"/"+xc_projName+"/"+file.name, file.data, function (err) {
       if (err) {
         return console.log(err);
       }
@@ -275,9 +285,19 @@ app.post('/get-project-contents', function(req, res) {
   var id_dir = ls(project_id)[0];
   // var files = ls(project_id+"/"+id_dir+"/"+id_dir);
 
+  var xc_projName = ""; // suprisingly enough, people like to name their repository name differently than their .xcodeproj name
+  
+  for (var z = 0; z < ls(project_id + "/" + id_dir).length; z++) {
+    if (ls(project_id + "/" + id_dir)[z].indexOf('.xcodeproj') > -1) {
+      xc_projName = ls(project_id + "/" + id_dir)[z].replace('.xcodeproj', '');
+    }
+  }
+
+  console.log(('Xcode Project File Name: ' + xc_projName).red);
+
 
   // crawl the file tree
-  walk(buildProjects_path + "/" + project_id+"/"+id_dir+"/"+id_dir, function(err, results) {
+  walk(buildProjects_path + "/" + project_id+"/"+id_dir+"/"+xc_projName, function(err, results) {
     if (err) throw err;
 
     var filtered = [];
@@ -328,7 +348,7 @@ app.post('/get-project-contents', function(req, res) {
         var file = files[i];
         console.log(file);
 
-          fs.readFile(project_id+"/"+id_dir+"/"+id_dir+"/"+file, 'utf8', function (err, data) {
+          fs.readFile(project_id+"/"+id_dir+"/"+xc_projName+"/"+file, 'utf8', function (err, data) {
             if (err) {
               return console.log(err);
             }
@@ -555,8 +575,18 @@ app.post('/create-ipa', function (req, res) {
           console.log(out);
           console.log("\n");
 
+          var xc_projName = ""; // suprisingly enough, people like to name their repository name differently than their .xcodeproj name
+          
+          for (var z = 0; z < ls(project_id + "/" + id_dir).length; z++) {
+            if (ls(project_id + "/" + id_dir)[z].indexOf('.xcodeproj') > -1) {
+              xc_projName = ls(project_id + "/" + id_dir)[z].replace('.xcodeproj', '');
+            }
+          }
+
+          console.log(('Xcode Project File Name: ' + xc_projName).red);
+
           console.log('IPA for project '+ projectID + ' generated at '+ new Date());
-          var ipa_path = projectID +"/"+ id_dir + "/" + id_dir + ".ipa";
+          var ipa_path = projectID +"/"+ id_dir + "/" + xc_projName + ".ipa";
           var ipa_dl_url = secure_serverURL + "/" + ipa_path;
 
           console.log(ipa_dl_url.cyan);
