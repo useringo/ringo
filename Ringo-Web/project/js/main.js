@@ -2,10 +2,10 @@
 var typingTimer;                //timer identifier
 var doneTypingInterval = 1000;  //time in ms, 5 second for example
 
-var hostname = "https://200b3029.ngrok.com"
+var hostname = "https://36eb46ae.ngrok.com"
 
 // VERY TERMPORARY
-var project_id = "JshVywO_sL_2Ra2lN5m"; //prompt("Type your Ringo Project ID");
+var project_id = "JtdlEPNygDxwDLyZ1P5"; //prompt("Type your Ringo Project ID");
 var project_name = "";
 var files = [];
 

@@ -250,61 +250,101 @@ app.post('/get-project-contents', function(req, res) {
   cd(buildProjects_path);
 
   var id_dir = ls(project_id)[0];
-  var files = ls(project_id+"/"+id_dir+"/"+id_dir);
-
-  files.remove('Images.xcassets');
-  files.remove('Base.lproj');
-  files.remove('GameScene.sks');
+  // var files = ls(project_id+"/"+id_dir+"/"+id_dir);
 
 
-  res.setHeader('Content-Type', 'application/json');
+  // crawl the file tree
+  walk(buildProjects_path + "/" + project_id+"/"+id_dir+"/"+id_dir, function(err, results) {
+    if (err) throw err;
 
-  console.log(files);  
+    var filtered = [];
 
-  var filesContents = []; // final array of json data
+    // filter out all the stuff that is useless
+    for (var i = 0; i < results.length; i++) {
+      var tmp = results[i];
 
-  var i = 0;
+      tmp = tmp.split("/");
 
-  loopFiles();
+      for (var j = 0; j < 11; j++) { // remove the eleven parent directories of the file
+        tmp.shift();
+      }
 
-  function loopFiles() {
-      var file = files[i];
-      console.log(file);
+      tmp = tmp.join("/");
+      
 
-        fs.readFile(project_id+"/"+id_dir+"/"+id_dir+"/"+file, 'utf8', function (err, data) {
-          if (err) {
-            return console.log(err);
+      if (!(tmp.indexOf("Images") > -1)) {
+        if (!(tmp.indexOf(".lproj") > -1)) {
+          if (!(tmp.indexOf(".sks") > -1)) {
+            if (!(tmp.indexOf(".playground") > -1)) {
+              if (!(tmp.indexOf(".png") > -1)) {
+                filtered.push(tmp); 
+              }
+                  
+            } 
           }
+                
+        }
+      }
+    }
+
+    console.log(filtered)
+
+    var files = filtered;
+
+    res.setHeader('Content-Type', 'application/json');
+
+    console.log(files);  
+
+    var filesContents = []; // final array of json data
+
+    var i = 0;
+
+    loopFiles();
+
+    function loopFiles() {
+        var file = files[i];
+        console.log(file);
+
+          fs.readFile(project_id+"/"+id_dir+"/"+id_dir+"/"+file, 'utf8', function (err, data) {
+            if (err) {
+              return console.log(err);
+            }
 
 
 
-          var contentForFile = {};
-          contentForFile["name"] = file;
+            var contentForFile = {};
+            contentForFile["name"] = file;
 
-          // console.log(data);
-          contentForFile["data"] = data;
+            // console.log(data);
+            contentForFile["data"] = data;
 
-          filesContents.push(contentForFile);
+            filesContents.push(contentForFile);
 
-          // console.log(filesContents)
+            // console.log(filesContents)
 
-          if (i < files.length) {
-            
-            console.log(i);
-            loopFiles();
-            i++;
-          } else {
+            if (i < files.length) {
+              
+              console.log(i);
+              loopFiles();
+              i++;
+            } else {
 
-            console.log("HELLO")
-            res.send({"files": filesContents});
-          }
+              // console.log("HELLO")
+              res.send({"files": filesContents});
+            }
 
-        });
+          });
 
 
-  }
+    }
+
+
+  });
+
 
 });
+
+
 
 
 
@@ -557,6 +597,34 @@ var server = app.listen(port, function () {
   console.log('Example app listening at http://%s:%s', host, port);
 
 });
+
+
+
+  // function that invokes a crawl through all of the directories and files
+  var walk = function(dir, done) {
+      var results = [];
+      fs.readdir(dir, function(err, list) {
+        if (err) return done(err);
+        var i = 0;
+      
+          (function next() {
+        var file = list[i++];
+        if (!file) return done(null, results);
+        file = dir + '/' + file;
+        fs.stat(file, function(err, stat) {
+            if (stat && stat.isDirectory()) {
+                walk(file, function(err, res) {
+                  results = results.concat(res);
+                  next();
+              });
+            } else {
+                results.push(file);
+                next();
+            }
+            });
+          })();   
+    });
+  };
 
 
 // remove array objects
