@@ -2,10 +2,10 @@
 var typingTimer;                //timer identifier
 var doneTypingInterval = 1000;  //time in ms, 5 second for example
 
-var hostname = "https://6bc8e1f4.ngrok.com"
+var hostname = "https://32f358f.ngrok.com"
 
 // VERY TERMPORARY
-var project_id = "Jtemtnj36RFoUX5jrZJ"; //prompt("Type your Ringo Project ID");
+var project_id = "JtepQZ0rgVKN1VSh1y9"; //prompt("Type your Ringo Project ID");
 var project_name = "";
 var files = [];
 
@@ -189,7 +189,7 @@ function buildProject() {
 									$("#statusValue").text("Failed");
 									$("#outputArea").text(data.BUILD_FAILED);
 									var normalized = ($("#outputArea").text()).split("\n").join("<br />");
-									$("#outputArea").html("<span style=\"color:red; font-weight:bold;\">BUILD FAILED</span><br /><div>" + normalized + "</div><br /><br />");
+									$("#outputArea").html("<div style=\"margin-left: 10px; margin-right: 10px;\"><span style=\"color:red; font-weight:bold;\">BUILD FAILED</span><br /><div>" + normalized + "</div><br /><br /></div>");
 
 								}
 
@@ -249,8 +249,8 @@ function updateEditor() {
 
 // Truncating strings, but Mac style
 function start_and_end(str) {
-  if (str.length > 20) {
-    return str.substr(0, 10) + '...' + str.substr(str.length-7, str.length);
+  if (str.length > 36) {
+    return str.substr(0, 13) + '...' + str.substr(str.length-7, str.length);
   }
   return str;
 }

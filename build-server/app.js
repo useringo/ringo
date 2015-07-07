@@ -159,6 +159,7 @@ app.post('/create-project', function(req, res) {
     }
   }
 
+
   // only execute if they specify the required parameters
   if (req.body.projectName) {
         var projectName = req.body.projectName;
@@ -173,7 +174,7 @@ app.post('/create-project', function(req, res) {
 
 
             // creates a project with a unique id. The app that's trying to build the app will need to access the app via that unique ID from this point forward
-            var exec_cmd = 'git clone https://github.com/MHaroonBaig/Swift-Beautify && .././renameXcodeProject.sh Picker "'+ projectName +'" && rm -rf Picker';
+            var exec_cmd = 'git clone https://github.com/gmittal/ringoTemplate && .././renameXcodeProject.sh ringoTemplate "'+ projectName +'" && rm -rf ringoTemplate';
             exec(exec_cmd, function (err, out, stderror) {
               console.log(out);
               console.log(err);
@@ -452,7 +453,7 @@ app.post('/build-project', function (req, res) {
           // console.log(pwd());
 
           var path = projectID + "/" + id_dir + "/build/Release-iphonesimulator/" + projectID + ".zip";
-          // console.log(path);
+          console.log(buildProjects_path + path);
 
           var zip_dl_url = build_serverURL + "/" + path;
           console.log(".zip of simulator executable: " + zip_dl_url.cyan);
@@ -535,10 +536,21 @@ app.get('/get-project-details/:app_id', function (req, res) {
 
 
 
-  var projectID = req.param('app_id');
-  var projectName = ls(projectID)[0]; // project name e.g. WWDC
+  var project_id = req.param('app_id');
+  var id_dir = ls(project_id)[0]; // project directory
 
-  res.send({"project": {"name": projectName}});
+  var xc_projName = ""; // suprisingly enough, people like to name their repository name differently than their .xcodeproj name
+  
+  for (var z = 0; z < ls(project_id + "/" + id_dir).length; z++) {
+    if (ls(project_id + "/" + id_dir)[z].indexOf('.xcodeproj') > -1) {
+      xc_projName = ls(project_id + "/" + id_dir)[z].replace('.xcodeproj', '');
+    }
+  }
+
+  console.log(('Xcode Project File Name: ' + xc_projName).red);
+
+
+  res.send({"project": {"name": xc_projName}});
 
 });
 
