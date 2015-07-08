@@ -11,6 +11,7 @@
         <!-- Place favicon.ico in the root directory -->
 
         <link href='http://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900' rel='stylesheet' type='text/css'>
+        <!-- <link rel="stylesheet" href="css/modal.css"> -->
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" href="css/main.css">
         <script src="js/vendor/modernizr-2.8.3.min.js"></script>
@@ -292,6 +293,31 @@
             top: 6px;
             right: 60px;
             box-shadow: 0px 0.5px 0px 0px;
+            
+            -webkit-box-shadow: 0px 0.5px 0px 0px;
+        }
+
+        #createProjectButton {
+            height: 65%;
+            border-radius: 4px;
+            background-color:rgb(251, 251, 251);
+            width: 40px;
+            position:absolute;
+            top: 6px;
+            right: 160px;
+            box-shadow: 0px 0.5px 0px 0px;
+            -webkit-box-shadow: 0px 0.5px 0px 0px;
+        }
+
+        #GCButton {
+            height: 65%;
+            border-radius: 4px;
+            background-color:rgb(251, 251, 251);
+            width: 40px;
+            position:absolute;
+            top: 6px;
+            right: 110px;
+            box-shadow: 0px 0.5px 0px 0px;
             -webkit-box-shadow: 0px 0.5px 0px 0px;
         }
 
@@ -306,7 +332,19 @@
 
         }
 
+        #GCButton img {
+            position:absolute;
+            right:0;
+            left:0;
+            margin: 0 auto;
+            top: 3px;
+        }
+
         #runButton:active {
+            background-color: rgb(227, 227, 227);
+        }
+
+        #GCButton:active {
             background-color: rgb(227, 227, 227);
         }
 
@@ -315,6 +353,10 @@
         }
 
         #ULButton:active {
+            background-color: rgb(227, 227, 227);
+        }
+
+        #createProjectButton:active {
             background-color: rgb(227, 227, 227);
         }
 
@@ -396,7 +438,89 @@
             background-color: black;
         }
 
+        .plus {
+            height: 35px;
+            width: 35px;
+            position: absolute;
+            right: 0;
+            left: 0;
+            margin: 0 auto;
+            margin-top: -5px;
+        }
 
+
+
+        .modalDialog {
+            position: fixed;
+            font-family: 'Roboto';
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: rgba(0,0,0,0.8);
+            z-index: 99999;
+            opacity:0;
+            -webkit-transition: opacity 400ms ease-in;
+            -moz-transition: opacity 400ms ease-in;
+            transition: opacity 400ms ease-in;
+            pointer-events: none;
+        }
+
+
+        .modalDialog:target {
+            opacity:1;
+            pointer-events: auto;
+        }
+
+        .modalDialog > div {
+            width: 400px;
+            position: relative;
+            margin: 10% auto;
+            padding: 5px 20px 13px 20px;
+            border-radius: 10px;
+            background: #fff;
+            /*background: -moz-linear-gradient(#fff, #999);*/
+            /*background: -webkit-linear-gradient(#fff, #999);*/
+            /*background: -o-linear-gradient(#fff, #999);*/
+        }
+
+        .modalInput {
+            width: -webkit-calc(90% - 10px);
+            width: calc(90% - 10px);
+            padding: 10px;
+            border-radius: 10px;
+            font-family: 'Roboto';
+            font-weight: 300;
+            border: 1px solid rgba(0,0,0,0.2);
+            margin-top: 10px;
+            color: #3498db;
+        }
+
+        .modalInput:focus {
+            outline: none;
+        }
+
+
+        .close {
+            background: #606061;
+            color: #FFFFFF;
+            line-height: 25px;
+            position: absolute;
+            right: -12px;
+            text-align: center;
+            top: -10px;
+            width: 24px;
+            text-decoration: none;
+            font-weight: bold;
+            -webkit-border-radius: 12px;
+            -moz-border-radius: 12px;
+            border-radius: 12px;
+            -moz-box-shadow: 1px 1px 3px #000;
+            -webkit-box-shadow: 1px 1px 3px #000;
+            box-shadow: 1px 1px 3px #000;
+        }
+
+        .close:hover { background: #00d9ff; }
 
 
         @media only screen and (max-width: 270px) {
@@ -426,10 +550,19 @@
             <div id="runButton"><div class="arrow-right"></div></div>
             <div id="stopButton"><div class="stop-box disabled"></div></div>
 
+            <div id="createProjectButton"><img src="http://iconshow.me/download.php?file=path/media/images/ui/ios7-icons/png/512/plus-empty.png" class="plus"/></div>
+
+            <div id="GCButton"><img src="https://git-scm.com/images/logos/downloads/Git-Icon-Black.png" style="height: 80%"/></div>
+
             <div id="ULButton"><div class="triangle-up"></div><div class="ul-box"></div></div>
             <div id="ipaDLButton"><div class="triangle-down"></div><div class="dl-box"></div></div>
 
             <div class="scheme"><span id="appName">Loading...</span>&nbsp;&raquo; <span id="deviceTarget"><img src="img/iPhone-4-icon.svg" style="display: inline-block; height: 10pt;margin-top: -2px;"/> iPhone 6</span></div>
+
+
+
+
+
 
         </div>
 
@@ -440,6 +573,23 @@
         <div id="outputArea">    
 
         </div>
+
+
+
+
+
+
+<div id="openModal" class="modalDialog">
+    <div>
+        <a href="#close" title="Close" class="close">X</a>
+        <h2 style="color:black;">Upload or Clone from Git</h2>
+        <p>Ringo is not guaranteed to save your projects on its servers, so we suggest that once you're done coding, you download your code locally, and reupload it to Ringo when you're ready to start hacking again.</p><br />
+        <p>If you like using Git, and your project is already publicly available, paste the your HTTPS clone URL below:</p>
+        <center>
+        <input type="text" class="modalInput" id="gitCloneURL" placeholder="https://github.com/username/repo.git"/>
+        </center>
+    </div>
+</div>
 
 
 
