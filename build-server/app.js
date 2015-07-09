@@ -215,17 +215,30 @@ app.get('/download-project/:id', function (req, res) {
   var name = ls()[0];
 
   // before the user can download their file, you have to wipe the project's build directory
-  // cd()
+  cd(name);
+
   console.log(pwd());
+  console.log(ls())
 
-  exec('zip -r '+name+'.zip . -x ".*" -x "*/.*"', function (err, out, stderror) {
-    console.log(out.cyan);
+  exec('rm -rf build', function (err, out, stderror) {
+    console.log(out);
 
-    res.sendFile(buildProjects_path+"/"+req.param('id')+"/"+name+".zip");
+    console.log('Successfully cleaned up the build directory from the project that will be downloaded.');
+  
+    // now that we've removed the build projects directory, we need to move back up to the ID directory
+    cd(buildProjects_path + '/' + req.param('id'));
 
+    exec('zip -r '+name+' '+name, function (err, out, stderror) {
+      console.log(out.cyan);
+
+      res.sendFile(buildProjects_path+"/"+req.param('id')+"/"+name+".zip");
+
+
+    });
 
   });
 
+  
 });
 
 
