@@ -2,7 +2,7 @@
 var typingTimer;                //timer identifier
 var doneTypingInterval = 1000;  //time in ms, 5 second for example
 
-var hostname = "https://76be7496.ngrok.com"
+var hostname = "https://2f225d9a.ngrok.com"
 
 // VERY TERMPORARY
 var project_id = "Jtnp6uDhh8l4rXt3JU6"; //prompt("Type your Ringo Project ID");
@@ -388,6 +388,47 @@ function handleFileSelect(evt) {
 				});	
 	  		}	
 			
+	  	}
+
+
+
+	  	function createProject() {
+	  		if ($("#createModal").children("div").children("center").children("#createName").val().length > 0) {
+	  			console.log("Request to create project approved.")
+	  			
+
+	  			$.ajax({
+				    type: 'POST',
+				    url: hostname+'/clone-git-project',
+				    data: {"projectName": $("#createModal").children("div").children("center").children("#createName").val()},
+				    error: function (err) {
+				    	if (err) {
+				    		$("#createModal").children("div").children("center").children("#createName").val("There was an error. Try again.");
+
+				    		setTimeout(function() {
+				    			$("#createModal").children("div").children("center").children("#createName").val("");
+				    		}, 3000);
+				    	}
+				        // console.log(err);
+				    }, 
+				    success: function (data) {
+				        console.log(data);
+
+				        if (data) {
+				        	$("#createModal").children("div").children("center").children("#createName").val("Success!");
+
+				    		setTimeout(function() {
+				    			$("#createModal").children("div").children("center").children("#createName").val("");
+				    		}, 3000);
+
+				        }
+
+
+				    },
+				    dataType: "json"
+				});	// end ajax request
+
+	  		}
 	  	}
 
 

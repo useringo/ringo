@@ -548,6 +548,24 @@
 
         button:focus {outline:0;}
 
+        select {
+            width: -webkit-calc(90% + 10px);
+            width: calc(90% + 10px);
+            padding: 10px;
+            border-radius: 10px;
+            font-family: 'Roboto';
+            font-weight: 300;
+            border: 1px solid rgba(0,0,0,0.2);
+            margin-top: 10px;
+            color: #3498db;
+       /*     -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;*/
+        }
+
+        select:focus {
+            outline: none;
+        }
 
         @media only screen and (max-width: 270px) {
             body {
@@ -629,9 +647,20 @@
         <a href="#close" title="Close" class="close">X</a>
         <h2 style="color:black;">Create a New Project</h2>
         <p>Ringo is not guaranteed to save your projects on its servers, so we suggest that once you're done coding, you download your code locally, and reupload it to Ringo when you're ready to start hacking again.</p><br />
-        <p>To upload your project, compress your project into a ZIP file, and upload it here.</p>
+        <p>To create a project, simply type your project's name and what starter template you would like to use.</p>
         <center>
-        <!-- <input type="text" class="modalInput" id="gitCloneURL" placeholder="https://github.com/username/repo.git"/> -->
+        <input type="text" class="modalInput" id="createName" placeholder="MyAwesomeProjectName"/>
+        <br /><br />
+        <p>Choose a project starter template:</p>
+        <select id="templateName">
+          <option value="game">Game (SpriteKit)</option>
+          <option value="mda">Master-Detail Application</option>
+          <option value="pba">Page-Based Application</option>
+          <option value="sva">Single View Application</option>
+          <option value="ta">Tabbed Application</option>
+        </select>
+        <br /><br />
+        <button class="awesomeButton" id="uploadProjectToServerButton" onclick="javascript: uploadFile();">Create Project</button>
         </center>
     </div>
 </div>
