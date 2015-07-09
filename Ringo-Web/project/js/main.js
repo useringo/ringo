@@ -2,10 +2,10 @@
 var typingTimer;                //timer identifier
 var doneTypingInterval = 1000;  //time in ms, 5 second for example
 
-var hostname = "https://f11dfcc.ngrok.com"
+var hostname = "https://f50e1e6.ngrok.com"
 
 // VERY TERMPORARY
-var project_id = "JtepQZ0rgVKN1VSh1y9"; //prompt("Type your Ringo Project ID");
+var project_id = "JtkEzDd62Gy1zn_MJVm"; //prompt("Type your Ringo Project ID");
 var project_name = "";
 var files = [];
 
@@ -238,6 +238,14 @@ $("#ipaDLButton").click(function() { // download your code from the server
 
 $("#ULButton").click(function() {
 	location.href = "#openModal";
+});
+
+$("#GCButton").click(function() {
+	location.href = "#gitModal";
+});
+
+$("#createProjectButton").click(function() {
+	location.href = "#createModal";
 });
 
 function updateEditor() {

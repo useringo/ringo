@@ -476,7 +476,7 @@
             width: 400px;
             position: relative;
             margin: 10% auto;
-            padding: 5px 20px 13px 20px;
+            padding: 20px 20px 20px 20px;
             border-radius: 10px;
             background: #fff;
             /*background: -moz-linear-gradient(#fff, #999);*/
@@ -521,6 +521,32 @@
         }
 
         .close:hover { background: #00d9ff; }
+
+
+        .awesomeButton {
+            /*height: 65%;*/
+            height: 40px;
+            border-radius: 4px;
+            background-color:rgb(230, 230, 230);
+            width: 80%;
+            /*position:absolute;*/
+            /*top: 6px;*/
+            /*right: 110px;*/
+            border: none;
+            box-shadow: 0px 0.5px 0px 0px;
+            -webkit-box-shadow: 0px 0.5px 0px 0px;
+            font-family: 'Roboto';
+            font-weight: 100;
+            font-size: 14pt;
+            color:black;
+        }
+
+        .awesomeButton:active {
+            background-color: rgb(210,210,210);
+            outline: none;
+        }
+
+        button:focus {outline:0;}
 
 
         @media only screen and (max-width: 270px) {
@@ -582,9 +608,108 @@
 <div id="openModal" class="modalDialog">
     <div>
         <a href="#close" title="Close" class="close">X</a>
-        <h2 style="color:black;">Upload or Clone from Git</h2>
+        <h2 style="color:black;">Upload Your Project</h2>
         <p>Ringo is not guaranteed to save your projects on its servers, so we suggest that once you're done coding, you download your code locally, and reupload it to Ringo when you're ready to start hacking again.</p><br />
-        <p>If you like using Git, and your project is already publicly available, paste the your HTTPS clone URL below:</p>
+        <p>To upload your project, compress your project into a ZIP file, and upload it here. As of now, Ringo can accept files up to 50MB.</p>
+        <br />
+        <center>
+        <input type="file" id="files" name="files[]" />
+        <output id="list"></output>
+
+        <br /><br />
+        <button class="awesomeButton">Upload Project</button>
+
+        <script>
+          function handleFileSelect(evt) {
+            var files = evt.target.files; // FileList object
+
+            // FileReader.readAsDataURL(Blob|File)
+
+            // files is a FileList of File objects. List some properties.
+            var output = [];
+            for (var i = 0, f; f = files[i]; i++) {
+              output.push('<li><strong>', escape(f.name), '</strong> (', f.type || 'n/a', ') - ',
+                          f.size/1000000, ' MB, last modified: ',
+                          f.lastModifiedDate ? f.lastModifiedDate.toLocaleDateString() : 'n/a',
+                          '</li>');
+            }
+            document.getElementById('list').innerHTML = '<ul>' + output.join('') + '</ul>';
+
+
+            // Read the ZIP file data
+              for (var i = 0, f; f = files[i]; i++) {
+
+                  // Only process zip files.
+                  if (!f.type.match('zip.*')) {
+                    continue;
+                  }
+
+                  var reader = new FileReader();
+
+                  // Closure to capture the file information.
+                  reader.onload = (function(theFile) {
+                    return function(e) {
+              
+
+                      console.log(e.target.result);
+
+                        $.ajax({
+                            type: 'POST',
+                            url: hostname+'/upload-project-zip',
+                            data: {"file": e.target.result},
+                            error: function (err) {
+                                // console.log(err);
+                            }, 
+                            success: function (data) {
+                                console.log(data);
+
+
+                            },
+                            dataType: "json"
+                        });
+
+
+   
+                    };
+                  })(f);
+
+                  // Read in the image file as a data URL.
+                  reader.readAsDataURL(f);
+
+
+                }
+ 
+          } // end handleFileSelect function
+
+
+
+
+
+          document.getElementById('files').addEventListener('change', handleFileSelect, false);
+        </script>
+
+        </center>
+    </div>
+</div>
+
+<div id="createModal" class="modalDialog">
+    <div>
+        <a href="#close" title="Close" class="close">X</a>
+        <h2 style="color:black;">Create a New Project</h2>
+        <p>Ringo is not guaranteed to save your projects on its servers, so we suggest that once you're done coding, you download your code locally, and reupload it to Ringo when you're ready to start hacking again.</p><br />
+        <p>To upload your project, compress your project into a ZIP file, and upload it here.</p>
+        <center>
+        <input type="text" class="modalInput" id="gitCloneURL" placeholder="https://github.com/username/repo.git"/>
+        </center>
+    </div>
+</div>
+
+<div id="gitModal" class="modalDialog">
+    <div>
+        <a href="#close" title="Close" class="close">X</a>
+        <h2 style="color:black;">Clone Your Project via Git</h2>
+        <p>Ringo is not guaranteed to save your projects on its servers, so we suggest that once you're done coding, you download your code locally, and reupload it to Ringo when you're ready to start hacking again.</p><br />
+        <p>To upload your project, compress your project into a ZIP file, and upload it here.</p>
         <center>
         <input type="text" class="modalInput" id="gitCloneURL" placeholder="https://github.com/username/repo.git"/>
         </center>

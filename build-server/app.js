@@ -15,6 +15,8 @@
 
 // might be useful to refer to this: http://stackoverflow.com/questions/4079280/javascript-communication-between-browser-tabs-windows, when thinking about implementing a simulator which opens in an external window
 
+
+
 var dotenv = require('dotenv');
 dotenv.load();
 
@@ -150,6 +152,8 @@ var buildProjects_path = process.env.BUILD_PROJECTS_PATH;
 // Request to make a new Xcode project
 app.post('/create-project', function(req, res) {
 
+  cd(buildProjects_path);
+
   // Figure out what directory the app is in
   if (pwd() != '/Users/gautam/Desktop/git-repos/ringo/build-server/build-projects') {
     cd('build-projects');
@@ -197,14 +201,22 @@ app.post('/create-project', function(req, res) {
 
 
 
+
+
+// Handle download, upload, git cloning, and creation of Xcode project code
+
 // download your project code in a ZIP file
 app.get('/download-project/:id', function (req, res) {
-  cd(buildProjects_path + "/"+req.param('id'));
+  cd(buildProjects_path);
 
-  // cd(req.param('id'));
+  cd(req.param('id'));
 
 
   var name = ls()[0];
+
+  // before the user can download their file, you have to wipe the project's build directory
+  // cd()
+  console.log(pwd());
 
   exec('zip -r '+name+'.zip . -x ".*" -x "*/.*"', function (err, out, stderror) {
     console.log(out.cyan);
@@ -214,14 +226,75 @@ app.get('/download-project/:id', function (req, res) {
 
   });
 
+});
+
+
+app.post('/upload-project-zip', function (req, res) {
+  cd(buildProjects_path);
+
+  res.setHeader('Content-Type', 'application/json');
+
+  
+
+
+  if (req.body.file) {
+
+    cd(buildProjects_path);
+
+    // create a unique ID where this awesome project will live
+    var project_uid = uid_maker.push().key();
+    project_uid = project_uid.substr(1, project_uid.length);
+
+    console.log(project_uid);
+
+    // console.log(req.body.file);
+
+    exec('mkdir '+ project_uid, function (err, out, stderror) {
+          cd(project_uid);
+
+          var base64Data = req.body.file.replace(/^data:application\/zip;base64,/, "");
+
+          require("fs").writeFile("anonymous_project.zip", base64Data, 'base64', function(err) {
+            if (err) {
+              console.log(err);  
+            }
+            
+            console.log('User ZIP project successfully received.'.magenta);
+
+            exec('unzip anonymous_project.zip && rm -rf anonymous_project.zip', function (err, out, stderror) {
+              console.log('Took out the garbage.'.yellow);
+              res.send({"Success": "Your file was successfully uploaded to the server."});
+
+              cd(buildProjects_path);
+            });
+
+
+            
+
+          }); // end write ZIP file
+
+    }); // end create project directory
+
+
+
+  } else {
+    res.send({"Error": "Invalid parameters"});
+  }
 
 });
 
 
 
 
+
+
+
+
+
 // Save the files with updated content -- assumes end user has already made a request to /get-project-contents
 app.post('/update-project-contents', function (req, res) {
+  cd(buildProjects_path);
+
   var project_id = req.body.id;
   var files = req.body.files;
 
@@ -317,7 +390,7 @@ app.post('/get-project-contents', function(req, res) {
       
 
       if (!(tmp.indexOf("Images") > -1)) {
-        if (!(tmp.indexOf(".lproj") > -1)) {
+        // if (!(tmp.indexOf(".lproj") > -1)) {
           if (!(tmp.indexOf(".sks") > -1)) {
             if (!(tmp.indexOf(".playground") > -1)) {
               if (!(tmp.indexOf(".png") > -1)) {
@@ -327,9 +400,11 @@ app.post('/get-project-contents', function(req, res) {
             } 
           }
                 
-        }
-      }
-    }
+        // }
+      } // end filters
+    
+
+    } // end for loop
 
     console.log(filtered)
 
