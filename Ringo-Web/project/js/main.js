@@ -2,7 +2,7 @@
 var typingTimer;                //timer identifier
 var doneTypingInterval = 1000;  //time in ms, 5 second for example
 
-var hostname = "https://7c026fb9.ngrok.com"
+var hostname = "https://6c730eb5.ngrok.com"
 
 // VERY TERMPORARY
 var project_id = "JtkWm6yi9Ovd1fx_Cdy"; //prompt("Type your Ringo Project ID");
@@ -12,6 +12,8 @@ var files = [];
 var currentFile = "";
 
 var currentData = editor.getValue();
+
+var currentUploadedFileData = "";
 
 
 loadFiles(); // load the file menu
@@ -265,6 +267,94 @@ function start_and_end(str) {
   }
   return str;
 }
+
+
+
+
+
+// handle file upload requests
+
+
+function handleFileSelect(evt) {
+	var files = evt.target.files; // FileList object
+
+	// FileReader.readAsDataURL(Blob|File)
+
+	// files is a FileList of File objects. List some properties.
+	var output = [];
+	for (var i = 0, f; f = files[i]; i++) {
+	  output.push('<li><strong>', escape(f.name), '</strong> (', f.type || 'n/a', ') - ',
+	              f.size/1000000, ' MB, last modified: ',
+	              f.lastModifiedDate ? f.lastModifiedDate.toLocaleDateString() : 'n/a',
+	              '</li>');
+	}
+	document.getElementById('list').innerHTML = '<ul>' + output.join('') + '</ul>';
+
+
+	// Read the ZIP file data
+	  for (var i = 0, f; f = files[i]; i++) {
+
+	      // Only process zip files.
+	      if (!f.type.match('zip.*')) {
+	        continue;
+	      }
+
+	      var reader = new FileReader();
+
+	      // Closure to capture the file information.
+	      reader.onload = (function(theFile) {
+	        return function(e) {
+	  
+
+	          console.log(e.target.result);
+	          currentUploadedFileData = e.target.result;
+
+
+
+	            
+
+
+
+	        };
+	      })(f);
+
+	      // Read in the image file as a data URL.
+	      reader.readAsDataURL(f);
+
+
+	    }
+
+	} // end handleFileSelect function
+
+
+
+
+
+	document.getElementById('files').addEventListener('change', handleFileSelect, false);
+
+
+
+	  // $("#uploadProjectToServerButton").click(function() {
+	  	function uploadFile() {
+	  		$.ajax({
+			    type: 'POST',
+			    url: hostname+'/upload-project-zip',
+			    data: {"file": currentUploadedFileData},
+			    error: function (err) {
+			        // console.log(err);
+			    }, 
+			    success: function (data) {
+			        console.log(data);
+
+
+			    },
+			    dataType: "json"
+			});
+	  	}
+			
+		// });
+
+
 
 
 

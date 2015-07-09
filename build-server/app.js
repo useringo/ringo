@@ -276,7 +276,7 @@ app.post('/upload-project-zip', function (req, res) {
 
             exec('unzip anonymous_project.zip && rm -rf anonymous_project.zip', function (err, out, stderror) {
               console.log('Took out the garbage.'.yellow);
-              res.send({"Success": "Your file was successfully uploaded to the server."});
+              res.send({"id": project_uid});
 
               cd(buildProjects_path);
             });
