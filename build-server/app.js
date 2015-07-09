@@ -299,9 +299,11 @@ app.post('/upload-project-zip', function (req, res) {
 
 
 app.post('/clone-git-project', function (req, res) {
+  res.setHeader('Content-Type', 'application/json');
+
   cd(buildProjects_path);
 
-  res.setHeader('Content-Type', 'application/json');
+  
 
   if (req.body.url) {
     console.log('Received request to git clone a file.');
@@ -317,15 +319,20 @@ app.post('/clone-git-project', function (req, res) {
 
       // actually clone the repository
       exec('git clone ' + req.body.url, function (err, out, stderror) {
-        console.log(out.cyan);
+        if (out !== undefined) {
+          console.log(out.cyan);  
+        }
+        
         if (err) {
           console.log(err.red);
-          // res.statusCode = 400;
+          res.statusCode = 500;
           res.send({"Error":"Something did not go as expected."});  
+        } else {
+          res.send({"id": project_uid});  
         }
         
 
-        res.send({"id": project_uid});
+        
       });
 
 
@@ -333,7 +340,7 @@ app.post('/clone-git-project', function (req, res) {
 
 
   } else {
-    // res.statusCode = 400;
+    res.statusCode = 500;
     res.send({"Error" : "Invalid parameters"});
   }
 

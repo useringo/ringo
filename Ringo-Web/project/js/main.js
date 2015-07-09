@@ -2,7 +2,7 @@
 var typingTimer;                //timer identifier
 var doneTypingInterval = 1000;  //time in ms, 5 second for example
 
-var hostname = "https://527e2b4e.ngrok.com"
+var hostname = "https://76be7496.ngrok.com"
 
 // VERY TERMPORARY
 var project_id = "Jtnp6uDhh8l4rXt3JU6"; //prompt("Type your Ringo Project ID");
@@ -354,7 +354,7 @@ function handleFileSelect(evt) {
 
 	  	function gitClone() {
 	  		if ($("#gitModal").children("div").children("center").children("#gitCloneURL").val().length > 0) {
-	  			console.log("HELLO");
+	  			console.log("Request to clone to git approved.");
 
 	  			$.ajax({
 				    type: 'POST',
