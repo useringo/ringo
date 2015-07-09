@@ -298,6 +298,40 @@ app.post('/upload-project-zip', function (req, res) {
 
 
 
+app.post('/clone-git-project', function (req, res) {
+  cd(buildProjects_path);
+
+  res.setHeader('Content-Type', 'application/json');
+
+  if (req.body.url) {
+    console.log('Received request to git clone a file.');
+
+    // create a unique ID where this awesome project will live
+    var project_uid = uid_maker.push().key();
+    project_uid = project_uid.substr(1, project_uid.length);
+
+    console.log(project_uid);
+
+    exec('mkdir '+ project_uid, function (err, out, stderror) {
+      cd(project_uid);
+
+      // actually clone the repository
+      exec('git clone ' + req.body.url, function (err, out, stderror) {
+        console.log(out.cyan);
+        console.log(err.out);
+
+        res.send({"id": project_uid});
+      });
+
+
+    }); // end $ mkdir project_uid
+
+
+  } else {
+    res.send({"Error" : "Invalid parameters"});
+  }
+
+});
 
 
 
@@ -521,23 +555,46 @@ app.post('/build-project', function (req, res) {
       // $ xcodebuild -sdk iphonesimulator -configuration Release -verbose | grep -A 5 error:
 
 
-
+      console.log('Attempting to build the project...'.red);
 
       exec('xcodebuild -sdk iphonesimulator -configuration Release -verbose | grep -A 5 error:', function (err, xcode_out, stderror) {
         cd('build/Release-iphonesimulator');
 
-
         
         console.log(xcode_out.green);
 
-        var normalized = id_dir.split(' ').join('\\ ');
-
         // console.log(normalized);
 
-        exec('zip -r '+projectID+' '+normalized+".app", function (err, out, stderror) {
-          // console.log(ls());
+        cd(buildProjects_path);
+
+        var xc_projName = ""; // suprisingly enough, people like to name their repository name differently than their .xcodeproj name
+  
+        for (var z = 0; z < ls(projectID + "/" + id_dir).length; z++) {
+          if (ls(projectID + "/" + id_dir)[z].indexOf('.xcodeproj') > -1) {
+            xc_projName = ls(projectID + "/" + id_dir)[z].replace('.xcodeproj', '');
+          }
+        }
+
+        var normalized = xc_projName.split(' ').join('\ ');
+
+        console.log('Normalized NAME: ' + normalized);
+
+        // cd(projectID+"/"+id_dir);
+        // well this is important
+        cd(projectID+"/"+id_dir + '/build/Release-iphonesimulator');
+
+        console.log(pwd());
+
+        console.log('zip -r "'+projectID+'" "'+xc_projName+'.app"'.green);
+
+        // zip up the simulator executable
+        exec('zip -r "'+projectID+'" "'+xc_projName+'.app"', function (err, out, stderror) {
+          
           cd(buildProjects_path); // enter build-projects once again (using absolute paths!)
           
+          console.log(out.green);
+          // console.log(err.red);
+
           // console.log(pwd());
 
           var path = projectID + "/" + id_dir + "/build/Release-iphonesimulator/" + projectID + ".zip";

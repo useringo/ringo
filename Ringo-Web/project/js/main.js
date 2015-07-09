@@ -2,10 +2,10 @@
 var typingTimer;                //timer identifier
 var doneTypingInterval = 1000;  //time in ms, 5 second for example
 
-var hostname = "https://6c730eb5.ngrok.com"
+var hostname = "https://774bfcab.ngrok.com"
 
 // VERY TERMPORARY
-var project_id = "JtkWm6yi9Ovd1fx_Cdy"; //prompt("Type your Ringo Project ID");
+var project_id = "Jtnp6uDhh8l4rXt3JU6"; //prompt("Type your Ringo Project ID");
 var project_name = "";
 var files = [];
 
@@ -334,7 +334,6 @@ function handleFileSelect(evt) {
 
 
 
-	  // $("#uploadProjectToServerButton").click(function() {
 	  	function uploadFile() {
 	  		$.ajax({
 			    type: 'POST',
@@ -351,8 +350,45 @@ function handleFileSelect(evt) {
 			    dataType: "json"
 			});
 	  	}
+
+
+	  	function gitClone() {
+	  		if ($("#gitModal").children("div").children("center").children("#gitCloneURL").val().length > 0) {
+	  			console.log("HELLO");
+
+	  			$.ajax({
+				    type: 'POST',
+				    url: hostname+'/clone-git-project',
+				    data: {"url": $("#gitModal").children("div").children("center").children("#gitCloneURL").val()},
+				    error: function (err) {
+				    	if (err) {
+				    		$("#gitModal").children("div").children("center").children("#gitCloneURL").val() = "There was an error. Try again.";
+
+				    		setTimeout(function() {
+				    			$("#gitModal").children("div").children("center").children("#gitCloneURL").val() = "";
+				    		}, 3000);
+				    	}
+				        // console.log(err);
+				    }, 
+				    success: function (data) {
+				        console.log(data);
+
+				        if (data) {
+				        	$("#gitModal").children("div").children("center").children("#gitCloneURL").val() = "Success!";
+
+				    		setTimeout(function() {
+				    			$("#gitModal").children("div").children("center").children("#gitCloneURL").val() = "";
+				    		}, 3000);
+
+				        }
+
+
+				    },
+				    dataType: "json"
+				});	
+	  		}	
 			
-		// });
+	  	}
 
 
 
