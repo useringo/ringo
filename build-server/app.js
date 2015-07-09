@@ -318,7 +318,12 @@ app.post('/clone-git-project', function (req, res) {
       // actually clone the repository
       exec('git clone ' + req.body.url, function (err, out, stderror) {
         console.log(out.cyan);
-        console.log(err.out);
+        if (err) {
+          console.log(err.red);
+          // res.statusCode = 400;
+          res.send({"Error":"Something did not go as expected."});  
+        }
+        
 
         res.send({"id": project_uid});
       });
@@ -328,6 +333,7 @@ app.post('/clone-git-project', function (req, res) {
 
 
   } else {
+    // res.statusCode = 400;
     res.send({"Error" : "Invalid parameters"});
   }
 

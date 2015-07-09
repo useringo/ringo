@@ -2,7 +2,7 @@
 var typingTimer;                //timer identifier
 var doneTypingInterval = 1000;  //time in ms, 5 second for example
 
-var hostname = "https://774bfcab.ngrok.com"
+var hostname = "https://527e2b4e.ngrok.com"
 
 // VERY TERMPORARY
 var project_id = "Jtnp6uDhh8l4rXt3JU6"; //prompt("Type your Ringo Project ID");
@@ -152,7 +152,7 @@ function buildProject() {
 	    // if (code != currentData) {
 
 	    	$("#statusValue").html('<img src="img/loading.gif" />&nbsp;&nbsp;Building');
-			$("#outputArea").html('<center>Building your application...</center>');
+			$("#outputArea").html('<center><img src="img/Preloader_3.gif" /><br/><br />Building your application...<center>');
 
 	    	// currentData = code;
 
@@ -362,10 +362,10 @@ function handleFileSelect(evt) {
 				    data: {"url": $("#gitModal").children("div").children("center").children("#gitCloneURL").val()},
 				    error: function (err) {
 				    	if (err) {
-				    		$("#gitModal").children("div").children("center").children("#gitCloneURL").val() = "There was an error. Try again.";
+				    		$("#gitModal").children("div").children("center").children("#gitCloneURL").val("There was an error. Try again.");
 
 				    		setTimeout(function() {
-				    			$("#gitModal").children("div").children("center").children("#gitCloneURL").val() = "";
+				    			$("#gitModal").children("div").children("center").children("#gitCloneURL").val("");
 				    		}, 3000);
 				    	}
 				        // console.log(err);
@@ -374,10 +374,10 @@ function handleFileSelect(evt) {
 				        console.log(data);
 
 				        if (data) {
-				        	$("#gitModal").children("div").children("center").children("#gitCloneURL").val() = "Success!";
+				        	$("#gitModal").children("div").children("center").children("#gitCloneURL").val("Success!");
 
 				    		setTimeout(function() {
-				    			$("#gitModal").children("div").children("center").children("#gitCloneURL").val() = "";
+				    			$("#gitModal").children("div").children("center").children("#gitCloneURL").val("");
 				    		}, 3000);
 
 				        }
