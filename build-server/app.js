@@ -127,7 +127,7 @@ exec('cd build-projects', function (err, out, stderror) {
       cd('build-projects');
       
       // download the great
-      exec('wget https://cdn.rawgit.com/gmittal/ringo/d63d7a40828f2d6a738cd2a109d7bcfd7a33d950/build-server/renameXcodeProject.sh', function (err, out, stderror) {
+      exec('wget https://cdn.rawgit.com/phunter/CCRMA-Coursework/5b5ceebea2a3cc488dc46d03e623d594c589ba6a/winter_12/248/shader-demo/renameXcodeProject.sh', function (err, out, stderror) {
         console.log(out);
 
         exec('chmod 755 renameXcodeProject.sh', function (err, out, stderror) {
@@ -170,10 +170,14 @@ app.post('/create-project', function(req, res) {
         var project_uid = uid_maker.push().key();
         project_uid = project_uid.substr(1, project_uid.length);
 
+        console.log(project_uid);
+
         res.setHeader('Content-Type', 'application/json');
 
         // Using node's child_process.exec causes asynchronous issues... callbacks are my friend
         exec('mkdir '+ project_uid, function (err, out, stderror) {
+
+
             cd(project_uid);
 
             var template = req.body.template;
