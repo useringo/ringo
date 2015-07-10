@@ -253,7 +253,7 @@ app.get('/download-project/:id', function (req, res) {
     // now that we've removed the build projects directory, we need to move back up to the ID directory
     cd(buildProjects_path + '/' + req.param('id'));
 
-    exec('zip -r '+name+' '+name, function (err, out, stderror) {
+    exec('zip -r "'+name+'" "'+name+'"', function (err, out, stderror) {
       console.log(out.cyan);
 
       res.sendFile(buildProjects_path+"/"+req.param('id')+"/"+name+".zip");
