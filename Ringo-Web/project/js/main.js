@@ -346,7 +346,7 @@ function handleFileSelect(evt) {
 			        console.log(data);
 			        location.href = "#";
 
-			        // initializeNewProject(data.id);
+			        initializeNewProject(data.uid);
 
 			    },
 			    dataType: "json"
@@ -383,7 +383,7 @@ function handleFileSelect(evt) {
 				    			$("#gitModal").children("div").children("center").children("#gitCloneURL").val("");
 				    			location.href = "#";
 
-				    			// initializeNewProject(data.id);
+				    			initializeNewProject(data.uid);
 
 				    		}, 3000);
 
@@ -431,7 +431,7 @@ function handleFileSelect(evt) {
 				    			$("#createModal").children("div").children("center").children("#createName").val("");
 				    			location.href = "#";
 
-				    			// initializeNewProject(data.id);
+				    			initializeNewProject(data.uid);
 
 				    		}, 3000);
 
@@ -457,6 +457,8 @@ function handleFileSelect(evt) {
 			currentData = editor.getValue();
 
 			currentUploadedFileData = "";
+
+			$("#fileMenu").html("");
 
 
 			loadFiles(); // load the file menu with the new updated data
