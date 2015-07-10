@@ -2,10 +2,10 @@
 var typingTimer;                //timer identifier
 var doneTypingInterval = 1000;  //time in ms, 5 second for example
 
-var hostname = "https://962c907.ngrok.com";
+var hostname = "https://6894340.ngrok.com";
 
 // VERY TERMPORARY
-var project_id = "Jtnp6uDhh8l4rXt3JU6"; //prompt("Type your Ringo Project ID");
+var project_id = "JtpP1_sDodA0fgpKfoW"; //prompt("Type your Ringo Project ID");
 var project_name = "";
 var files = [];
 
@@ -344,7 +344,9 @@ function handleFileSelect(evt) {
 			    }, 
 			    success: function (data) {
 			        console.log(data);
+			        location.href = "#";
 
+			        // initializeNewProject(data.id);
 
 			    },
 			    dataType: "json"
@@ -366,6 +368,7 @@ function handleFileSelect(evt) {
 
 				    		setTimeout(function() {
 				    			$("#gitModal").children("div").children("center").children("#gitCloneURL").val("");
+				    			// location.href = "#";
 				    		}, 3000);
 				    	}
 				        // console.log(err);
@@ -378,6 +381,10 @@ function handleFileSelect(evt) {
 
 				    		setTimeout(function() {
 				    			$("#gitModal").children("div").children("center").children("#gitCloneURL").val("");
+				    			location.href = "#";
+
+				    			// initializeNewProject(data.id);
+
 				    		}, 3000);
 
 				        }
@@ -422,6 +429,10 @@ function handleFileSelect(evt) {
 
 				    		setTimeout(function() {
 				    			$("#createModal").children("div").children("center").children("#createName").val("");
+				    			location.href = "#";
+
+				    			// initializeNewProject(data.id);
+
 				    		}, 3000);
 
 				        }
@@ -435,7 +446,21 @@ function handleFileSelect(evt) {
 	  	}
 
 
+	  	// not actually sure if this works, so far it doesn't seem to do so at all
+	  	function initializeNewProject(id) {
+	  		project_id = id;
+	  		project_name = "";
+			files = [];
 
+			currentFile = "";
+
+			currentData = editor.getValue();
+
+			currentUploadedFileData = "";
+
+
+			loadFiles(); // load the file menu with the new updated data
+	  	}
 
 
 
