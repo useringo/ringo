@@ -176,22 +176,47 @@ app.post('/create-project', function(req, res) {
         exec('mkdir '+ project_uid, function (err, out, stderror) {
             cd(project_uid);
 
+            var template = req.body.template;
 
-            // creates a project with a unique id. The app that's trying to build the app will need to access the app via that unique ID from this point forward
-            var exec_cmd = 'git clone https://github.com/gmittal/ringoTemplate && .././renameXcodeProject.sh ringoTemplate "'+ projectName +'" && rm -rf ringoTemplate';
+            var exec_cmd = ''; // there is a different command that needs to be executed based on the template the user chooses
+
+            if (template == "game") { // generate a SpriteKit game
+              exec_cmd = 'git clone https://github.com/gmittal/ringoTemplate && .././renameXcodeProject.sh ringoTemplate "'+ projectName +'" && rm -rf ringoTemplate';
+
+            } else if (template == "mda") { // generates a Master-Detail application
+              exec_cmd = 'git clone https://github.com/gmittal/ringoMDATemplate && .././renameXcodeProject.sh ringoMDATemplate "'+ projectName +'" && rm -rf ringoMDATemplate';
+
+            } else if (template == "sva") { // generates a Single View application
+              exec_cmd = 'git clone https://github.com/gmittal/ringoSVATemplate && .././renameXcodeProject.sh ringoSVATemplate "'+ projectName +'" && rm -rf ringoSVATemplate';
+
+            } else if (template == "pba") { // generates a Page-based application
+              exec_cmd = 'git clone https://github.com/gmittal/ringoPBATemplate && .././renameXcodeProject.sh ringoPBATemplate "'+ projectName +'" && rm -rf ringoPBATemplate';
+
+            } else if (template == "ta") { // generates a Tabbed application
+              exec_cmd = 'git clone https://github.com/gmittal/ringoTATemplate && .././renameXcodeProject.sh ringoTATemplate "'+ projectName +'" && rm -rf ringoTATemplate';
+
+            }
+
+
+
+
             exec(exec_cmd, function (err, out, stderror) {
               console.log(out);
               console.log(err);
 
 
               console.log('============================================== \n Successfully created '+project_uid+' at ' + new Date() + '\n');
+
+              // don't send back the code until its actually done
+              res.send({"uid": project_uid});
           
             });
 
-            res.send({"uid": project_uid});
+            
 
         });  
   } else {
+    res.statusCode = 500;
     res.send({"Error": "Invalid parameters."});
   }
 

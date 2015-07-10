@@ -2,7 +2,7 @@
 var typingTimer;                //timer identifier
 var doneTypingInterval = 1000;  //time in ms, 5 second for example
 
-var hostname = "https://2f225d9a.ngrok.com"
+var hostname = "https://962c907.ngrok.com";
 
 // VERY TERMPORARY
 var project_id = "Jtnp6uDhh8l4rXt3JU6"; //prompt("Type your Ringo Project ID");
@@ -395,12 +395,15 @@ function handleFileSelect(evt) {
 	  	function createProject() {
 	  		if ($("#createModal").children("div").children("center").children("#createName").val().length > 0) {
 	  			console.log("Request to create project approved.")
-	  			
+
+	  			var templateType = $("#createModal").children("div").children("center").children("#templateName").val();
+
+	  			// console.log()
 
 	  			$.ajax({
 				    type: 'POST',
-				    url: hostname+'/clone-git-project',
-				    data: {"projectName": $("#createModal").children("div").children("center").children("#createName").val()},
+				    url: hostname+'/create-project',
+				    data: {"projectName": $("#createModal").children("div").children("center").children("#createName").val(), "template": templateType},
 				    error: function (err) {
 				    	if (err) {
 				    		$("#createModal").children("div").children("center").children("#createName").val("There was an error. Try again.");
