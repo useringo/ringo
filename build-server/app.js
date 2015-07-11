@@ -588,6 +588,16 @@ app.post('/add-image-xcasset', function (req, res) {
 
 });
 
+// get the xcasset files
+app.post('/get-image-xcassets', function (req, res) {
+
+});
+
+
+// add new files to the project directory
+app.post('/add-file', function (req, res) {
+
+});
 
 
 
