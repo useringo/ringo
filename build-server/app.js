@@ -357,7 +357,7 @@ app.post('/clone-git-project', function (req, res) {
           res.statusCode = 500;
           res.send({"Error":"Something did not go as expected."});  
         } else {
-          res.send({"id": project_uid});  
+          res.send({"uid": project_uid});  
         }
         
 
@@ -443,7 +443,7 @@ app.post('/update-project-contents', function (req, res) {
 app.post('/get-project-contents', function(req, res) {
   var project_id = req.body.id;
 
-  console.log(req.body.id);
+  // console.log(req.body.id);
 
   cd(buildProjects_path);
 
