@@ -3,7 +3,7 @@ var typingTimer;                //timer identifier
 var doneTypingInterval = 1000;  //time in ms, 5 second for example
 
 
-var hostname = "https://44d834f6.ngrok.com";
+var hostname = "https://6c75462b.ngrok.com";
 
 var project_id = ""; //prompt("Type your Ringo Project ID");
 var project_name = "";
@@ -408,16 +408,24 @@ function handleFileSelect(evt) {
 			    url: hostname+'/upload-project-zip',
 			    data: {"file": currentUploadedFileData},
 			    error: function (err) {
-			        // console.log(err);
+			        console.log(err);
+			        // if (err) {
+			        // 	console.log("THERE WAS AN ERROR UPLOADING THE FILE");
+			        // }
+
 			    }, 
 			    success: function (data) {
 			        console.log(data);
 
+			        if (data.Error) {
+			        	$("output").append('<span style="color:red;">An error occurred. Try again.</span>');
+			        } else {
+			        	location.href = "#";
 
+				        initializeNewProject(data.id);
+			        }
 
-			        location.href = "#";
-
-			        initializeNewProject(data.id);
+			        
 
 			    },
 			    dataType: "json"
