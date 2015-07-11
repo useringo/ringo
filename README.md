@@ -28,3 +28,30 @@ Ringo is actually very simple under the hood. Ringo compiles your project's code
 
 ### Plans for the Future
 Currently, I have a very basic version of Xcode working in the browser. It may not be as extensive as Xcode, but it still allows you to edit and run iOS apps in the browser. Some plans for the future include better debugging and logging in the browser. In addition, I plan on building a method of testing your iOS applications on your own iOS device via some OTA browser magic. I've also considered extending this project to the Android SDK, however, I've heard that it is possible to compile Swift applications into native Android applications, and am considering building a way to make Ringo generate APK files in addition to display an Android simulator.
+
+
+### Installation
+Firstly, you're going to need to have the latest GM release of Xcode (currently v6.3) installed on your Mac. Once you have that installed you're going to need the ever so essential Xcode command line tools, which allow Node.js to interface with Xcode easily. Type the following into your command line to install them:
+
+```$ xcode-select --install```
+
+Clone the repository and navigate to your local copy of the build server:
+
+``` $ git clone https://www.github.com/gmittal/ringo.git && cd ringo/build-server ```
+
+Install the various dependencies:
+
+``` $ npm install ```
+
+You're also going to need to populate your environment variables with some important information. For now, Ringo uses [Appetize](http://www.appetize.io) to run your iOS apps in an in-browser simulator. That does require an API key, but they are free and easy to get ahold of. You'll also need to provide the absolute path to a ```build-projects`` directory where the server will store local copies of the generated Xcode projects.
+
+```
+APPETIZE_TOKEN=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+BUILD_PROJECTS_PATH=/Users/username/path/to/ringo/build-server/build-projects
+```
+
+Once all of that is complete, it should be fairly easy to get the server running:
+
+``` $ node app.js ```
+
+The server should spit out an ngrok localhost tunnel which should allow you to access the server externally, allowing you to get up and running with hacking it.
