@@ -301,7 +301,33 @@ app.post('/upload-project-zip', function (req, res) {
 
             exec('unzip anonymous_project.zip && rm -rf anonymous_project.zip', function (err, out, stderror) {
               console.log('Took out the garbage.'.yellow);
-              res.send({"id": project_uid});
+
+              console.log('Verifying that the project file tree is compliant with Xcode standards...'.yellow);
+
+                cd(buildProjects_path);
+
+                var id_dir = ls(project_uid)[0];
+
+                var xc_projName = ""; // suprisingly enough, people like to name their repository name differently than their .xcodeproj name
+                
+                for (var z = 0; z < ls(project_uid + "/" + id_dir).length; z++) {
+                  if (ls(project_uid + "/" + id_dir)[z].indexOf('.xcodeproj') > -1) {
+                    xc_projName = ls(project_uid + "/" + id_dir)[z].replace('.xcodeproj', '');
+                  }
+                }
+
+                // console.log("XC " + xc_projName.length);
+
+
+                if (xc_projName.length !== 0) {
+                  res.send({"id": project_uid});    
+                } else {
+                  console.log("Does not comply with the standard Xcode project file tree...".red);
+                  res.statusCode = 500;
+                  res.send({"Error": "Invalid parameters"});
+                }
+
+              
 
               // cd(buildProjects_path);
             });
