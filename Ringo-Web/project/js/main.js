@@ -4,10 +4,41 @@ var doneTypingInterval = 1000;  //time in ms, 5 second for example
 
 var hostname = "https://3405abd7.ngrok.com";
 
-// VERY TERMPORARY
-var project_id = "JtpP1_sDodA0fgpKfoW"; //prompt("Type your Ringo Project ID");
+var project_id = ""; //prompt("Type your Ringo Project ID");
 var project_name = "";
-var files = [];
+
+var placeholderData = "// Welcome to Ringo \n\
+// A portable Xcode-based IDE in your browser \n\
+// Built by Gautam Mittal \n\n\
+// Ringo lets you do a ton of cool things, such as: \n\
+//	- Edit, modify, debug, and build iOS projects that you create or have already created \n\
+\n\
+\n\
+\n\
+\n\
+//                  %%\n\
+//                 %%%\n\
+//                %%%%\n\
+//      %%%%%%*   %%%  *%%%%%%\n\
+//    %%%%%%%%%%% %% *%%%%%%%%%%%\n\
+//   !!!!!!!!!!!!!!!!!!!!!!!!!!!!\n\
+//  !!!!!!!!!!!!!!!!!!!!!!!!!!!\n\
+//  {{{{{{{{{{{{{{{{{{{{{{{{{{\n\
+//  {{{{{{{{{{{{{{{{{{{{{{{{{{\n\
+//  &&&&&&&&&&&&&&&&&&&&&&&&&&&\n\
+//  &&&&&&&&&&&&&&&&&&&&&&&&&&&&&\n\
+// 	$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n\
+//   $$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n\
+//    %%%%%%%%%%%%%%%%%%%%%%%%%%%\n\
+//     %%%%%%%%%%%%%%%%%%%%%%%%%\n\
+//      %%%%%%%%%*****%%%%%%%$\n\
+//         %%%%*       *%%%%\n\
+\
+";
+
+
+var files = [{"name": "INTRODUCTION", "data": placeholderData}];
+
 
 var currentFile = "";
 
@@ -18,7 +49,11 @@ var currentUploadedFileData = "";
 
 loadFiles(); // load the file menu
 
-// need to come up with a better way of asking for project ID
+// back up 
+$("#fileMenu").append("<div name=\"INTRODUCTION\" onclick=\"javascript: currentFile = $(this).attr('name'); $('#fileMenu div').css({'background-color': 'transparent', \'font-weight\': \'normal\', \'color\': \'black\'}); $(this).css({'background-color': 'rgb(14, 101, 227)', 'font-weight':'bold', 'color':'white'}); updateEditor();\">Getting Started.swift</div>");
+editor.setValue(files[0].data, -1);
+editor.scrollToLine(0);
+
 
 
 //on keyup, start the countdown
@@ -145,7 +180,7 @@ listener.simple_combo("alt r", function() {
 
 function buildProject() {
 	
-
+	if (project_id.length > 0) {
 	// save files, then build	
 	    var code = editor.getValue();
 
@@ -162,6 +197,7 @@ function buildProject() {
 		    		filedata.data = code;
 		    	}
 		    }
+
 
 			$.ajax({
 				type: 'POST',
@@ -215,7 +251,7 @@ function buildProject() {
 		// }
 
 
-
+	} // end if project_id.length > 0
 
 
 }
