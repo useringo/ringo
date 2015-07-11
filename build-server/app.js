@@ -307,7 +307,7 @@ app.post('/upload-project-zip', function (req, res) {
               console.log('Took out the garbage.'.yellow);
               res.send({"id": project_uid});
 
-              cd(buildProjects_path);
+              // cd(buildProjects_path);
             });
 
 
@@ -443,9 +443,12 @@ app.post('/update-project-contents', function (req, res) {
 app.post('/get-project-contents', function(req, res) {
   var project_id = req.body.id;
 
+  console.log(req.body.id);
+
   cd(buildProjects_path);
 
   var id_dir = ls(project_id)[0];
+  console.log(id_dir);
   // var files = ls(project_id+"/"+id_dir+"/"+id_dir);
 
   var xc_projName = ""; // suprisingly enough, people like to name their repository name differently than their .xcodeproj name
@@ -539,6 +542,7 @@ app.post('/get-project-contents', function(req, res) {
 
               // console.log("HELLO")
               res.send({"files": filesContents});
+              cd(buildProjects_path);
             }
 
           });

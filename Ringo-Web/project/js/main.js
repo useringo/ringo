@@ -2,7 +2,7 @@
 var typingTimer;                //timer identifier
 var doneTypingInterval = 1000;  //time in ms, 5 second for example
 
-var hostname = "https://3405abd7.ngrok.com";
+var hostname = "https://3b242225.ngrok.com";
 
 var project_id = ""; //prompt("Type your Ringo Project ID");
 var project_name = "";
@@ -120,48 +120,53 @@ function doneTyping () {
 
 
 function loadFiles() {
-	$.ajax({
-		type: 'POST',
-		url: hostname+'/get-project-contents',
-		data: {"id": project_id},
-		error: function (err) {
-			console.log(err);
-		},
-		success: function (data) {
-			console.log(data);
-			data.files.shift();
-
-			files = data.files;
+	if (project_id.length > 0) {
 
 
-			for (var i = 0; i < data.files.length; i++) {
+		$.ajax({
+			type: 'POST',
+			url: hostname+'/get-project-contents',
+			data: {"id": project_id},
+			error: function (err) {
+				console.log(err);
+			},
+			success: function (data) {
+				console.log(data);
+				data.files.shift();
 
-				console.log(data.files[i].name);
-
-				$("#fileMenu").append('<div name="'+ data.files[i].name +'" onclick=\"javascript: currentFile = $(this).attr(\'name\'); $(\'#fileMenu div\').css({\'background-color\': \'transparent\', \'font-weight\': \'normal\', \'color\': \'black\'}); $(this).css({\'background-color\': \'rgb(14, 101, 227)\', \'font-weight\':\'bold\', \'color\':\'white\'}); updateEditor();\">'+start_and_end(data.files[i].name) + '</div>');
-			}
-
-			editor.setValue(files[0].data, -1);
-			editor.scrollToLine(0);
-			currentFile = files[0].name;
-
-			$.get(hostname+'/get-project-details/'+project_id, function (data) {
-				console.log(data)
-
-				project_name = data.project.name;
-
-				$("#appName").text(start_and_end(project_name));
-				$("#fileMenu").prepend("<div style=\"margin-top: 5px;\"><b><img height=\"20pt\" style=\"vertical-align:middle;margin-top: -5px;\" src=\"img/folder-icon.svg\" />&nbsp;"+ start_and_end(data.project.name) +"</b></div>")
-			
-				// buildProject();
-
-			});
+				files = data.files;
 
 
+				for (var i = 0; i < data.files.length; i++) {
 
-		},
-		dataType: "json"
-	});
+					console.log(data.files[i].name);
+
+					$("#fileMenu").append('<div name="'+ data.files[i].name +'" onclick=\"javascript: currentFile = $(this).attr(\'name\'); $(\'#fileMenu div\').css({\'background-color\': \'transparent\', \'font-weight\': \'normal\', \'color\': \'black\'}); $(this).css({\'background-color\': \'rgb(14, 101, 227)\', \'font-weight\':\'bold\', \'color\':\'white\'}); updateEditor();\">'+start_and_end(data.files[i].name) + '</div>');
+				}
+
+				editor.setValue(files[0].data, -1);
+				editor.scrollToLine(0);
+				currentFile = files[0].name;
+
+				$.get(hostname+'/get-project-details/'+project_id, function (data) {
+					console.log(data)
+
+					project_name = data.project.name;
+
+					$("#appName").text(start_and_end(project_name));
+					$("#fileMenu").prepend("<div style=\"margin-top: 5px;\"><b><img height=\"20pt\" style=\"vertical-align:middle;margin-top: -5px;\" src=\"img/folder-icon.svg\" />&nbsp;"+ start_and_end(data.project.name) +"</b></div>")
+				
+					// buildProject();
+
+				});
+
+
+
+			},
+			dataType: "json"
+		});
+
+	} // end if project_id.length > 0
 
 }
 
@@ -391,9 +396,12 @@ function handleFileSelect(evt) {
 			    }, 
 			    success: function (data) {
 			        console.log(data);
+
+
+
 			        location.href = "#";
 
-			        initializeNewProject(data.uid);
+			        initializeNewProject(data.id);
 
 			    },
 			    dataType: "json"
