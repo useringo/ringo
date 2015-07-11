@@ -150,8 +150,8 @@ function loadFiles() {
 
 				project_name = data.project.name;
 
-				$("#appName").text(project_name);
-				$("#fileMenu").prepend("<div style=\"margin-top: 5px;\"><b><img height=\"20pt\" style=\"vertical-align:middle;margin-top: -5px;\" src=\"img/folder-icon.svg\" />&nbsp;"+ data.project.name +"</b></div>")
+				$("#appName").text(start_and_end(project_name));
+				$("#fileMenu").prepend("<div style=\"margin-top: 5px;\"><b><img height=\"20pt\" style=\"vertical-align:middle;margin-top: -5px;\" src=\"img/folder-icon.svg\" />&nbsp;"+ start_and_end(data.project.name) +"</b></div>")
 			
 				// buildProject();
 
@@ -277,7 +277,11 @@ $("#fileMenu").click(function() {
 
 
 $("#ipaDLButton").click(function() { // download your code from the server
-	location.href = (hostname + '/download-project/'+project_id);
+	if (project_id.length > 0) {
+		console.log("Requesting a ZIP file with your code...");
+		location.href = (hostname + '/download-project/'+project_id);	
+	} 
+	
 });
 
 
