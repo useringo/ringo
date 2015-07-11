@@ -701,9 +701,14 @@
         
 
         <script src="//cdnjs.cloudflare.com/ajax/libs/ace/1.1.9/ace.js" type="text/javascript" charset="utf-8"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/ace/1.2.0/ext-modelist.js" type="text/javascript" charset="utf-8"></script>
         <script>
             var editor = ace.edit("editor");
             editor.setTheme("ace/theme/monokai");
+            // imports the ability to change syntax highlighting on the fly
+            var modelist = ace.require("ace/ext/modelist");
+
+            
             editor.getSession().setMode("ace/mode/rust");
 
             editor.resize()

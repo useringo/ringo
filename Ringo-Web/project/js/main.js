@@ -2,7 +2,8 @@
 var typingTimer;                //timer identifier
 var doneTypingInterval = 1000;  //time in ms, 5 second for example
 
-var hostname = "https://7e466b08.ngrok.com";
+
+var hostname = "https://3f6614c4.ngrok.com";
 
 var project_id = ""; //prompt("Type your Ringo Project ID");
 var project_name = "";
@@ -306,6 +307,21 @@ function updateEditor() {
 	for (var j = 0; j < files.length; j++) {
 		if (files[j].name == currentFile) {
 			editor.setValue(files[j].data, -1);
+
+			var fileExt = currentFile;
+
+			if (fileExt.includes(".plist")) {
+				editor.session.setMode(modelist.getModeForPath(".xml").mode);
+			} else if (fileExt.includes(".xib")) {
+				editor.session.setMode(modelist.getModeForPath(".xml").mode);
+			} else if (fileExt.includes(".storyboard")) {
+				editor.session.setMode(modelist.getModeForPath(".xml").mode);
+			} else if (fileExt.includes(".swift")) {
+				editor.session.setMode(modelist.getModeForPath(".rs").mode);
+			} else {
+				editor.session.setMode(modelist.getModeForPath(fileExt).mode);
+			}
+			
 		}
 	}
 
