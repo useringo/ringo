@@ -12,9 +12,16 @@ var placeholderData = "// Welcome to Ringo \n\
 // Built by Gautam Mittal \n\n\
 // Ringo lets you do a ton of cool things, such as: \n\
 //	- Edit, modify, debug, and build iOS projects that you create or have already created \n\
+//	- Write iOS apps that use both Swift/Objective-C code \n\
+//	- Write and test Swift playgrounds in the browser \n\
+//  - View iOS apps through an online, in-browser iOS simulator at 60 FPS \n\
+//  - Harness the power of Xcode without the need for expensive hardware and software (you could use this on the Chromebook, and get nearly identical performance) \n\
 \n\
 \n\
+// IF YOU HAVE QUESTIONS OR WANT TO LEARN MORE ABOUT RINGO, SEND AN EMAIL TO gautam@mittal.net \n\
 \n\
+\n\
+// GET STARTED BY HITTING ONE OF THE BUTTONS IN THE TOP RIGHT CORNER TO EITHER CREATE, GIT CLONE, OR UPLOAD AN XCODE PROJECT. \n\
 \n\
 //                  %%\n\
 //                 %%%\n\
