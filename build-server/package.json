@@ -19,7 +19,6 @@
     "colors": "^1.1.2",
     "dotenv": "^1.1.0",
     "express": "^4.12.4",
-    "firebase": "^2.2.5",
     "ngrok": "^0.1.99",
     "request": "^2.55.0",
     "shelljs": "^0.5.0",
