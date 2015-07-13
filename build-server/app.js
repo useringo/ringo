@@ -6,7 +6,8 @@
   NODE.JS + Xcode 6.3 + Homebrew + Ruby 2.2.2
 
   $ sudo npm install && gem install nomad-cli && brew install wget zip unzip
-
+  $ thor install https://github.com/gonzoua/xcs/raw/master/xcs.thor
+  
   You will also need to populate the .env file with the necessary environment variables in order for this script to run effectively
 
 
@@ -586,6 +587,10 @@ app.post('/get-project-contents', function(req, res) {
 app.post('/add-image-xcasset', function (req, res) {
   cd(buildProjects_path); // always need this
 
+  // note: the file has to already have been made and added into the directory, the following command just links it to the .xcodeproj so Xcode can run its debuggers through it
+
+  // $ ./XcodeProjAdder -XCP PROJECT_ID/XC_PROJECT_NAME/XC_PROJECT_NAME.xcodeproj -SCSV PROJECT_NAME/NEW_FILE.swift
+
 });
 
 // get the xcasset files
@@ -596,6 +601,8 @@ app.post('/get-image-xcassets', function (req, res) {
 
 // add new files to the project directory
 app.post('/add-file', function (req, res) {
+  cd(buildProjects_path);
+
 
 });
 

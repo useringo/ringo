@@ -3,7 +3,7 @@ var typingTimer;                //timer identifier
 var doneTypingInterval = 1000;  //time in ms, 5 second for example
 
 
-var hostname = "https://6c75462b.ngrok.com";
+var hostname = "https://26248ab1.ngrok.com";
 
 var project_id = ""; //prompt("Type your Ringo Project ID");
 var project_name = "";
@@ -330,7 +330,7 @@ function updateEditor() {
 
 // Truncating strings, but Mac style
 function start_and_end(str) {
-  if (str.length > 36) {
+  if (str.length > 30) {
     return str.substr(0, 13) + '...' + str.substr(str.length-7, str.length);
   }
   return str;
