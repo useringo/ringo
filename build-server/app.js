@@ -117,18 +117,20 @@ app.post('/build-sandbox', function (req, res) {
 
 exec('cd build-projects', function (err, out, stderror) {
   if (err) { // if error, assume that the directory is non-existent
-    console.log('build-projects directory does not exist! creating one instead.');
-    console.log('downloading renameXcodeProject.sh...');
+    console.log('build-projects directory does not exist! creating one instead.'.red);
+    console.log('downloading renameXcodeProject.sh...'.cyan);
+    console.log('downloading XcodeProjAdder...'.cyan)
 
     exec('mkdir build-projects', function (err, out, stderror) {
       cd('build-projects');
       
       // download the great
-      exec('wget https://cdn.rawgit.com/phunter/CCRMA-Coursework/5b5ceebea2a3cc488dc46d03e623d594c589ba6a/winter_12/248/shader-demo/renameXcodeProject.sh', function (err, out, stderror) {
+      exec('wget https://cdn.rawgit.com/phunter/CCRMA-Coursework/5b5ceebea2a3cc488dc46d03e623d594c589ba6a/winter_12/248/shader-demo/renameXcodeProject.sh && wget http://www.gautam.cc/s3/XcodeProjAdder', function (err, out, stderror) {
         console.log(out);
 
-        exec('chmod 755 renameXcodeProject.sh', function (err, out, stderror) {
-          console.log('Successfully downloaded renameXcodeProject.sh at ' + new Date());
+        exec('chmod 755 renameXcodeProject.sh && chmod a+x XcodeProjAdder', function (err, out, stderror) {
+          console.log(('Successfully downloaded renameXcodeProject.sh at ' + new Date()).green);
+          console.log(('Successfully downloaded XcodeProjAdder at ' + new Date()).green);
         });
 
       });
@@ -587,10 +589,7 @@ app.post('/get-project-contents', function(req, res) {
 app.post('/add-image-xcasset', function (req, res) {
   cd(buildProjects_path); // always need this
 
-  // note: the file has to already have been made and added into the directory, the following command just links it to the .xcodeproj so Xcode can run its debuggers through it
-
-  // $ ./XcodeProjAdder -XCP PROJECT_ID/XC_PROJECT_NAME/XC_PROJECT_NAME.xcodeproj -SCSV PROJECT_NAME/NEW_FILE.swift
-
+  
 });
 
 // get the xcasset files
@@ -603,6 +602,38 @@ app.post('/get-image-xcassets', function (req, res) {
 app.post('/add-file', function (req, res) {
   cd(buildProjects_path);
 
+  res.setHeader('Content-Type', 'application/json');
+
+  if (req.body.id) {
+    project_uid = req.body.id;
+
+      var id_dir = ls(project_uid)[0];
+
+      var xc_projName = ""; // suprisingly enough, people like to name their repository name differently than their .xcodeproj name
+      
+      for (var z = 0; z < ls(project_uid + "/" + id_dir).length; z++) {
+        if (ls(project_uid + "/" + id_dir)[z].indexOf('.xcodeproj') > -1) {
+          xc_projName = ls(project_uid + "/" + id_dir)[z].replace('.xcodeproj', '');
+        }
+      }
+
+      var xcpath = buildProjects_path + "/" + project_uid + "/" + xc_projName + ".xcodeproj";
+      
+      
+
+  } else {
+    res.statusCode = 500;
+    res.send({"Error": "Invalid parameters"});
+
+  }
+
+
+
+  // note: the file has to already have been made and added into the directory, the following command just links it to the .xcodeproj so Xcode can run its debuggers through it
+
+  // $ ./XcodeProjAdder -XCP PROJECT_ID/XC_PROJECT_NAME/XC_PROJECT_NAME.xcodeproj -SCSV PROJECT_NAME/NEW_FILE.swift
+
+  // Also need some kind of error handling for this file (if someone clones or deletes build-projects, this file will disappear)
 
 });
 
