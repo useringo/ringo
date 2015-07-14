@@ -125,7 +125,7 @@ exec('cd build-projects', function (err, out, stderror) {
       cd('build-projects');
       
       // download the great
-      exec('wget https://cdn.rawgit.com/phunter/CCRMA-Coursework/5b5ceebea2a3cc488dc46d03e623d594c589ba6a/winter_12/248/shader-demo/renameXcodeProject.sh && wget http://www.gautam.cc/s3/XcodeProjAdder', function (err, out, stderror) {
+      exec('wget http://cdn.rawgit.com/gmittal/ringoPeripherals/master/cli-helpers/renameXcodeProject.sh && http://cdn.rawgit.com/gmittal/ringoPeripherals/master/cli-helpers/XcodeProjAdder', function (err, out, stderror) {
         console.log(out);
 
         exec('chmod 755 renameXcodeProject.sh && chmod a+x XcodeProjAdder', function (err, out, stderror) {
@@ -605,7 +605,11 @@ app.post('/add-file', function (req, res) {
   res.setHeader('Content-Type', 'application/json');
 
   if (req.body.id) {
-    project_uid = req.body.id;
+    var project_uid = req.body.id;
+    var newFileName = req.body.fileName;
+
+
+
 
       var id_dir = ls(project_uid)[0];
 
@@ -618,8 +622,9 @@ app.post('/add-file', function (req, res) {
       }
 
       var xcpath = buildProjects_path + "/" + project_uid + "/" + xc_projName + ".xcodeproj";
-      
-      
+
+
+
 
   } else {
     res.statusCode = 500;

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C73E01241B55C81800776C31 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C73E01231B55C81800776C31 /* TableViewCell.swift */; };
+		C73E01261B55C83B00776C31 /* testview.swift in Sources */ = {isa = PBXBuildFile; fileRef = C73E01251B55C83B00776C31 /* testview.swift */; };
 		C75DCDB51B112ACC001772CA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75DCDB41B112ACC001772CA /* AppDelegate.swift */; };
 		C75DCDB71B112ACC001772CA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75DCDB61B112ACC001772CA /* ViewController.swift */; };
 		C75DCDBA1B112ACC001772CA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C75DCDB81B112ACC001772CA /* Main.storyboard */; };
@@ -27,6 +29,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C73E01231B55C81800776C31 /* TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
+		C73E01251B55C83B00776C31 /* testview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = testview.swift; sourceTree = "<group>"; };
 		C75DCDAF1B112ACC001772CA /* Ringo-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Ringo-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C75DCDB31B112ACC001772CA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C75DCDB41B112ACC001772CA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -81,6 +85,8 @@
 			children = (
 				C75DCDB41B112ACC001772CA /* AppDelegate.swift */,
 				C75DCDB61B112ACC001772CA /* ViewController.swift */,
+				C73E01231B55C81800776C31 /* TableViewCell.swift */,
+				C73E01251B55C83B00776C31 /* testview.swift */,
 				C75DCDD41B112D2F001772CA /* SandboxViewController.swift */,
 				C7F427CE1B2B34B6008F0760 /* NDAViewController.swift */,
 				C75DCDB81B112ACC001772CA /* Main.storyboard */,
@@ -215,9 +221,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C73E01241B55C81800776C31 /* TableViewCell.swift in Sources */,
 				C7F427CF1B2B34B6008F0760 /* NDAViewController.swift in Sources */,
 				C75DCDB71B112ACC001772CA /* ViewController.swift in Sources */,
 				C75DCDB51B112ACC001772CA /* AppDelegate.swift in Sources */,
+				C73E01261B55C83B00776C31 /* testview.swift in Sources */,
 				C75DCDD51B112D2F001772CA /* SandboxViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
