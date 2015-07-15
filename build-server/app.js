@@ -609,19 +609,49 @@ app.post('/add-file', function (req, res) {
     var newFileName = req.body.fileName;
 
 
+    var id_dir = ls(project_uid)[0];
 
-
-      var id_dir = ls(project_uid)[0];
-
-      var xc_projName = ""; // suprisingly enough, people like to name their repository name differently than their .xcodeproj name
-      
-      for (var z = 0; z < ls(project_uid + "/" + id_dir).length; z++) {
-        if (ls(project_uid + "/" + id_dir)[z].indexOf('.xcodeproj') > -1) {
-          xc_projName = ls(project_uid + "/" + id_dir)[z].replace('.xcodeproj', '');
-        }
+    var xc_projName = ""; // suprisingly enough, people like to name their repository name differently than their .xcodeproj name
+    
+    for (var z = 0; z < ls(project_uid + "/" + id_dir).length; z++) {
+      if (ls(project_uid + "/" + id_dir)[z].indexOf('.xcodeproj') > -1) {
+        xc_projName = ls(project_uid + "/" + id_dir)[z].replace('.xcodeproj', '');
       }
+    }
 
-      var xcpath = buildProjects_path + "/" + project_uid + "/" + xc_projName + ".xcodeproj";
+    var xcpath = buildProjects_path + "/" + project_uid + "/" + id_dir + "/"+ xc_projName + ".xcodeproj";
+
+    cd(project_uid + "/" + id_dir + "/" + xc_projName);
+
+    // Simple test to know which directory the server is in
+    // console.log(ls());
+
+    // download a vanilla swift class file
+    exec('wget cdn.rawgit.com/gmittal/ringoPeripherals/master/new-class-templates/R6roHpOHU8qa3Z2TvHsG.swift', function (err, out, stderror) {
+
+      // rename file after downloading from GitHub
+      exec('mv "R6roHpOHU8qa3Z2TvHsG.swift" "'+ newFileName + '.swift"', function (err, out, stderror) {
+
+        // another debugging step which allows you to see what's happening in the current directory
+        // console.log(ls());
+        var filePath = xc_projName + "/" + newFileName + '.swift';
+
+        // now the important step: adding the file reference to the .xcodeproj file
+        cd(buildProjects_path);
+        exec('./XcodeProjAdder -XCP "'+xcpath+'" -SCSV "'+ filePath + '"', function (err, out, stderror) {
+          
+          console.log(xcpath);
+
+          res.send({"Success":"Successfully added file named "+newFileName+".swift"});          
+        
+        });
+
+
+
+
+      }); 
+
+    });
 
 
 
