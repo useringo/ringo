@@ -6,7 +6,6 @@
   NODE.JS + Xcode 6.3 + Homebrew + Ruby 2.2.2
 
   $ sudo npm install && gem install nomad-cli && brew install wget zip unzip
-  $ thor install https://github.com/gonzoua/xcs/raw/master/xcs.thor
   
   You will also need to populate the .env file with the necessary environment variables in order for this script to run effectively
 
@@ -588,6 +587,48 @@ app.post('/get-project-contents', function(req, res) {
 // allows you to add a new Xcode image asset to the project asset catalog (requires PNG file)
 app.post('/add-image-xcasset', function (req, res) {
   cd(buildProjects_path); // always need this
+
+  if (req.body.id) {
+    var project_id = req.body.id;
+    var newImage = req.body.file;
+    var xcassetName = req.body.assetName;
+
+    var id_dir = ls(project_id)[0];
+
+    var xc_projName = ""; // suprisingly enough, people like to name their repository name differently than their .xcodeproj name
+    
+    for (var z = 0; z < ls(project_id + "/" + id_dir).length; z++) {
+      if (ls(project_id + "/" + id_dir)[z].indexOf('.xcodeproj') > -1) {
+        xc_projName = ls(project_id + "/" + id_dir)[z].replace('.xcodeproj', '');
+      }
+    }
+
+    console.log(('Xcode Project File Name: ' + xc_projName).red);
+
+    // console.log(ls(project_id + "/" + id_dir + "/" + xc_projName));
+
+    // cd(buildProjects_path);
+
+    var xcassetsDirName = "";
+
+    // contents of the xcode project files directory (one level below the .xcodeproj file's directory)
+    var xcProjDirectory = ls(project_id + "/" + id_dir + "/" + xc_projName);
+
+    for (var z = 0; z < xcProjDirectory.length; z++) {
+
+      if (xcProjDirectory[z].indexOf('.xcassets') > -1) {
+        xcassetsDirName = xcProjDirectory[z];
+      }
+    }
+
+    console.log(('.xcassets Directory Name: ' + xcassetsDirName).cyan);
+
+    // fs.writeFile(buildProjects_path + "/" + project_id+"/"+id_dir+"/"+xc_projName+"/")    
+
+
+
+
+  } // end if req.body.id
 
   
 });
