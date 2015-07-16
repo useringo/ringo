@@ -699,24 +699,24 @@ app.post('/get-image-xcassets', function (req, res) {
 
         var i = 0;
 
-        // loopFiles();
+        loopFiles();
 
         function loopFiles() {
             var file = files[i];
+
             console.log(file);
 
-              fs.readFile(project_id+"/"+id_dir+"/"+xc_projName+"/"+file, 'utf8', function (err, data) {
+              fs.readFile(project_id+"/"+id_dir+"/"+xc_projName+"/"+file, function (err, data) {
                 if (err) {
                   return console.log(err);
                 }
 
 
-
                 var contentForFile = {};
-                contentForFile["name"] = file;
+                contentForFile["name"] = filtered[i];
 
                 // console.log(data);
-                contentForFile["data"] = data;
+                contentForFile["data"] = new Buffer(data).toString('base64');
 
                 filesContents.push(contentForFile);
 
@@ -729,7 +729,7 @@ app.post('/get-image-xcassets', function (req, res) {
                   i++;
                 } else {
 
-                  // console.log("HELLO")
+
                   res.send({"files": filesContents});
                   cd(buildProjects_path);
                 }
