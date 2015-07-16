@@ -633,14 +633,22 @@ app.post('/get-image-xcassets', function (req, res) {
 
           tmp = tmp.join("/");
           
-
+          // filter through all of the stuff that we don't want
           if (!(tmp.indexOf(".swift") > -1)) {
             if (!(tmp.indexOf(".lproj") > -1)) {
               if (!(tmp.indexOf(".sks") > -1)) {
                 if (!(tmp.indexOf(".playground") > -1)) {
-                  // if (!(tmp.indexOf(".png") > -1)) {
-                    filtered.push(tmp); 
-                  // }
+                  if (!(tmp.indexOf(".plist") > -1)) {
+                    if (!(tmp.indexOf(".m") > -1)) {
+                      if (!(tmp.indexOf(".h") > -1)) {
+                        if (!(tmp.indexOf(".json") > -1)) {
+                          filtered.push(tmp);
+                        }
+                         
+                      }
+                    }
+                    
+                  }
                       
                 } 
               }
@@ -651,12 +659,40 @@ app.post('/get-image-xcassets', function (req, res) {
 
         } // end for loop
 
-        console.log(filtered)
 
-        var files = filtered;
+        var files = [];
+
+        for (var n = 0; n < filtered.length; n++) {
+          var t = filtered[n];
+
+          // push the un-altered copy to the files array
+          files.push(t);
+
+          var imageSetPathSplit = t.split("/");
+          var imageSetName = imageSetPathSplit[1]; // usually the second folder's name in the path hierarchy
+
+          filtered[n] = imageSetName;
+
+
+        }
+
+        // only present one of the many images that may be within an imageset
+        for (var o = 0; o < filtered.length; o++) {
+          var u = filtered[o];
+
+          if (u == filtered[o+1]) {
+            filtered.splice(o, 1);
+            files.splice(o, 1)
+          }
+
+
+        }
+
 
         res.setHeader('Content-Type', 'application/json');
 
+        
+        console.log(filtered)
         console.log(files);  
 
         var filesContents = []; // final array of json data
