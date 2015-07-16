@@ -506,7 +506,7 @@ app.post('/get-project-contents', function(req, res) {
       tmp = tmp.join("/");
       
 
-      if (!(tmp.indexOf("Images") > -1)) {
+      if (!(tmp.indexOf(".xcassets") > -1)) {
         // if (!(tmp.indexOf(".lproj") > -1)) {
           if (!(tmp.indexOf(".sks") > -1)) {
             if (!(tmp.indexOf(".playground") > -1)) {
@@ -594,6 +594,121 @@ app.post('/add-image-xcasset', function (req, res) {
 
 // get the xcasset files
 app.post('/get-image-xcassets', function (req, res) {
+  cd(buildProjects_path);
+
+  if (req.body.id) {
+
+      var project_id = req.body.id;
+
+      var id_dir = ls(project_id)[0];
+      console.log(id_dir);
+      // var files = ls(project_id+"/"+id_dir+"/"+id_dir);
+
+      var xc_projName = ""; // suprisingly enough, people like to name their repository name differently than their .xcodeproj name
+      
+      for (var z = 0; z < ls(project_id + "/" + id_dir).length; z++) {
+        if (ls(project_id + "/" + id_dir)[z].indexOf('.xcodeproj') > -1) {
+          xc_projName = ls(project_id + "/" + id_dir)[z].replace('.xcodeproj', '');
+        }
+      }
+
+      console.log(('Xcode Project File Name: ' + xc_projName).red);
+
+
+      // crawl the file tree
+      walk(buildProjects_path + "/" + project_id+"/"+id_dir+"/"+xc_projName, function(err, results) {
+        if (err) throw err;
+
+        var filtered = [];
+
+        // filter out all the stuff that is useless
+        for (var i = 0; i < results.length; i++) {
+          var tmp = results[i];
+
+          tmp = tmp.split("/");
+
+          for (var j = 0; j < 11; j++) { // remove the eleven parent directories of the file
+            tmp.shift();
+          }
+
+          tmp = tmp.join("/");
+          
+
+          if (!(tmp.indexOf(".swift") > -1)) {
+            if (!(tmp.indexOf(".lproj") > -1)) {
+              if (!(tmp.indexOf(".sks") > -1)) {
+                if (!(tmp.indexOf(".playground") > -1)) {
+                  // if (!(tmp.indexOf(".png") > -1)) {
+                    filtered.push(tmp); 
+                  // }
+                      
+                } 
+              }
+                    
+            }
+          } // end filters
+        
+
+        } // end for loop
+
+        console.log(filtered)
+
+        var files = filtered;
+
+        res.setHeader('Content-Type', 'application/json');
+
+        console.log(files);  
+
+        var filesContents = []; // final array of json data
+
+        var i = 0;
+
+        // loopFiles();
+
+        function loopFiles() {
+            var file = files[i];
+            console.log(file);
+
+              fs.readFile(project_id+"/"+id_dir+"/"+xc_projName+"/"+file, 'utf8', function (err, data) {
+                if (err) {
+                  return console.log(err);
+                }
+
+
+
+                var contentForFile = {};
+                contentForFile["name"] = file;
+
+                // console.log(data);
+                contentForFile["data"] = data;
+
+                filesContents.push(contentForFile);
+
+                // console.log(filesContents)
+
+                if (i < files.length) {
+                  
+                  console.log(i);
+                  loopFiles();
+                  i++;
+                } else {
+
+                  // console.log("HELLO")
+                  res.send({"files": filesContents});
+                  cd(buildProjects_path);
+                }
+
+              });
+
+
+        }
+
+
+      });
+
+  }
+
+
 
 });
 
