@@ -605,9 +605,6 @@ app.post('/add-image-xcasset', function (req, res) {
 
     console.log(('Xcode Project File Name: ' + xc_projName).red);
 
-    // console.log(ls(project_id + "/" + id_dir + "/" + xc_projName));
-
-    // cd(buildProjects_path);
 
     var xcassetsDirName = "";
 
@@ -623,7 +620,11 @@ app.post('/add-image-xcasset', function (req, res) {
 
     console.log(('.xcassets Directory Name: ' + xcassetsDirName).cyan);
 
-    // fs.writeFile(buildProjects_path + "/" + project_id+"/"+id_dir+"/"+xc_projName+"/")    
+    var imageSetJSON = '{"images" : [{"idiom" : "universal","scale" : "1x","filename" : "Spaceship.png"},{"idiom" : "universal","scale" : "2x"},{"idiom" : "universal","scale" : "3x"},"info" : {"version" : 1,"author" : "xcode"}}'
+
+    fs.writeFile("Contents.json", imageSetJSON, function(err) {
+
+    });    
 
 
 
