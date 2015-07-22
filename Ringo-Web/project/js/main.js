@@ -124,6 +124,7 @@ function doneTyping () {
 function loadFiles() {
 	if (project_id.length > 0) {
 
+		$("#fileMenu").html("");
 
 		$.ajax({
 			type: 'POST',
@@ -553,7 +554,7 @@ function handleFileSelect(evt) {
 
 	  	function createProject() {
 	  		if ($("#createModal").children("div").children("center").children("#createName").val().length > 0) {
-	  			console.log("Request to create project approved.")
+	  			console.log("Request to create project approved.");
 
 	  			$(".awesomeButton").prop("disabled", true);
 
@@ -605,6 +606,62 @@ function handleFileSelect(evt) {
 
 	  		}
 	  	}
+
+
+	  	function addFileToProject() {
+	  		if ($("#addFileModal").children("div").children("center").children("#newFileNameInput").val().length > 0) {
+	  			console.log("Request to create file approved.");
+
+	  			$(".awesomeButton").prop("disabled", true);
+
+
+	  			$.ajax({
+				    type: 'POST',
+				    url: hostname+'/add-file',
+				    data: {"fileName": $("#addFileModal").children("div").children("center").children("#newFileNameInput").val(), "id": project_id},
+				    error: function (err) {
+				    	
+
+				    	if (err) {
+				    		$("#addFileModal").children("div").children("center").children("#newFileNameInput").val("There was an error. Try again.");
+
+				    		setTimeout(function() {
+				    			$("#addFileModal").children("div").children("center").children("#newFileNameInput").val("");
+				    			$(".awesomeButton").prop("disabled", false);
+				    		}, 3000);
+				    	}
+				        // console.log(err);
+				    }, 
+				    success: function (data) {
+				        console.log(data);
+
+				        
+
+				        if (data) {
+				        	$("#addFileModal").children("div").children("center").children("#newFileNameInput").val("Success!");
+
+				    		setTimeout(function() {
+				    			$("#addFileModal").children("div").children("center").children("#newFileNameInput").val("");
+				    			location.href = "#";
+
+				    			// reload the files
+				    			loadFiles();
+				    			// initializeNewProject(data.uid);
+
+				    			$(".awesomeButton").prop("disabled", false);
+
+				    		}, 3000);
+
+				        }
+
+
+				    },
+				    dataType: "json"
+				});	// end ajax request
+
+	  		}
+	  	}
+
 
 
 	  	// not actually sure if this works, so far it doesn't seem to do so at all
