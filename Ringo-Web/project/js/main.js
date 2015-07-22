@@ -3,7 +3,7 @@ var typingTimer;                //timer identifier
 var doneTypingInterval = 1000;  //time in ms, 5 second for example
 
 
-var hostname = "https://398a3ac8.ngrok.com";
+var hostname = "http://localhost:3000"; // https://33983d9e.ngrok.com
 
 var project_id = ""; //prompt("Type your Ringo Project ID");
 var project_name = "";
@@ -418,7 +418,8 @@ function handleFileSelect(evt) {
 			        console.log(data);
 
 			        if (data.Error) {
-			        	$("output").append('<span style="color:red;">An error occurred. Try again.</span>');
+			        	$("output").text("");
+			        	$("output").append('<br /><br /><span style="color:red;">An error occurred. Try again.</span>');
 			        } else {
 			        	location.href = "#";
 

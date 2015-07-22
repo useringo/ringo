@@ -622,7 +622,8 @@ app.post('/add-image-xcasset', function (req, res) {
 
     var imageSetJSON = '{"images" : [{"idiom" : "universal","scale" : "1x","filename" : "Spaceship.png"},{"idiom" : "universal","scale" : "2x"},{"idiom" : "universal","scale" : "3x"},"info" : {"version" : 1,"author" : "xcode"}}'
 
-    fs.writeFile("Contents.json", imageSetJSON, function(err) {
+    fs.writeFile(project_id + "/" + id_dir + "/" + xc_projName + "/" + xcassetsDirName + "/" + xcassetName + ".imageset/Contents.json", imageSetJSON, function(err) {
+      
 
     });    
 
