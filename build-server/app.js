@@ -972,13 +972,23 @@ app.post('/build-project', function (req, res) {
                       // success
                       console.log(message.body);
 
-                      var public_key = (message.body.publicURL).split("/")[4];
-                      console.log("Simulator Public Key: " + public_key.yellow);
+                      console.log(message.body.publicURL != null);
 
-                      var screenEmbed = '<iframe src="https://appetize.io/embed/'+public_key+'?device=iphone6&scale=75&autoplay=false&orientation=portrait&deviceColor=white&screenOnly=true" width="282px" height="501px" frameborder="0" scrolling="no"></iframe>';
-                      var deviceEmbed = '<iframe src="https://appetize.io/embed/'+public_key+'?device=iphone6&scale=75&autoplay=true&orientation=portrait&deviceColor=white" width="312px" height="653px" frameborder="0" scrolling="no"></iframe>';
+                      if (message.body.publicURL != null) {
+                          var public_key = (message.body.publicURL).split("/")[4];
+                          console.log("Simulator Public Key: " + public_key.yellow);
 
-                      res.send({'simulatorURL': message.body.publicURL, "screenOnlyEmbedCode": screenEmbed, "fullDeviceEmbedCode": deviceEmbed, "console": out});
+                          var screenEmbed = '<iframe src="https://appetize.io/embed/'+public_key+'?device=iphone6&scale=75&autoplay=false&orientation=portrait&deviceColor=white&screenOnly=true" width="282px" height="501px" frameborder="0" scrolling="no"></iframe>';
+                          var deviceEmbed = '<iframe src="https://appetize.io/embed/'+public_key+'?device=iphone6&scale=75&autoplay=true&orientation=portrait&deviceColor=white" width="312px" height="653px" frameborder="0" scrolling="no"></iframe>';
+
+                          res.send({'simulatorURL': message.body.publicURL, "screenOnlyEmbedCode": screenEmbed, "fullDeviceEmbedCode": deviceEmbed, "console": out});
+                        } else {
+                          res.send({"BUILD_FAILED": "There was an error building your application."});
+                        }
+
+          
+
+                      
 
                       
 
