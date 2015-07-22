@@ -43,7 +43,7 @@ Install the various dependencies:
 
 ``` $ sudo npm install && gem install nomad-cli && brew install wget zip unzip ```
 
-You're also going to need to populate your environment variables with some important information. For now, Ringo uses [Appetize](http://www.appetize.io) to run your iOS apps in an in-browser simulator. That does require an API key, but they are free and easy to get ahold of. You'll also need to provide the absolute path to a ```build-projects`` directory where the server will store local copies of the generated Xcode projects.
+You're also going to need to populate your environment variables with some important information. For now, Ringo uses [Appetize](http://www.appetize.io) to run your iOS apps in an in-browser simulator. That does require an API key, but they are free and easy to get ahold of. You'll also need to provide the absolute path to a ```build-projects``` directory where the server will store local copies of the generated Xcode projects.
 
 ```
 APPETIZE_TOKEN=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
