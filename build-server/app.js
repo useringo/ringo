@@ -344,6 +344,7 @@ app.post('/upload-project-zip', function (req, res) {
 
 
   } else {
+    res.statusCode = 500;
     res.send({"Error": "Invalid parameters"});
   }
 

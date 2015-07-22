@@ -415,6 +415,9 @@ function handleFileSelect(evt) {
 			    data: {"file": currentUploadedFileData},
 			    error: function (err) {
 			        console.log(err);
+
+			        $("output").text("");
+		        	$("output").append('<br /><br /><span style="color:red;">An error occurred. Try again.</span>');
 			        // if (err) {
 			        // 	console.log("THERE WAS AN ERROR UPLOADING THE FILE");
 			        // }
