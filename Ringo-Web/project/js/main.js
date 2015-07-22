@@ -160,7 +160,7 @@ function loadFiles() {
 					project_name = data.project.name;
 
 					$("#appName").text(start_and_end(project_name));
-					$("#fileMenu").prepend("<div style=\"margin-top: 5px;\"><b><img height=\"20pt\" style=\"vertical-align:middle;margin-top: -5px;\" src=\"img/folder-icon.svg\" />&nbsp;"+ start_and_end(data.project.name) +"</b></div><div id=\"addFileButton\">+</div>");
+					$("#fileMenu").prepend("<div style=\"margin-top: 5px;\"><b><img height=\"20pt\" style=\"vertical-align:middle;margin-top: -5px;\" src=\"img/folder-icon.svg\" />&nbsp;"+ start_and_end(data.project.name) +"</b></div><span id=\"addFileButton\">+</span>");
 
 					// add addFileButton click listener
 					$("#addFileButton").click(function() { // add file to your project directory
@@ -474,7 +474,7 @@ function handleFileSelect(evt) {
 			    success: function (data) {
 			        console.log(data);
 
-			        $(".awesomeButton").prop("disabled", false);
+			        
 
 			        if (data.Error) 
 			        {
@@ -486,6 +486,7 @@ function handleFileSelect(evt) {
 				        initializeNewProject(data.id);
 			        }
 
+			        $(".awesomeButton").prop("disabled", false);
 
 
 			        
@@ -507,7 +508,7 @@ function handleFileSelect(evt) {
 				    url: hostname+'/clone-git-project',
 				    data: {"url": $("#gitModal").children("div").children("center").children("#gitCloneURL").val()},
 				    error: function (err) {
-				    	$(".awesomeButton").prop("disabled", false);
+				    	
 
 				    	if (err) {
 				    		$("#gitModal").children("div").children("center").children("#gitCloneURL").val("There was an error. Try again.");
@@ -515,13 +516,15 @@ function handleFileSelect(evt) {
 				    		setTimeout(function() {
 				    			$("#gitModal").children("div").children("center").children("#gitCloneURL").val("");
 				    			// location.href = "#";
+
+				    			$(".awesomeButton").prop("disabled", false);
 				    		}, 3000);
 				    	}
 				        // console.log(err);
 				    }, 
 				    success: function (data) {
 				        console.log(data);
-				        $(".awesomeButton").prop("disabled", false);
+				        
 
 				        if (data) {
 				        	$("#gitModal").children("div").children("center").children("#gitCloneURL").val("Success!");
@@ -531,6 +534,8 @@ function handleFileSelect(evt) {
 				    			location.href = "#";
 
 				    			initializeNewProject(data.uid);
+
+				    			$(".awesomeButton").prop("disabled", false);
 
 				    		}, 3000);
 
@@ -561,13 +566,14 @@ function handleFileSelect(evt) {
 				    url: hostname+'/create-project',
 				    data: {"projectName": $("#createModal").children("div").children("center").children("#createName").val(), "template": templateType},
 				    error: function (err) {
-				    	$(".awesomeButton").prop("disabled", false);
+				    	
 
 				    	if (err) {
 				    		$("#createModal").children("div").children("center").children("#createName").val("There was an error. Try again.");
 
 				    		setTimeout(function() {
 				    			$("#createModal").children("div").children("center").children("#createName").val("");
+				    			$(".awesomeButton").prop("disabled", false);
 				    		}, 3000);
 				    	}
 				        // console.log(err);
@@ -575,7 +581,7 @@ function handleFileSelect(evt) {
 				    success: function (data) {
 				        console.log(data);
 
-				        $(".awesomeButton").prop("disabled", false);
+				        
 
 				        if (data) {
 				        	$("#createModal").children("div").children("center").children("#createName").val("Success!");
@@ -585,6 +591,8 @@ function handleFileSelect(evt) {
 				    			location.href = "#";
 
 				    			initializeNewProject(data.uid);
+
+				    			$(".awesomeButton").prop("disabled", false);
 
 				    		}, 3000);
 
