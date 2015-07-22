@@ -607,6 +607,15 @@
             outline: none;
         }
 
+        #addFileButton {
+            position:absolute;
+            top: 0;
+            margin-left: -webkit-calc(100% - 30px);
+            margin-left: calc(100% - 30px);
+            font-size: 15pt;
+            color: green;
+        }
+
         @media only screen and (max-width: 270px) {
             body {
                 margin: 10px auto;
@@ -652,7 +661,6 @@
 
         <div id="fileMenu">
             <div style="margin-top: 5px;"><b><img height="20pt" style="vertical-align:middle;margin-top: -5px;" src="img/folder-icon.svg" />&nbsp;Welcome to Ringo</b></div>
-            
 
         </div>
 
@@ -725,6 +733,20 @@
         <input type="text" class="modalInput" id="gitCloneURL" placeholder="https://github.com/username/repo.git"/>
         <br /><br />
         <button class="awesomeButton" id="uploadProjectToServerButton" onclick="javascript: gitClone();">$ git clone</button>
+        </center>
+    </div>
+</div>
+
+<div id="addFileModal" class="modalDialog">
+    <div>
+        <a href="#close" title="Close" class="close">X</a>
+        <h2 style="color:black;">Add a File to Your Project</h2>
+        <p>Ringo is not guaranteed to save your projects on its servers, so we suggest that once you're done coding, you download your code locally, and reupload it to Ringo when you're ready to start hacking again.</p><br />
+        <p>This will allow you to add a new .swift file to your project directory. Just provide the name of the file you would like to create, and Ringo will automagically add it to your project directory.</p><br />
+        <center>
+        <input type="text" class="modalInput" id="newFileNameInput" placeholder="MyAwesomeFileName"/>
+        <br /><br />
+        <button class="awesomeButton" id="uploadProjectToServerButton" onclick="javascript: addFileToProject();">Add File</button>
         </center>
     </div>
 </div>

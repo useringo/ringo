@@ -147,6 +147,7 @@ function loadFiles() {
 
 					$("#fileMenu div:nth-child(1)").css({'background-color': 'rgb(14, 101, 227)', 'font-weight':'bold', 'color':'white'});
 					
+
 				}
 
 				editor.setValue(files[0].data, -1);
@@ -159,11 +160,21 @@ function loadFiles() {
 					project_name = data.project.name;
 
 					$("#appName").text(start_and_end(project_name));
-					$("#fileMenu").prepend("<div style=\"margin-top: 5px;\"><b><img height=\"20pt\" style=\"vertical-align:middle;margin-top: -5px;\" src=\"img/folder-icon.svg\" />&nbsp;"+ start_and_end(data.project.name) +"</b></div>")
-					
+					$("#fileMenu").prepend("<div style=\"margin-top: 5px;\"><b><img height=\"20pt\" style=\"vertical-align:middle;margin-top: -5px;\" src=\"img/folder-icon.svg\" />&nbsp;"+ start_and_end(data.project.name) +"</b></div><div id=\"addFileButton\">+</div>");
+
+					// add addFileButton click listener
+					$("#addFileButton").click(function() { // add file to your project directory
+						if (project_id.length > 0) {
+							// console.log("Openi);
+							location.href = "#addFileModal";	
+						} 
+						
+					});
+
+
+					// update the editor
 					updateEditor();
 
-					// buildProject();
 
 				});
 
@@ -329,6 +340,7 @@ $("#ipaDLButton").click(function() { // download your code from the server
 });
 
 
+
 $("#ULButton").click(function() {
 	location.href = "#openModal";
 });
@@ -441,12 +453,16 @@ function handleFileSelect(evt) {
 
 
 	  	function uploadFile() {
+	  		$(".awesomeButton").prop("disabled", true);
+
 	  		$.ajax({
 			    type: 'POST',
 			    url: hostname+'/upload-project-zip',
 			    data: {"file": currentUploadedFileData},
 			    error: function (err) {
 			        console.log(err);
+
+			        $(".awesomeButton").prop("disabled", false);
 
 			        $("output").text("");
 		        	$("output").append('<br /><br /><span style="color:red;">An error occurred. Try again.</span>');
@@ -458,7 +474,10 @@ function handleFileSelect(evt) {
 			    success: function (data) {
 			        console.log(data);
 
-			        if (data.Error) {
+			        $(".awesomeButton").prop("disabled", false);
+
+			        if (data.Error) 
+			        {
 			        	$("output").text("");
 			        	$("output").append('<br /><br /><span style="color:red;">An error occurred. Try again.</span>');
 			        } else {
@@ -466,6 +485,8 @@ function handleFileSelect(evt) {
 
 				        initializeNewProject(data.id);
 			        }
+
+
 
 			        
 
@@ -479,11 +500,15 @@ function handleFileSelect(evt) {
 	  		if ($("#gitModal").children("div").children("center").children("#gitCloneURL").val().length > 0) {
 	  			console.log("Request to clone to git approved.");
 
+	  			$(".awesomeButton").prop("disabled", true);
+
 	  			$.ajax({
 				    type: 'POST',
 				    url: hostname+'/clone-git-project',
 				    data: {"url": $("#gitModal").children("div").children("center").children("#gitCloneURL").val()},
 				    error: function (err) {
+				    	$(".awesomeButton").prop("disabled", false);
+
 				    	if (err) {
 				    		$("#gitModal").children("div").children("center").children("#gitCloneURL").val("There was an error. Try again.");
 
@@ -496,6 +521,7 @@ function handleFileSelect(evt) {
 				    }, 
 				    success: function (data) {
 				        console.log(data);
+				        $(".awesomeButton").prop("disabled", false);
 
 				        if (data) {
 				        	$("#gitModal").children("div").children("center").children("#gitCloneURL").val("Success!");
@@ -524,6 +550,8 @@ function handleFileSelect(evt) {
 	  		if ($("#createModal").children("div").children("center").children("#createName").val().length > 0) {
 	  			console.log("Request to create project approved.")
 
+	  			$(".awesomeButton").prop("disabled", true);
+
 	  			var templateType = $("#createModal").children("div").children("center").children("#templateName").val();
 
 	  			// console.log()
@@ -533,6 +561,8 @@ function handleFileSelect(evt) {
 				    url: hostname+'/create-project',
 				    data: {"projectName": $("#createModal").children("div").children("center").children("#createName").val(), "template": templateType},
 				    error: function (err) {
+				    	$(".awesomeButton").prop("disabled", false);
+
 				    	if (err) {
 				    		$("#createModal").children("div").children("center").children("#createName").val("There was an error. Try again.");
 
@@ -544,6 +574,8 @@ function handleFileSelect(evt) {
 				    }, 
 				    success: function (data) {
 				        console.log(data);
+
+				        $(".awesomeButton").prop("disabled", false);
 
 				        if (data) {
 				        	$("#createModal").children("div").children("center").children("#createName").val("Success!");
