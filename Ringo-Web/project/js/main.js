@@ -57,6 +57,7 @@ var currentUploadedFileData = "";
 
 loadFiles(); // load the file menu
 
+
 // back up 
 $("#fileMenu").append("<div name=\"INTRODUCTION\" onclick=\"javascript: currentFile = $(this).attr('name'); $('#fileMenu div').css({'background-color': 'transparent', \'font-weight\': \'normal\', \'color\': \'black\'}); $(this).css({'background-color': 'rgb(14, 101, 227)', 'font-weight':'bold', 'color':'white'}); updateEditor();\">Getting Started.swift</div>");
 editor.setValue(files[0].data, -1);
@@ -143,6 +144,9 @@ function loadFiles() {
 					console.log(data.files[i].name);
 
 					$("#fileMenu").append('<div name="'+ data.files[i].name +'" onclick=\"javascript: currentFile = $(this).attr(\'name\'); $(\'#fileMenu div\').css({\'background-color\': \'transparent\', \'font-weight\': \'normal\', \'color\': \'black\'}); $(this).css({\'background-color\': \'rgb(14, 101, 227)\', \'font-weight\':\'bold\', \'color\':\'white\'}); updateEditor();\">'+start_and_end(data.files[i].name) + '</div>');
+
+					$("#fileMenu div:nth-child(1)").css({'background-color': 'rgb(14, 101, 227)', 'font-weight':'bold', 'color':'white'});
+					
 				}
 
 				editor.setValue(files[0].data, -1);
@@ -156,7 +160,9 @@ function loadFiles() {
 
 					$("#appName").text(start_and_end(project_name));
 					$("#fileMenu").prepend("<div style=\"margin-top: 5px;\"><b><img height=\"20pt\" style=\"vertical-align:middle;margin-top: -5px;\" src=\"img/folder-icon.svg\" />&nbsp;"+ start_and_end(data.project.name) +"</b></div>")
-				
+					
+					updateEditor();
+
 					// buildProject();
 
 				});
