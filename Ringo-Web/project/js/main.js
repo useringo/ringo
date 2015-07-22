@@ -196,6 +196,38 @@ listener.simple_combo("alt r", function() {
     buildProject();
 });
 
+// new project
+listener.simple_combo("alt n", function() {
+    // console.log("used keyboard shortcut to start buildProject()");
+
+    location.href = "#createModal";
+});
+
+// upload project
+listener.simple_combo("alt u", function() {
+    // console.log("used keyboard shortcut to start buildProject()");
+
+    location.href = "#openModal";
+});
+
+// clone git repo
+listener.simple_combo("alt g", function() {
+    // console.log("used keyboard shortcut to start buildProject()");
+
+    location.href = "#gitModal";
+});
+
+// download code
+listener.simple_combo("alt d", function() {
+    // console.log("used keyboard shortcut to start buildProject()");
+
+    if (project_id.length > 0) {
+		console.log("Requesting a ZIP file with your code...");
+		location.href = (hostname + '/download-project/'+project_id);	
+	} 
+});
+
+
 
 function buildProject() {
 	
