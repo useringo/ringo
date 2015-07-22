@@ -868,6 +868,10 @@ app.post('/add-file', function (req, res) {
 });
 
 
+app.post('/delete-file', function (req, res) {
+
+});
+
 
 // Build an Xcode Project using the appetize.io on-screen simulator
 app.post('/build-project', function (req, res) {
