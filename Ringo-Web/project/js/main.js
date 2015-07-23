@@ -54,6 +54,8 @@ var currentData = editor.getValue();
 
 var currentUploadedFileData = "";
 
+var currentUploadAssetData = "";
+
 
 loadFiles(); // load the file menu
 
@@ -451,6 +453,132 @@ function handleFileSelect(evt) {
 
 
 	document.getElementById('files').addEventListener('change', handleFileSelect, false);
+
+
+
+
+	function handleAssetSelect(evt) {
+		var files = evt.target.files; // FileList object
+
+		// FileReader.readAsDataURL(Blob|File)
+
+		// files is a FileList of File objects. List some properties.
+		var output = [];
+		for (var i = 0, f; f = files[i]; i++) {
+		  output.push('<li><strong>', escape(f.name), '</strong> (', f.type || 'n/a', ') - ',
+		              f.size/1000000, ' MB, last modified: ',
+		              f.lastModifiedDate ? f.lastModifiedDate.toLocaleDateString() : 'n/a',
+		              '</li>');
+		}
+		document.getElementById('assetList').innerHTML = '<ul>' + output.join('') + '</ul>';
+
+
+		// Read the ZIP file data
+		  for (var i = 0, f; f = files[i]; i++) {
+
+		      // Only process zip files.
+		      if (!f.type.match('image.*')) {
+		        continue;
+		      }
+
+		      var reader = new FileReader();
+
+		      // Closure to capture the file information.
+		      reader.onload = (function(theFile) {
+		        return function(e) {
+		  
+
+		          console.log(e.target.result);
+		          currentUploadAssetData = e.target.result;
+
+
+
+		            
+
+
+
+		        };
+		      })(f);
+
+		      // Read in the image file as a data URL.
+		      reader.readAsDataURL(f);
+
+
+		    }
+
+		} // end handleFileSelect function
+
+
+		document.getElementById('assets').addEventListener('change', handleAssetSelect, false);
+
+
+
+
+		function addXcasset() {
+			$(".awesomeButton").prop("disabled", true);
+
+			if ($("#assetList").text().length > 0) {
+				if ($("#addXcassetModal").children("div").children("center").children("#xcassetNameInput").val().length > 0) {
+					console.log("Request to generate new xcasset approved.");
+			  		$.ajax({
+					    type: 'POST',
+					    url: hostname+'/add-image-xcasset',
+					    data: {"file": currentUploadAssetData, "id": project_id, "assetName": $("#addXcassetModal").children("div").children("center").children("#xcassetNameInput").val()},
+					    error: function (err) {
+					        console.log(err);
+
+					        $(".awesomeButton").prop("disabled", false);
+
+					        $("output").text("");
+				        	$("output").append('<br /><br /><span style="color:red;">An error occurred. Try again.</span>');
+					        // if (err) {
+					        // 	console.log("THERE WAS AN ERROR UPLOADING THE FILE");
+					        // }
+
+					    }, 
+					    success: function (data) {
+					        console.log(data);
+
+					        
+
+					        // if (data.Error) 
+					        // {
+					        // 	$("output").text("");
+					        // 	$("output").append('<br /><br /><span style="color:red;">An error occurred. Try again.</span>');
+					        // } else {
+					        // 	location.href = "#";
+						        
+					        // }
+
+					        if (data) {
+					        	$("#addXcassetModal").children("div").children("center").children("#xcassetNameInput").val("Success!");
+
+					    		setTimeout(function() {
+					    			$("#addXcassetModal").children("div").children("center").children("#xcassetNameInput").val("");
+					    			location.href = "#";
+
+					    			$(".awesomeButton").prop("disabled", false);
+
+					    		}, 3000);
+
+					        }
+
+
+			;
+
+
+					        
+
+					    },
+					    dataType: "json"
+					}); // end ajax request
+
+				} // end if text field length
+			} // end if assetList.length
+
+		} // end addXcasset function
+
+
 
 
 

@@ -800,11 +800,11 @@
         <p>This allows you to add a new .imageset to your project's .xcassets folder. You will then be able to access the image within your code. Just upload a PNG file with your image, and give it a name. Ringo will handle the rest.</p><br />
         <center>
         <input type="text" class="modalInput" id="xcassetNameInput" placeholder="MyAwesomeAssetName"/><br /><br />
-        <input type="file" id="assets" name="files[]" style="font-family: 'Roboto'; font-weight: 300;"/>
+        <input type="file" id="assets" name="files[]" style="font-family: 'Roboto'; font-weight: 300;" accept="image/png"/>
         <output id="assetList"></output>
 
         <br /><br />
-        <button class="awesomeButton" id="uploadProjectToServerButton" onclick="javascript: addFileToProject();">Add Xcode Asset</button>
+        <button class="awesomeButton" id="uploadProjectToServerButton" onclick="javascript: addXcasset();">Add Xcode Asset</button>
         </center>
     </div>
 </div>

@@ -620,20 +620,51 @@ app.post('/add-image-xcasset', function (req, res) {
 
     console.log(('.xcassets Directory Name: ' + xcassetsDirName).cyan);
 
-    fs.writeFile(project_id + "/" + id_dir + "/" + xc_projName + "/" + xcassetsDirName + "/" + xcassetName + ".imageset/"+xcassetName+".png", req.body.file, 'base64', function (err) {
+    var base64Data = req.body.file.replace(/^data:image\/png;base64,/, "");
+
+
+    cd(project_id + "/" + id_dir + "/" + xc_projName + "/" + xcassetsDirName);
+
+    // console.log(ls());
+
+    exec('mkdir "'+xcassetName+'.imageset"', function (err, out, stderror) {
         if (err) {
-          res.statusCode = 500;
-          res.send({"Error": "There was an error creating your xcasset"});
-        } else {
-            var imageSetJSON = '{"images" : [{"idiom" : "universal","scale" : "1x","filename" : "Spaceship.png"},{"idiom" : "universal","scale" : "2x"},{"idiom" : "universal","scale" : "3x"},"info" : {"version" : 1,"author" : "xcode"}}'
-
-            fs.writeFile(project_id + "/" + id_dir + "/" + xc_projName + "/" + xcassetsDirName + "/" + xcassetName + ".imageset/Contents.json", imageSetJSON, function(err) {
-              
-
-            }); 
+          console.log(err);
         }
 
-    });
+          cd(buildProjects_path + "/"+project_id + "/" + id_dir + "/" + xc_projName + "/" + xcassetsDirName); // lets take it from the top
+
+          fs.writeFile(xcassetName + ".imageset/"+xcassetName+".png", base64Data, 'base64', function (err) {
+              // console.log(ls());
+
+              if (err) {
+                console.log(err);
+
+                res.statusCode = 500;
+                res.send({"Error": "There was an error creating your xcasset"});
+              } else {
+
+
+                  var imageSetJSON = '{"images" : [{"idiom" : "universal","scale" : "1x","filename" : "'+xcassetName+'.png"},{"idiom" : "universal","scale" : "2x"},{"idiom" : "universal","scale" : "3x"},"info" : {"version" : 1,"author" : "xcode"}}'
+
+                  fs.writeFile(xcassetName + ".imageset/Contents.json", imageSetJSON, function(err) {
+                    if (err) {
+                      console.log(err);
+                      res.statusCode = 500;
+                      res.send({"Error": "There was an error creating your xcasset"});
+                    } else {
+                      // console.log();
+
+                      res.send({"Success":"Image xcasset successfully added."});
+
+                    }
+
+                  }); // end writeFile JSON
+              }
+
+          }); // end writeFile PNG
+    }); // end exec mkdir
+
 
   
 
