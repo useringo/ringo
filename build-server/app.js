@@ -665,7 +665,7 @@ app.post('/add-image-xcasset', function (req, res) {
     "version" : 1,\n\
     "author" : "xcode"\n\
   }\n\
-}'
+}';
 
                   fs.writeFile(xcassetName + ".imageset/Contents.json", imageSetJSON, function(err) {
                     if (err) {

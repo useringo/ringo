@@ -142,45 +142,97 @@ function loadFiles() {
 				files = data.files;
 
 
-				for (var i = 0; i < data.files.length; i++) {
+				// get the .xcassets files
+				$.ajax({
+				    type: 'POST',
+				    url: hostname+'/get-image-xcassets',
+				    data: {"id": project_id},
+				    error: function (err) {
+				    	
+				    	if (err) {
+							// Do nothin'
+							console.log(err);
+				    	}
 
-					console.log(data.files[i].name);
+				    }, 
+				    success: function (imageData) {
+				        // console.log(data);
 
-					$("#fileMenu").append('<div name="'+ data.files[i].name +'" onclick=\"javascript: currentFile = $(this).attr(\'name\'); $(\'#fileMenu div\').css({\'background-color\': \'transparent\', \'font-weight\': \'normal\', \'color\': \'black\'}); $(this).css({\'background-color\': \'rgb(14, 101, 227)\', \'font-weight\':\'bold\', \'color\':\'white\'}); updateEditor();\">'+start_and_end(data.files[i].name) + '</div><span class="deleteFileButton" name="'+ data.files[i].name +'" onclick="javascript: deleteFile($(this).attr(\'name\'));">-</span>');
+				        if (imageData) { // that means it worked...
+				        	var images = imageData.files;
+					        // images.shift();
+					        images.splice(images.length - 1, 1);
 
-					$("#fileMenu div:nth-child(1)").css({'background-color': 'rgb(14, 101, 227)', 'font-weight':'bold', 'color':'white'});
-					
-
-				}
-
-				editor.setValue(files[0].data, -1);
-				editor.scrollToLine(0);
-				currentFile = files[0].name;
-
-				$.get(hostname+'/get-project-details/'+project_id, function (data) {
-					console.log(data)
-
-					project_name = data.project.name;
-
-					$("#appName").text(start_and_end(project_name));
-					$("#fileMenu").prepend("<div style=\"margin-top: 5px;\"><b><img height=\"20pt\" style=\"vertical-align:middle;margin-top: -5px;\" src=\"img/folder-icon.svg\" />&nbsp;"+ start_and_end(data.project.name) +"</b></div><span id=\"addFileButton\">+</span>");
-
-					// add addFileButton click listener
-					$("#addFileButton").click(function() { // add file to your project directory
-						if (project_id.length > 0) {
-							// console.log("Openi);
-							location.href = "#addFileModal";	
-						} 
-						
-					});
+					        // add a new property to the image
+					        for (var l = 0; l < images.length; l++) {
+					        	var tmp = images[l];
+					        	tmp["type"] = "xcasset";
+					        	images[l] = tmp;
+					        }
+					      
+							files = files.concat(images);
 
 
+							// console.log()
+							console.log(files);
 
-					// update the editor
-					updateEditor();
+
+							for (var i = 0; i < files.length; i++) {
+
+								console.log(files[i].name);
+
+								if (files[i].name.includes("image")) { // this would indicate that the file that is being processed is an imageset, a non-removable file
+									$("#fileMenu").append('<div name="'+ files[i].name +'" onclick=\"javascript: currentFile = $(this).attr(\'name\'); $(\'#fileMenu div\').css({\'background-color\': \'transparent\', \'font-weight\': \'normal\', \'color\': \'black\'}); $(this).css({\'background-color\': \'rgb(14, 101, 227)\', \'font-weight\':\'bold\', \'color\':\'white\'}); updateEditor();\">'+ start_and_end(files[i].name) + '</div>');
+								} else {
+									$("#fileMenu").append('<div name="'+ files[i].name +'" onclick=\"javascript: currentFile = $(this).attr(\'name\'); $(\'#fileMenu div\').css({\'background-color\': \'transparent\', \'font-weight\': \'normal\', \'color\': \'black\'}); $(this).css({\'background-color\': \'rgb(14, 101, 227)\', \'font-weight\':\'bold\', \'color\':\'white\'}); updateEditor();\">'+ start_and_end(files[i].name) + '</div><span class="deleteFileButton" name="'+ files[i].name +'" onclick="javascript: deleteFile($(this).attr(\'name\'));">-</span>');
+								}
+
+								$("#fileMenu div:nth-child(1)").css({'background-color': 'rgb(14, 101, 227)', 'font-weight':'bold', 'color':'white'});
+								
+
+							}
+
+							editor.setValue(files[0].data, -1);
+							editor.scrollToLine(0);
+							currentFile = files[0].name;
+
+							$.get(hostname+'/get-project-details/'+project_id, function (data) {
+								console.log(data)
+
+								project_name = data.project.name;
+
+								$("#appName").text(start_and_end(project_name));
+								$("#fileMenu").prepend("<div style=\"margin-top: 5px;\"><b><img height=\"20pt\" style=\"vertical-align:middle;margin-top: -5px;\" src=\"img/folder-icon.svg\" />&nbsp;"+ start_and_end(data.project.name) +"</b></div><span id=\"addFileButton\">+</span>");
+
+								// add addFileButton click listener
+								$("#addFileButton").click(function() { // add file to your project directory
+									if (project_id.length > 0) {
+										// console.log("Openi);
+										location.href = "#addFileModal";	
+									} 
+									
+								});
 
 
-				});
+
+
+
+								// update the editor
+								updateEditor();
+
+
+							});
+
+
+
+				        }
+
+				    },
+				    dataType: "json"
+				});	// end ajax request
+
+
+
 
 
 
@@ -515,11 +567,14 @@ function handleFileSelect(evt) {
 
 
 		function addXcasset() {
-			$(".awesomeButton").prop("disabled", true);
+			
 
 			if ($("#assetList").text().length > 0) {
 				if ($("#addXcassetModal").children("div").children("center").children("#xcassetNameInput").val().length > 0) {
 					console.log("Request to generate new xcasset approved.");
+
+					$(".awesomeButton").prop("disabled", true);
+
 			  		$.ajax({
 					    type: 'POST',
 					    url: hostname+'/add-image-xcasset',
@@ -529,8 +584,8 @@ function handleFileSelect(evt) {
 
 					        $(".awesomeButton").prop("disabled", false);
 
-					        $("output").text("");
-				        	$("output").append('<br /><br /><span style="color:red;">An error occurred. Try again.</span>');
+					        $("#assetList").text("");
+				        	$("#assetList").append('<br /><br /><span style="color:red;">An error occurred. Try again.</span>');
 					        // if (err) {
 					        // 	console.log("THERE WAS AN ERROR UPLOADING THE FILE");
 					        // }
@@ -556,6 +611,8 @@ function handleFileSelect(evt) {
 					    		setTimeout(function() {
 					    			$("#addXcassetModal").children("div").children("center").children("#xcassetNameInput").val("");
 					    			location.href = "#";
+
+					    			loadFiles();
 
 					    			$(".awesomeButton").prop("disabled", false);
 
@@ -594,8 +651,8 @@ function handleFileSelect(evt) {
 
 			        $(".awesomeButton").prop("disabled", false);
 
-			        $("output").text("");
-		        	$("output").append('<br /><br /><span style="color:red;">An error occurred. Try again.</span>');
+			        $("#list").text("");
+		        	$("#list").append('<br /><br /><span style="color:red;">An error occurred. Try again.</span>');
 			        // if (err) {
 			        // 	console.log("THERE WAS AN ERROR UPLOADING THE FILE");
 			        // }
@@ -608,8 +665,8 @@ function handleFileSelect(evt) {
 
 			        if (data.Error) 
 			        {
-			        	$("output").text("");
-			        	$("output").append('<br /><br /><span style="color:red;">An error occurred. Try again.</span>');
+			        	$("#list").text("");
+			        	$("#list").append('<br /><br /><span style="color:red;">An error occurred. Try again.</span>');
 			        } else {
 			        	location.href = "#";
 
@@ -796,33 +853,33 @@ function handleFileSelect(evt) {
 	  		console.log(fileElement); // fileName to delete
 
 	  		$.ajax({
-				    type: 'POST',
-				    url: hostname+'/delete-file',
-				    data: {"fileName": fileElement, "id": project_id},
-				    error: function (err) {
-				    	
+			    type: 'POST',
+			    url: hostname+'/delete-file',
+			    data: {"fileName": fileElement, "id": project_id},
+			    error: function (err) {
+			    	
 
-				    	if (err) {
-							// Do nothin'
-							console.log(err);
-				    	}
+			    	if (err) {
+						// Do nothin'
+						console.log(err);
+			    	}
 
-				    }, 
-				    success: function (data) {
-				        console.log(data);
+			    }, 
+			    success: function (data) {
+			        console.log(data);
 
-				        
+			        
 
-				        if (data) {
-				        	// that means it worked...
-							loadFiles();
+			        if (data) {
+			        	// that means it worked...
+						loadFiles();
 
-				        }
+			        }
 
 
-				    },
-				    dataType: "json"
-				});	// end ajax request
+			    },
+			    dataType: "json"
+			});	// end ajax request
 
 
 	  	}
