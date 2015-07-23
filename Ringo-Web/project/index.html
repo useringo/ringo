@@ -350,6 +350,7 @@
             padding-right: 5px;
             width: -webkit-calc(100% - 10px);
             width: calc(100% - 10px);
+            position:relative;
             /*border-bottom: 1px solid red;*/
 
         }
@@ -621,10 +622,37 @@
             -ms-transition: all 0.1s linear;
         }
 
+        .deleteFileButton {
+            position:absolute;
+            margin-top: -25px;
+            z-index: 10000000;
+            margin-left: -webkit-calc(100% - 25px);
+            margin-left: calc(100% - 25px);
+            font-size: 15pt;
+            color: red;
+
+            -webkit-transition: all 0.1s linear;
+            -moz-transition: all 0.1s linear;
+            -o-transition: all 0.1s linear;
+            -ms-transition: all 0.1s linear;
+
+            visibility: hidden;
+        }
+
+        #fileMenu:hover .deleteFileButton {
+            visibility: visible;
+        }
+
         #addFileButton:hover {
             font-size: 17pt;
             color:blue;
             cursor: pointer;
+        }
+
+        .deleteFileButton:hover {
+            font-size: 17pt;
+            color:blue;
+            cursor:pointer;
         }
 
         @media only screen and (max-width: 270px) {

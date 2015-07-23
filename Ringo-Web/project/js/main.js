@@ -144,7 +144,7 @@ function loadFiles() {
 
 					console.log(data.files[i].name);
 
-					$("#fileMenu").append('<div name="'+ data.files[i].name +'" onclick=\"javascript: currentFile = $(this).attr(\'name\'); $(\'#fileMenu div\').css({\'background-color\': \'transparent\', \'font-weight\': \'normal\', \'color\': \'black\'}); $(this).css({\'background-color\': \'rgb(14, 101, 227)\', \'font-weight\':\'bold\', \'color\':\'white\'}); updateEditor();\">'+start_and_end(data.files[i].name) + '</div>');
+					$("#fileMenu").append('<div name="'+ data.files[i].name +'" onclick=\"javascript: currentFile = $(this).attr(\'name\'); $(\'#fileMenu div\').css({\'background-color\': \'transparent\', \'font-weight\': \'normal\', \'color\': \'black\'}); $(this).css({\'background-color\': \'rgb(14, 101, 227)\', \'font-weight\':\'bold\', \'color\':\'white\'}); updateEditor();\">'+start_and_end(data.files[i].name) + '</div><span class="deleteFileButton" name="'+ data.files[i].name +'" onclick="javascript: deleteFile($(this).attr(\'name\'));">-</span>');
 
 					$("#fileMenu div:nth-child(1)").css({'background-color': 'rgb(14, 101, 227)', 'font-weight':'bold', 'color':'white'});
 					
@@ -171,6 +171,7 @@ function loadFiles() {
 						} 
 						
 					});
+
 
 
 					// update the editor
@@ -660,6 +661,42 @@ function handleFileSelect(evt) {
 				});	// end ajax request
 
 	  		}
+	  	}
+
+
+	  	function deleteFile(fileElement) {
+	  		console.log(fileElement); // fileName to delete
+
+	  		$.ajax({
+				    type: 'POST',
+				    url: hostname+'/delete-file',
+				    data: {"fileName": fileElement, "id": project_id},
+				    error: function (err) {
+				    	
+
+				    	if (err) {
+							// Do nothin'
+							console.log(err);
+				    	}
+
+				    }, 
+				    success: function (data) {
+				        console.log(data);
+
+				        
+
+				        if (data) {
+				        	// that means it worked...
+							loadFiles();
+
+				        }
+
+
+				    },
+				    dataType: "json"
+				});	// end ajax request
+
+
 	  	}
 
 
