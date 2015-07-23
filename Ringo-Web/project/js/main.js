@@ -208,7 +208,7 @@ function loadFiles() {
 								$("#addFileButton").click(function() { // add file to your project directory
 									if (project_id.length > 0) {
 										// console.log("Openi);
-										location.href = "#addFileModal";	
+										location.href = "#addFileFork";	
 									} 
 									
 								});
