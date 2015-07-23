@@ -20,7 +20,6 @@
 var dotenv = require('dotenv');
 dotenv.load();
 
-var async = require('async');
 var bodyParser = require('body-parser');
 var colors = require('colors');
 var fs = require('fs');
@@ -621,15 +620,29 @@ app.post('/add-image-xcasset', function (req, res) {
 
     console.log(('.xcassets Directory Name: ' + xcassetsDirName).cyan);
 
-    var imageSetJSON = '{"images" : [{"idiom" : "universal","scale" : "1x","filename" : "Spaceship.png"},{"idiom" : "universal","scale" : "2x"},{"idiom" : "universal","scale" : "3x"},"info" : {"version" : 1,"author" : "xcode"}}'
+    fs.writeFile(project_id + "/" + id_dir + "/" + xc_projName + "/" + xcassetsDirName + "/" + xcassetName + ".imageset/", req.body.file, 'base64', function (err) {
+        if (err) {
+          res.statusCode = 500;
+          res.send({"Error": "There was an error creating your xcasset"});
+        } else {
+            var imageSetJSON = '{"images" : [{"idiom" : "universal","scale" : "1x","filename" : "Spaceship.png"},{"idiom" : "universal","scale" : "2x"},{"idiom" : "universal","scale" : "3x"},"info" : {"version" : 1,"author" : "xcode"}}'
 
-    fs.writeFile(project_id + "/" + id_dir + "/" + xc_projName + "/" + xcassetsDirName + "/" + xcassetName + ".imageset/Contents.json", imageSetJSON, function(err) {
-      
+            fs.writeFile(project_id + "/" + id_dir + "/" + xc_projName + "/" + xcassetsDirName + "/" + xcassetName + ".imageset/Contents.json", imageSetJSON, function(err) {
+              
 
-    });    
+            }); 
+        }
+
+    });
+
+  
 
 
 
+
+  } else {
+    res.statusCode = 500;
+    res.send({"Error": "Invalid parameters"});
 
   } // end if req.body.id
 
