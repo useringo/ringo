@@ -645,7 +645,27 @@ app.post('/add-image-xcasset', function (req, res) {
               } else {
 
 
-                  var imageSetJSON = '{"images" : [{"idiom" : "universal","scale" : "1x","filename" : "'+xcassetName+'.png"},{"idiom" : "universal","scale" : "2x"},{"idiom" : "universal","scale" : "3x"},"info" : {"version" : 1,"author" : "xcode"}}'
+                  var imageSetJSON = '{\n\
+  "images" : [\n\
+    {\n\
+      "idiom" : "universal",\n\
+      "scale" : "1x",\n\
+      "filename" : "'+ xcassetName +'.png"\n\
+    },\n\
+    {\n\
+      "idiom" : "universal",\n\
+      "scale" : "2x"\n\
+    },\n\
+    {\n\
+      "idiom" : "universal",\n\
+      "scale" : "3x"\n\
+    }\n\
+  ],\n\
+  "info" : {\n\
+    "version" : 1,\n\
+    "author" : "xcode"\n\
+  }\n\
+}'
 
                   fs.writeFile(xcassetName + ".imageset/Contents.json", imageSetJSON, function(err) {
                     if (err) {
