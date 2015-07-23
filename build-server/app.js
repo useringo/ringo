@@ -905,14 +905,61 @@ app.post('/delete-file', function (req, res) {
           if (err) {
             res.statusCode = 500;
             res.send({"Error": "There was an error deleting the file."});
-            
+
           } else {
-            res.send({"Success": "Successfully deleted file named "+deleteFileName});
-          }
+
+            cd(buildProjects_path + "/" + project_uid + "/" + id_dir + "/" + xc_projName + ".xcodeproj");
+
+            // Again another test to figure out which directory the server is in
+            // console.log(ls());
+            
+            // unfortunately we have to dig down to farthest depths of the project filetree to delete the file, as well as modify the core file of the .xcodeproj
+            fs.readFile("project.pbxproj", 'utf-8', function (err, data) {
+              if (err) {
+                res.statusCode = 500;
+                res.send({"Error": "There was an error deleting the file."});                
+              } else {
+                // console.log(data);
+                var lines = data.split('\n');
+                console.log((lines.length + ' lines of code in the project.pbxproj').green);
+
+                for (var h = 0; h < lines.length; h++) {
+                  // find the various lines that contain the file we want to delete
+                  if (lines[h].indexOf(deleteFileName) > -1) {
+                    console.log(("Line "+ (h+1).toString() + " contains " + deleteFileName).red);
+                    lines.splice(h, 1); // delete the line
+
+                  }
+                }
+
+                var newFile = lines.join('\n');
+
+                fs.writeFile("project.pbxproj", newFile, function (err) {
+                  if (err) {
+                    res.statusCode = 500;
+                    res.send({"Error": "There was an error deleting the file."}); 
+                  
+                  } else {
+                    console.log(('Successfully rewrote project.pbxproj and deleted file named '+deleteFileName).green);
+
+                    res.send({"Success": "Successfully deleted file named "+deleteFileName}); // finally, after that long process, we can finally notify the user that all is well
+
+                  } //
+                }); // end writeFile
+
+
+              } // end if err within readFile
+
+
+            }); // end readFile
+
+
+            
+          } // end if err rm -rf
 
 
 
-        });
+        }); // end exec rm -rf
 
 
 
