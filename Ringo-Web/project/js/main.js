@@ -181,7 +181,7 @@ function loadFiles() {
 
 								console.log(files[i].name);
 
-								if (files[i].name.includes("image")) { // this would indicate that the file that is being processed is an imageset, a non-removable file
+								if (files[i].type == "xcasset") { // this would indicate that the file that is being processed is an imageset, a non-removable file
 									$("#fileMenu").append('<div name="'+ files[i].name +'" onclick=\"javascript: currentFile = $(this).attr(\'name\'); $(\'#fileMenu div\').css({\'background-color\': \'transparent\', \'font-weight\': \'normal\', \'color\': \'black\'}); $(this).css({\'background-color\': \'rgb(14, 101, 227)\', \'font-weight\':\'bold\', \'color\':\'white\'}); updateEditor();\">'+ start_and_end(files[i].name) + '</div>');
 								} else {
 									$("#fileMenu").append('<div name="'+ files[i].name +'" onclick=\"javascript: currentFile = $(this).attr(\'name\'); $(\'#fileMenu div\').css({\'background-color\': \'transparent\', \'font-weight\': \'normal\', \'color\': \'black\'}); $(this).css({\'background-color\': \'rgb(14, 101, 227)\', \'font-weight\':\'bold\', \'color\':\'white\'}); updateEditor();\">'+ start_and_end(files[i].name) + '</div><span class="deleteFileButton" name="'+ files[i].name +'" onclick="javascript: deleteFile($(this).attr(\'name\'));">-</span>');
