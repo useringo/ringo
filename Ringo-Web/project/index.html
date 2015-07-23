@@ -792,6 +792,23 @@
     </div>
 </div>
 
+<div id="addXcassetModal" class="modalDialog">
+    <div>
+        <a href="#close" title="Close" class="close">X</a>
+        <h2 style="color:black;">Add a New Xcode Asset</h2>
+        <p>Ringo is not guaranteed to save your projects on its servers, so we suggest that once you're done coding, you download your code locally, and reupload it to Ringo when you're ready to start hacking again.</p><br />
+        <p>This allows you to add a new .imageset to your project's .xcassets folder. You will then be able to access the image within your code. Just upload a PNG file with your image, and give it a name. Ringo will handle the rest.</p><br />
+        <center>
+        <input type="text" class="modalInput" id="xcassetNameInput" placeholder="MyAwesomeAssetName"/><br /><br />
+        <input type="file" id="assets" name="files[]" style="font-family: 'Roboto'; font-weight: 300;"/>
+        <output id="assetList"></output>
+
+        <br /><br />
+        <button class="awesomeButton" id="uploadProjectToServerButton" onclick="javascript: addFileToProject();">Add Xcode Asset</button>
+        </center>
+    </div>
+</div>
+
 
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>

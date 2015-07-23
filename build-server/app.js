@@ -620,7 +620,7 @@ app.post('/add-image-xcasset', function (req, res) {
 
     console.log(('.xcassets Directory Name: ' + xcassetsDirName).cyan);
 
-    fs.writeFile(project_id + "/" + id_dir + "/" + xc_projName + "/" + xcassetsDirName + "/" + xcassetName + ".imageset/", req.body.file, 'base64', function (err) {
+    fs.writeFile(project_id + "/" + id_dir + "/" + xc_projName + "/" + xcassetsDirName + "/" + xcassetName + ".imageset/"+xcassetName+".png", req.body.file, 'base64', function (err) {
         if (err) {
           res.statusCode = 500;
           res.send({"Error": "There was an error creating your xcasset"});
