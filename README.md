@@ -1,7 +1,8 @@
 # りんご (Ringo)
 
-![Hacking the Apple ecosystem](https://s-media-cache-ak0.pinimg.com/236x/2f/36/2a/2f362aa5457d9b373a261e20a358d7d6.jpg)
-
+<img alt="Hacking the Apple ecosystem" src="https://s-media-cache-ak0.pinimg.com/236x/2f/36/2a/2f362aa5457d9b373a261e20a358d7d6.jpg" height="250px" />
+<img alt="Steve Jobs would not approve of this open source madness" src="https://c1.staticflickr.com/7/6050/7000020847_4bfda0d049_b.jpg" height="250px" />
+<!--![Steve Jobs would not approve](https://c1.staticflickr.com/7/6050/7000020847_4bfda0d049_b.jpg)-->
 
 Wouldn't it be cool if we had the ability to build native mobile apps that normally require expensive hardware and advanced software, all in the browser?
 
