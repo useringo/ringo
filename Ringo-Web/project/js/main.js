@@ -196,13 +196,13 @@ function loadFiles() {
 							editor.scrollToLine(0);
 							currentFile = files[0].name;
 
-							$.get(hostname+'/get-project-details/'+project_id, function (data) {
-								console.log(data)
+							$.get(hostname+'/get-project-details/'+project_id, function (detailData) {
+								console.log(detailData)
 
-								project_name = data.project.name;
+								project_name = detailData.project.name;
 
 								$("#appName").text(start_and_end(project_name));
-								$("#fileMenu").prepend("<div style=\"margin-top: 5px;\"><b><img height=\"20pt\" style=\"vertical-align:middle;margin-top: -5px;\" src=\"img/folder-icon.svg\" />&nbsp;"+ start_and_end(data.project.name) +"</b></div><span id=\"addFileButton\">+</span>");
+								$("#fileMenu").prepend("<div style=\"margin-top: 5px;\"><b><img height=\"20pt\" style=\"vertical-align:middle;margin-top: -5px;\" src=\"img/folder-icon.svg\" />&nbsp;"+ start_and_end(detailData.project.name) +"</b></div><span id=\"addFileButton\">+</span>");
 
 								// add addFileButton click listener
 								$("#addFileButton").click(function() { // add file to your project directory
