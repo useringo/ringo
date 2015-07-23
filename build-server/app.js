@@ -636,6 +636,7 @@ app.post('/add-image-xcasset', function (req, res) {
   
 });
 
+
 // get the xcasset files
 app.post('/get-image-xcassets', function (req, res) {
   cd(buildProjects_path);
@@ -868,7 +869,60 @@ app.post('/add-file', function (req, res) {
 });
 
 
+// Delete a file from the Xcode project directory
 app.post('/delete-file', function (req, res) {
+    cd(buildProjects_path);
+
+    res.setHeader('Content-Type', 'application/json');
+
+    if (req.body.id) {
+        var project_uid = req.body.id;
+        var deleteFileName = req.body.fileName;
+
+
+        var id_dir = ls(project_uid)[0];
+
+        var xc_projName = ""; // suprisingly enough, people like to name their repository name differently than their .xcodeproj name
+        
+        for (var z = 0; z < ls(project_uid + "/" + id_dir).length; z++) {
+          if (ls(project_uid + "/" + id_dir)[z].indexOf('.xcodeproj') > -1) {
+            xc_projName = ls(project_uid + "/" + id_dir)[z].replace('.xcodeproj', '');
+          }
+        }
+
+        var xcpath = buildProjects_path + "/" + project_uid + "/" + id_dir + "/"+ xc_projName + ".xcodeproj";
+
+        cd(project_uid + "/" + id_dir + "/" + xc_projName);
+
+        // Simple test to know which directory the server is in
+        // console.log(ls());
+
+        // delete the file (this is way simpler than adding a new file)
+        exec('rm -rf "'+ deleteFileName +'"', function (err, out, stderror) {
+          console.log(('Attempting to remove file named '+deleteFileName).cyan);
+          console.log(JSON.stringify(ls()).yellow);
+
+          if (err) {
+            res.statusCode = 500;
+            res.send({"Error": "There was an error deleting the file."});
+            
+          } else {
+            res.send({"Success": "Successfully deleted file named "+deleteFileName});
+          }
+
+
+
+        });
+
+
+
+    } else {
+      res.statusCode = 500;
+      res.send({"Error": "Invalid parameters"});
+
+    }
+
+
 
 });
 
