@@ -151,14 +151,14 @@ app.post('/create-project', function(req, res) {
 
   cd(buildProjects_path);
 
-  // Figure out what directory the app is in
-  if (pwd() != '/Users/gautam/Desktop/git-repos/ringo/build-server/build-projects') {
-    cd('build-projects');
+  // // Figure out what directory the app is in
+  // if (pwd() != '/Users/gautam/Desktop/git-repos/ringo/build-server/build-projects') {
+  //   cd('build-projects');
      
-    if (pwd() != '/Users/gautam/Desktop/git-repos/ringo/build-server/build-projects') {
-      cd('../');
-    }
-  }
+  //   if (pwd() != '/Users/gautam/Desktop/git-repos/ringo/build-server/build-projects') {
+  //     cd('../');
+  //   }
+  // }
 
 
   // only execute if they specify the required parameters
