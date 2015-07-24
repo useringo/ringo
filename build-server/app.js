@@ -498,6 +498,8 @@ app.post('/get-project-contents', function(req, res) {
 
       tmp = tmp.split("/");
 
+      console.log(tmp);
+
       for (var j = 0; j < 11; j++) { // remove the eleven parent directories of the file
         tmp.shift();
       }
@@ -736,7 +738,7 @@ app.post('/get-image-xcassets', function (req, res) {
 
           tmp = tmp.split("/");
 
-          for (var j = 0; j < 11; j++) { // remove the eleven parent directories of the file
+          for (var j = 0; j < 11; j++) { // remove the eleven parent directories of the file, very hacky, definitely causes bugs
             tmp.shift();
           }
 
