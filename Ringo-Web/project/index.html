@@ -539,43 +539,50 @@
 
 
         .close {
-            background: #606061;
-            color: #FFFFFF;
+            /*background: #606061;*/
+            color: grey;
             line-height: 25px;
             position: absolute;
-            right: -12px;
+            right: 10px;
             text-align: center;
-            top: -10px;
+            top: 10px;
             width: 24px;
             text-decoration: none;
-            font-weight: bold;
-            -webkit-border-radius: 12px;
-            -moz-border-radius: 12px;
-            border-radius: 12px;
-            -moz-box-shadow: 1px 1px 3px #000;
+            font-weight: 100;
+            font-family:'Roboto';
+            font-size: 16pt;
+            /*-webkit-border-radius: 12px;*/
+            /*-moz-border-radius: 12px;*/
+            /*border-radius: 12px;*/
+            /*-moz-box-shadow: 1px 1px 3px #000;
             -webkit-box-shadow: 1px 1px 3px #000;
-            box-shadow: 1px 1px 3px #000;
+            box-shadow: 1px 1px 3px #000;*/
         }
 
-        .close:hover { background: #00d9ff; }
+        .close:hover { color: #2980b9; font-weight: 300;}
 
 
         .awesomeButton {
             /*height: 65%;*/
             height: 40px;
-            border-radius: 4px;
-            background-color:rgb(230, 230, 230);
-            width: 80%;
+            border-radius: 20px;
+            background-color:#3498db;
+            width: 100%;
             /*position:absolute;*/
             /*top: 6px;*/
             /*right: 110px;*/
-            border: none;
-            box-shadow: 0px 0.5px 0px 0px;
-            -webkit-box-shadow: 0px 0.5px 0px 0px;
-            font-family: 'Roboto';
+            border:none;
+            font-family: 'Roboto Condensed';
             font-weight: 100;
             font-size: 14pt;
-            color:black;
+            color:white;
+            text-transform: uppercase;
+
+        }
+
+        .awesomeButton:hover {
+            background-color:#2980b9;
+
         }
 
         output {
@@ -583,7 +590,7 @@
         }
 
         .awesomeButton:active {
-            background-color: rgb(210,210,210);
+            background-color: #27ae60;
             outline: none;
         }
 

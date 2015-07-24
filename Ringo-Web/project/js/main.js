@@ -201,8 +201,11 @@ function loadFiles() {
 
 								project_name = detailData.project.name;
 
-								$("#appName").text(start_and_end(project_name));
-								$("#fileMenu").prepend("<div style=\"margin-top: 5px;\"><b><img height=\"20pt\" style=\"vertical-align:middle;margin-top: -5px;\" src=\"img/folder-icon.svg\" />&nbsp;"+ start_and_end(detailData.project.name) +"</b></div><span id=\"addFileButton\">+</span>");
+								console.log(detailData.project.name)
+
+
+								$("#appName").text(start_and_end_title(project_name));
+								$("#fileMenu").prepend("<div style=\"margin-top: 5px;\"><b><img height=\"20pt\" style=\"vertical-align:middle;margin-top: -5px;\" src=\"img/folder-icon.svg\" />&nbsp;"+ start_and_end(project_name) +"</b></div><span id=\"addFileButton\">+</span>");
 
 								// add addFileButton click listener
 								$("#addFileButton").click(function() { // add file to your project directory
@@ -212,9 +215,6 @@ function loadFiles() {
 									} 
 									
 								});
-
-
-
 
 
 								// update the editor
@@ -438,6 +438,13 @@ function updateEditor() {
 function start_and_end(str) {
   if (str.length > 30) {
     return str.substr(0, 13) + '...' + str.substr(str.length-7, str.length);
+  }
+  return str;
+}
+
+function start_and_end_title(str) {
+  if (str.length > 20) {
+    return str.substr(0, 13) + '...' + str.substr(str.length-6, str.length);
   }
   return str;
 }
