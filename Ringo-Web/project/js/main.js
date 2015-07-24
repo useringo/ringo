@@ -97,10 +97,20 @@ function doneTyping () {
 	    	}
 	    }
 
+	    var withoutImages = [];
+
+	    for (var j = 0; j < files.length; j++) {
+	    	if (files[j].type != "xcasset") { // we don't want to resave the image files
+	    		withoutImages.push(files[j]);
+	    	}
+	    }
+	    //tests
+	    // console.log("File list without imagesets: "+ JSON.stringify(withoutImages));
+
 		$.ajax({
 			type: 'POST',
 			url: hostname+'/update-project-contents',
-			data: {"id": project_id, "files": files},
+			data: {"id": project_id, "files": withoutImages},
 			error: function (err) {
 				console.log(err);
 			}, 
@@ -127,6 +137,7 @@ function loadFiles() {
 	if (project_id.length > 0) {
 
 		$("#fileMenu").html("");
+
 
 		$.ajax({
 			type: 'POST',
@@ -316,11 +327,19 @@ function buildProject() {
 		    	}
 		    }
 
+		    var withoutImages = [];
+
+		    for (var j = 0; j < files.length; j++) {
+		    	if (files[j].type != "xcasset") { // we don't want to resave the image files
+		    		withoutImages.push(files[j]);
+		    	}
+		    }
+
 
 			$.ajax({
 				type: 'POST',
 				url: hostname+'/update-project-contents',
-				data: {"id": project_id, "files": files},
+				data: {"id": project_id, "files": withoutImages},
 				error: function (err) {
 					console.log(err);
 					console.log("Saving files prior to building...");
