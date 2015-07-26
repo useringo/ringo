@@ -11,6 +11,7 @@
         <!-- Place favicon.ico in the root directory -->
 
         <link href='http://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:400,300,700' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" href="css/main.css">
         <script src="js/vendor/modernizr-2.8.3.min.js"></script>
@@ -23,6 +24,27 @@
             position:relative;
             margin:auto;
         }*/
+
+        @font-face {
+          font-family: 'Proxima Nova'; src: url('img/ProximaNova-Light.otf');
+          font-weight: 300;
+        }
+
+        @font-face {
+          font-family: 'Proxima Nova'; src: url('img/ProximaNova-Regular.otf');
+          font-weight: 500;
+        }
+
+        @font-face {
+          font-family: 'Proxima Nova'; src: url('img/ProximaNova-Semibold.otf');
+          font-weight: 700;
+        }
+
+        @font-face {
+          font-family: 'Proxima Nova'; src: url('img/ProximaNova-Bold.otf');
+          font-weight: 900;
+        }
+
 
         .warning
         {
@@ -137,7 +159,7 @@
             display: inline-block;
             width:28%;
             float:right;
-            font-family:'Helvetica Neue';
+            font-family:'Proxima Nova';
             color:white;
             background-color: rgb(69, 69, 69);
             height: calc(100% - 40px);
@@ -146,6 +168,7 @@
             padding-top: 1%;
             padding-left:1%;
             padding-right:1%;
+            word-wrap:break-word;
             /*padding-bottom: 1%;*/
             overflow: scroll;
         }
@@ -158,17 +181,23 @@
         .status {
             background-color: rgb(251, 251, 251);
             height: 60%;
-            width: 510px;
+            width: 230px;
             position:absolute;
-            top: 9px;
+            top: 7px;
             border-radius: 5px;
             margin: 0 auto;
           left: 0;
           right: 0;
+          font-family: 'Proxima Nova';
           -webkit-transition: all 0.1s linear;
           -moz-transition: all 0.1s linear;
           -o-transition: all 0.1s linear;
           -ms-transition: all 0.1s linear;
+
+          /*font-size: 12pt;*/
+
+          box-shadow: 0px 0.5px 0px 0px;
+          -webkit-box-shadow: 0px 0.5px 0px 0px;
 
         }
 
@@ -180,12 +209,12 @@
             color:black;
             font-weight: bold;
             margin-left: 10px;
-            font-size: 9pt;
+            font-size: 10pt;
         }
 
         #statusTime {
             color:black;
-            font-size: 9pt;
+            font-size: 10pt;
         }
 
 

@@ -3,9 +3,7 @@
 /*
 
   Dependencies:
-  NODE.JS + Xcode 6.3 + Homebrew + Ruby 2.2.2
-
-  $ sudo npm install && gem install nomad-cli && brew install wget zip unzip
+  NODE.JS + Xcode 6.3
   
   You will also need to populate the .env file with the necessary environment variables in order for this script to run effectively
 

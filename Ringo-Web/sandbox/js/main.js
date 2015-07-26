@@ -2,7 +2,7 @@
 var typingTimer;                //timer identifier
 var doneTypingInterval = 1000;  //time in ms, 5 second for example
 
-var hostname = "https://2e9ab5a8.ngrok.com"
+var hostname = "http://localhost:3000"
 
 //on keyup, start the countdown
 $('#editor').keyup(function(){
