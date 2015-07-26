@@ -151,15 +151,6 @@ app.post('/create-project', function(req, res) {
 
   cd(buildProjects_path);
 
-  // // Figure out what directory the app is in
-  // if (pwd() != '/Users/gautam/Desktop/git-repos/ringo/build-server/build-projects') {
-  //   cd('build-projects');
-     
-  //   if (pwd() != '/Users/gautam/Desktop/git-repos/ringo/build-server/build-projects') {
-  //     cd('../');
-  //   }
-  // }
-
 
   // only execute if they specify the required parameters
   if (req.body.projectName) {
@@ -501,8 +492,20 @@ app.post('/get-project-contents', function(req, res) {
       console.log(tmp);
 
 
+      // find all of the unnecessary top level directories 
+      var dirCount = 0;
+      
+      for (var k = 0; k < tmp.length; k++) {
+        if (tmp[k] == project_id) {
+          break;
+        } else {
+          dirCount++;
+        }
+      }
 
-      for (var j = 0; j < 11; j++) { // remove the eleven parent directories of the file
+      console.log(dirCount+3) // should be the number of directories that need to be removed
+
+      for (var j = 0; j < dirCount+3; j++) { // remove the parent directories of the file
         tmp.shift();
       }
 
@@ -740,7 +743,19 @@ app.post('/get-image-xcassets', function (req, res) {
 
           tmp = tmp.split("/");
 
-          for (var j = 0; j < 11; j++) { // remove the eleven parent directories of the file, very hacky, definitely causes bugs
+          // find all of the unnecessary top level directories 
+          var dirCount = 0;
+          
+          for (var k = 0; k < tmp.length; k++) {
+            if (tmp[k] == project_id) {
+              break;
+            } else {
+              dirCount++;
+            }
+          }
+
+
+          for (var j = 0; j < dirCount+3; j++) { // remove the parent directories
             tmp.shift();
           }
 
