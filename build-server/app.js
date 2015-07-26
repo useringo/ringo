@@ -114,6 +114,10 @@ app.post('/build-sandbox', function (req, res) {
 // This is where we want to store the generated Xcode projects
 
 exec('cd build-projects', function (err, out, stderror) {
+  // set the build-projects path
+  console.log(("build-projects path:" + pwd()).green);
+  process.env["BUILD_PROJECTS_PATH"] = pwd();
+
   if (err) { // if error, assume that the directory is non-existent
     console.log('build-projects directory does not exist! creating one instead.'.red);
     console.log('downloading renameXcodeProject.sh...'.cyan);
@@ -123,7 +127,7 @@ exec('cd build-projects', function (err, out, stderror) {
       cd('build-projects');
       
       // download the great
-      exec('wget http://cdn.rawgit.com/gmittal/ringoPeripherals/master/cli-helpers/renameXcodeProject.sh && http://cdn.rawgit.com/gmittal/ringoPeripherals/master/cli-helpers/XcodeProjAdder', function (err, out, stderror) {
+      exec('wget http://cdn.rawgit.com/gmittal/ringoPeripherals/master/cli-helpers/renameXcodeProject.sh && wget http://cdn.rawgit.com/gmittal/ringoPeripherals/master/cli-helpers/XcodeProjAdder', function (err, out, stderror) {
         console.log(out);
 
         exec('chmod 755 renameXcodeProject.sh && chmod a+x XcodeProjAdder', function (err, out, stderror) {
@@ -143,7 +147,6 @@ exec('cd build-projects', function (err, out, stderror) {
 });
 
 var buildProjects_path = process.env.BUILD_PROJECTS_PATH;
-
 
 
 // Request to make a new Xcode project
