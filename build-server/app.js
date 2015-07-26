@@ -500,6 +500,8 @@ app.post('/get-project-contents', function(req, res) {
 
       console.log(tmp);
 
+
+
       for (var j = 0; j < 11; j++) { // remove the eleven parent directories of the file
         tmp.shift();
       }
@@ -1153,7 +1155,7 @@ app.post('/build-project', function (req, res) {
                           var screenEmbed = '<iframe src="https://appetize.io/embed/'+public_key+'?device=iphone6&scale=75&autoplay=false&orientation=portrait&deviceColor=white&screenOnly=true" width="282px" height="501px" frameborder="0" scrolling="no"></iframe>';
                           var deviceEmbed = '<iframe src="https://appetize.io/embed/'+public_key+'?device=iphone6&scale=75&autoplay=true&orientation=portrait&deviceColor=white" width="312px" height="653px" frameborder="0" scrolling="no"></iframe>';
 
-                          res.send({'simulatorURL': message.body.publicURL, "screenOnlyEmbedCode": screenEmbed, "fullDeviceEmbedCode": deviceEmbed, "console": out});
+                          res.send({'simulatorURL': message.body.publicURL, "screenOnlyEmbedCode": screenEmbed, "fullDeviceEmbedCode": deviceEmbed, "console": xcode_out});
                         } else {
                           res.send({"BUILD_FAILED": "There was an error building your application."});
                         }
