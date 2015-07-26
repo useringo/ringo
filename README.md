@@ -11,6 +11,12 @@ Wouldn't it be cool if we had the ability to build native mobile apps that norma
 ### What is it?
 Ringo is a mobile development environment, similar to Xcode, that (for now) allows you to build native iOS applications in Swift all from the comfort of your favorite browser.
 
+### Backstory
+This year, I decided to apply for the 2015 Apple Worldwide Developer Conference Student Scholarship. One usually applies by submitting an iOS or OS X application that talks about their skills and background, as well as showcases their creativity. I decided to write a very basic application (which you can view [here](https://github.com/gmittal/wwdc-2015)) , except I added one special feature, an in-app Swift compiler. Now, I wasn't actually doing any Swift compilation natively on the device. I was simply sending the code to an external server, having the server run the code through the Xcode Swift REPL, and then send the output back to the iOS device. 
+
+
+Shortly after submitting my application, I realized that similar things could be done for Xcode itself, and that it wouldn't be super difficult to write a RESTful API around Xcode's command line tools. Now, Ringo isn't just an API for the Xcode command line tools. Yes, the core project build process does take place using the ```xcode-build``` tool, but Ringo gives you a ton of other endpoints, that allow you to interface with other features of the Xcode project easily.
+
 
 ### How does it work?
 Ringo is actually very simple under the hood. Ringo compiles your project's code by sending it to a remote Mac server, compiling it with Xcode, and then sending the results back to your browser.
@@ -29,7 +35,7 @@ Ringo is actually very simple under the hood. Ringo compiles your project's code
 
 
 ### Plans for the Future
-Currently, I have a very basic version of Xcode working in the browser. It may not be as extensive as Xcode, but it still allows you to edit and run iOS apps in the browser. Some plans for the future include better debugging and logging in the browser. In addition, I plan on building a method of testing your iOS applications on your own iOS device via some OTA browser magic. I've also considered extending this project to the Android SDK, however, I've heard that it is possible to compile Swift applications into native Android applications, and am considering building a way to make Ringo generate APK files in addition to display an Android simulator.
+Currently, I have a very basic version of Xcode working in the browser. It may not be as extensive as Xcode, but it still allows you to edit and run iOS apps in the browser. I've also considered extending this project to the Android SDK, however, I've heard that it is possible to compile Swift applications into native Android applications, and am considering building a way to make Ringo generate APK files in addition to display an Android simulator.
 
 
 ### Installation
@@ -43,13 +49,11 @@ Clone the repository and navigate to your local copy of the build server:
 
 Install the various dependencies:
 
-``` $ sudo npm install && gem install nomad-cli && brew install wget zip unzip ```
+``` $ npm install && brew install wget && gem install nomad-cli```
 
-You're also going to need to populate your environment variables with some important information. For now, Ringo uses [Appetize](http://www.appetize.io) to run your iOS apps in an in-browser simulator. That does require an API key, but they are free and easy to get ahold of. You'll also need to provide the absolute path to a ```build-projects``` directory where the server will store local copies of the generated Xcode projects.
-
+You're also going to need to populate your environment variables with some important information. For now, Ringo uses [Appetize](http://www.appetize.io) to run your iOS apps in an in-browser simulator. That does require an API key, but they are free and easy to get ahold of. 
 ```
 APPETIZE_TOKEN=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-BUILD_PROJECTS_PATH=/Users/username/path/to/ringo/build-server/build-projects
 ```
 
 Once all of that is complete, it should be fairly easy to get the server running:
