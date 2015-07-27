@@ -385,7 +385,11 @@ app.post('/upload-project-zip', function (req, res) {
 
                 cd(buildProjects_path);
 
+                // sometimes operating systems like OS X generate a __MACOSX directory which confuses the system
+                rm('-rf', project_uid + "/__MACOSX");
+
                 var id_dir = ls(project_uid)[0];
+
 
                 var xc_projName = ""; // suprisingly enough, people like to name their repository name differently than their .xcodeproj name
                 
@@ -600,7 +604,7 @@ app.post('/get-project-contents', function(req, res) {
       
 
       if (!(tmp.indexOf(".xcassets") > -1)) {
-        // if (!(tmp.indexOf(".lproj") > -1)) {
+        if (!(tmp.indexOf(".DS_Store") > -1)) {
           if (!(tmp.indexOf(".sks") > -1)) {
             if (!(tmp.indexOf(".playground") > -1)) {
               if (!(tmp.indexOf(".png") > -1)) {
@@ -610,7 +614,7 @@ app.post('/get-project-contents', function(req, res) {
             } 
           }
                 
-        // }
+        }
       } // end filters
     
 
@@ -857,7 +861,10 @@ app.post('/get-image-xcassets', function (req, res) {
                     if (!(tmp.indexOf(".m") > -1)) {
                       if (!(tmp.indexOf(".h") > -1)) {
                         if (!(tmp.indexOf(".json") > -1)) {
-                          filtered.push(tmp);
+                          if (!(tmp.indexOf(".DS_Store") > -1)) {
+                            filtered.push(tmp);
+                          }
+                          
                         }
                          
                       }
@@ -1339,7 +1346,7 @@ app.get('/get-project-details/:app_id', function (req, res) {
   }
 
   console.log(('Xcode Project File Name: ' + xc_projName).red);
-
+  console.log(JSON.stringify({"project": {"name": xc_projName}}).green);
 
   res.send({"project": {"name": xc_projName}});
 

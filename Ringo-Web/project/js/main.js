@@ -136,6 +136,9 @@ function doneTyping () {
 function loadFiles() {
 	if (project_id.length > 0) {
 
+
+
+
 		$("#fileMenu").html("");
 
 
@@ -216,7 +219,7 @@ function loadFiles() {
 
 
 								$("#appName").text(start_and_end_title(project_name));
-								$("#fileMenu").prepend("<div style=\"margin-top: 5px;\"><b><img height=\"20pt\" style=\"vertical-align:middle;margin-top: -5px;\" src=\"img/folder-icon.svg\" />&nbsp;"+ start_and_end(project_name) +"</b></div><span id=\"addFileButton\">+</span>");
+								$("#fileMenu").prepend("<div style=\"margin-top: 5px;\"><b><img height=\"20pt\" style=\"vertical-align:middle;margin-top: -5px;\" src=\"img/folder-icon.svg\" />&nbsp;"+ start_and_end_title(project_name) +"</b></div><span id=\"addFileButton\">+</span>");
 
 								// add addFileButton click listener
 								$("#addFileButton").click(function() { // add file to your project directory
@@ -231,8 +234,9 @@ function loadFiles() {
 								// update the editor
 								updateEditor();
 
+							});							
 
-							});
+							
 
 
 
