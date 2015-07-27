@@ -167,7 +167,7 @@ function cleanBuildProjects() {
   // console.log("Checking the build-projects directory");
   var projects = ls();
 
-  console.log(projects);
+  console.log(JSON.stringify(projects).grey);
 
   var i = 0;
 
@@ -228,7 +228,7 @@ app.post('/create-project', function(req, res) {
 
         res.setHeader('Content-Type', 'application/json');
 
-        console.log(ls());
+        // console.log(ls()); // simple test
 
         // Using node's child_process.exec causes asynchronous issues... callbacks are my friend
         exec('mkdir '+ project_uid, function (err, out, stderror) {
@@ -302,8 +302,8 @@ app.get('/download-project/:id', function (req, res) {
   // before the user can download their file, you have to wipe the project's build directory
   cd(name);
 
-  console.log(pwd());
-  console.log(ls())
+  // console.log(pwd());
+  // console.log(ls())
 
   exec('rm -rf build', function (err, out, stderror) {
     console.log(out);
@@ -560,7 +560,7 @@ app.post('/get-project-contents', function(req, res) {
 
       tmp = tmp.split("/");
 
-      console.log(tmp);
+      // console.log(tmp);
 
 
       // find all of the unnecessary top level directories 
@@ -574,7 +574,7 @@ app.post('/get-project-contents', function(req, res) {
         }
       }
 
-      console.log(dirCount+3) // should be the number of directories that need to be removed
+      // console.log(dirCount+3) // should be the number of directories that need to be removed
 
       for (var j = 0; j < dirCount+3; j++) { // remove the parent directories of the file
         tmp.shift();
@@ -616,7 +616,7 @@ app.post('/get-project-contents', function(req, res) {
 
     function loopFiles() {
         var file = files[i];
-        console.log(file);
+        // console.log(file);
 
           fs.readFile(project_id+"/"+id_dir+"/"+xc_projName+"/"+file, 'utf8', function (err, data) {
             if (err) {
@@ -637,7 +637,7 @@ app.post('/get-project-contents', function(req, res) {
 
             if (i < files.length) {
               
-              console.log(i);
+              // console.log(i);
               loopFiles();
               i++;
             } else {
@@ -923,7 +923,7 @@ app.post('/get-image-xcassets', function (req, res) {
 
                 if (i < files.length) {
                   
-                  console.log(i);
+                  // console.log(i);
                   loopFiles();
                   i++;
                 } else {
