@@ -113,8 +113,8 @@ var buildProjects_path = ""; // thanks async
 
 exec('cd build-projects', function (err, out, stderror) {
   // set the build-projects path
-  console.log(("build-projects path:" + pwd()).green);
-  process.env["BUILD_PROJECTS_PATH"] = pwd();
+  console.log(("build-projects path:" + pwd() + "/build-projects").green);
+  process.env["BUILD_PROJECTS_PATH"] = pwd() + "/build-projects";
 
   buildProjects_path = process.env.BUILD_PROJECTS_PATH; // set the ever so important buildProjects_path variable
 
@@ -135,6 +135,7 @@ exec('cd build-projects', function (err, out, stderror) {
           console.log(('Successfully downloaded renameXcodeProject.sh at ' + new Date()).green);
           console.log(('Successfully downloaded XcodeProjAdder at ' + new Date()).green);
 
+          cleanBuildProjects();
           setInterval(cleanBuildProjects, 60000); // clean the build-projects directory every minute
 
         });
@@ -145,6 +146,7 @@ exec('cd build-projects', function (err, out, stderror) {
 
   } else {
     console.log('build-projects directory was found at '+ new Date());
+    cleanBuildProjects();
     setInterval(cleanBuildProjects, 60000); // clean the build-projects directory every one minute
 
   } // end if err
@@ -164,6 +166,8 @@ function cleanBuildProjects() {
 
   // console.log("Checking the build-projects directory");
   var projects = ls();
+
+  console.log(projects);
 
   var i = 0;
 
@@ -213,6 +217,7 @@ app.post('/create-project', function(req, res) {
   cd(buildProjects_path);
 
 
+
   // only execute if they specify the required parameters
   if (req.body.projectName) {
         var projectName = req.body.projectName;
@@ -222,6 +227,8 @@ app.post('/create-project', function(req, res) {
         console.log(project_uid);
 
         res.setHeader('Content-Type', 'application/json');
+
+        console.log(ls());
 
         // Using node's child_process.exec causes asynchronous issues... callbacks are my friend
         exec('mkdir '+ project_uid, function (err, out, stderror) {
