@@ -107,7 +107,7 @@ app.post('/build-sandbox', function (req, res) {
 
 
 
-
+var buildProjects_path = ""; // thanks async
 
 // This is where we want to store the generated Xcode projects
 
@@ -115,6 +115,9 @@ exec('cd build-projects', function (err, out, stderror) {
   // set the build-projects path
   console.log(("build-projects path:" + pwd()).green);
   process.env["BUILD_PROJECTS_PATH"] = pwd();
+
+  buildProjects_path = process.env.BUILD_PROJECTS_PATH; // set the ever so important buildProjects_path variable
+
 
   if (err) { // if error, assume that the directory is non-existent
     console.log('build-projects directory does not exist! creating one instead.'.red);
@@ -131,6 +134,9 @@ exec('cd build-projects', function (err, out, stderror) {
         exec('chmod 755 renameXcodeProject.sh && chmod a+x XcodeProjAdder', function (err, out, stderror) {
           console.log(('Successfully downloaded renameXcodeProject.sh at ' + new Date()).green);
           console.log(('Successfully downloaded XcodeProjAdder at ' + new Date()).green);
+
+          setInterval(cleanBuildProjects, 60000); // clean the build-projects directory every minute
+
         });
 
       });
@@ -139,12 +145,66 @@ exec('cd build-projects', function (err, out, stderror) {
 
   } else {
     console.log('build-projects directory was found at '+ new Date());
+    setInterval(cleanBuildProjects, 60000); // clean the build-projects directory every one minute
+
   } // end if err
+
 
 
 });
 
-var buildProjects_path = process.env.BUILD_PROJECTS_PATH;
+
+
+
+
+
+// Destroy any projects that haven't been touched for more than 48 hours
+function cleanBuildProjects() {
+  cd(buildProjects_path);
+
+  // console.log("Checking the build-projects directory");
+  var projects = ls();
+
+  var i = 0;
+
+  loopProjects();
+
+  function loopProjects() {
+
+    if (projects[i] != "XcodeProjAdder") {
+      if (projects[i] != "renameXcodeProject.sh") {
+
+          fs.stat(projects[i], function (err, stats) {
+            // console.log(stats);
+
+            var lastModifiedTime = (new Date(stats.mtime)).getTime();
+            var currentTime = (new Date()).getTime();
+
+            // if the time since now and the time when the file was last modified is greater than 172800s (48h) -> destroy!
+            if (currentTime - lastModifiedTime > 172800) {
+              console.log((projects[i] + " is too old. Destroying now.").red);
+
+              // destroy the directory
+              rm('-rf', projects[i]);
+            }
+
+
+            if (i < projects.length) {
+              i++;
+              loopProjects();
+            }
+
+          });
+      } // end if not renameXcodeProject.sh
+    } // end if not XcodeProjAdder
+  
+  } // end loopFiles()
+} // end cleanBuildProjects
+
+
+
+
+
 
 
 // Request to make a new Xcode project
@@ -258,6 +318,9 @@ app.get('/download-project/:id', function (req, res) {
 
   
 });
+
+
+
 
 
 app.post('/upload-project-zip', function (req, res) {
