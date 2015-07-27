@@ -20,10 +20,26 @@ dotenv.load();
 
 var bodyParser = require('body-parser');
 var colors = require('colors');
-var fs = require('fs');
 var express = require('express');
+var fs = require('fs');
+var Keen = require("keen.io");
 var request = require('request');
+var satelize = require('satelize');
 require('shelljs/global');
+
+// internal analytics service
+
+
+var client;
+
+if (process.env.KEEN_PROJECT_ID) {
+
+  client = Keen.configure({
+      projectId: process.env.KEEN_PROJECT_ID,
+      writeKey: process.env.KEEN_WRITE_KEY
+  });
+
+}
 
 var exec = require('child_process').exec;
 
