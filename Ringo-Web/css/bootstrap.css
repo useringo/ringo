@@ -777,6 +777,7 @@ h3 {
 
 h4 {
   font-size: 17.5px;
+  color: green;
 }
 
 h5 {
@@ -4085,6 +4086,8 @@ input[type="submit"].btn.btn-mini {
 .nav-tabs > .active > a:focus {
   color: #555555;
   cursor: default;
+
+
   background-color: #ffffff;
   border: 1px solid #ddd;
   border-bottom-color: transparent;
@@ -4098,13 +4101,14 @@ input[type="submit"].btn.btn-mini {
   -webkit-border-radius: 5px;
      -moz-border-radius: 5px;
           border-radius: 5px;
+  color: #d35400;
 }
 
 .nav-pills > .active > a,
 .nav-pills > .active > a:hover,
 .nav-pills > .active > a:focus {
   color: #ffffff;
-  background-color: #0088cc;
+  background-color: #d35400;
 }
 
 .nav-stacked > li {
