@@ -974,8 +974,8 @@ app.post('/add-file', function (req, res) {
     var project_uid = req.body.id;
     var newFileName = req.body.fileName;
 
-
-
+    //removeAllSpaces
+    newFileName = newFileName.split(" ").join("");
 
     var id_dir = ls(project_uid)[0];
 
@@ -999,7 +999,7 @@ app.post('/add-file', function (req, res) {
       if (currentFiles[l] == newFileName + ".swift") {
         console.log("The file that is being added already exists".red);
 
-        newFileName += " copy";
+        newFileName += "Copy";
       }
     }
 
