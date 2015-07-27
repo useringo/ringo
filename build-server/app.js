@@ -975,6 +975,8 @@ app.post('/add-file', function (req, res) {
     var newFileName = req.body.fileName;
 
 
+
+
     var id_dir = ls(project_uid)[0];
 
     var xc_projName = ""; // suprisingly enough, people like to name their repository name differently than their .xcodeproj name
@@ -988,6 +990,19 @@ app.post('/add-file', function (req, res) {
     var xcpath = buildProjects_path + "/" + project_uid + "/" + id_dir + "/"+ xc_projName + ".xcodeproj";
 
     cd(project_uid + "/" + id_dir + "/" + xc_projName);
+
+    // make sure there are no copies of the exact same file
+    var currentFiles = ls();
+
+    
+    for (var l = 0; l < currentFiles.length; l++) {
+      if (currentFiles[l] == newFileName + ".swift") {
+        console.log("The file that is being added already exists".red);
+
+        newFileName += " copy";
+      }
+    }
+
 
     // Simple test to know which directory the server is in
     // console.log(ls());
