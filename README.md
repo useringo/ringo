@@ -63,6 +63,9 @@ Once all of that is complete, it should be fairly easy to get the server running
 The server should spit out an ngrok localhost tunnel which should allow you to access the server externally, allowing you to get up and running with hacking it.
 
 ### License
+
+##### [TL;DR](https://tldrlegal.com/license/mit-license)
+
 The MIT License (MIT)
 
 Copyright (c) 2015 Gautam Mittal
