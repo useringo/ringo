@@ -185,7 +185,7 @@ function cleanBuildProjects() {
             var currentTime = (new Date()).getTime();
 
             // if the time since now and the time when the file was last modified is greater than 172800s (48h) -> destroy!
-            if (currentTime - lastModifiedTime > 172800) {
+            if (currentTime - lastModifiedTime > 172800000) {
               console.log((projects[i] + " is too old. Destroying now.").red);
 
               // destroy the directory
