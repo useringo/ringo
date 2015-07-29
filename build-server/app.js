@@ -75,26 +75,29 @@ var secure_serverURL = process.env.SECURE_HOSTNAME;
       }
       console.log(("Server IP address: " + ip).cyan);
 
-      satelize.satelize({ip:ip}, function(err, geoData) {
-        // if data is JSON, we may wrap it in js object 
-        var obj = JSON.parse(geoData);
+      if (typeof client != "undefined") { // only run if analytics are already set up
+        satelize.satelize({ip:ip}, function(err, geoData) {
+          // if data is JSON, we may wrap it in js object 
+          var obj = JSON.parse(geoData);
+        
+          var location = obj.city + ", " + obj.region_code + ", " + obj.country_code3;
+          var isp = obj.isp;
+          var country = obj.country;
+          var timezone = obj.timezone;
+
+          console.log(location);
+
+          client.addEvent("on_start_server", {"location": location, "isp": isp, "country": country, "timezone": timezone}, function(err, res) {
+              if (err) {
+                  console.log("Oh no, an error logging on_start_server".red);
+              } else {
+                  console.log("Event on_start_server logged".green);
+              }
+          }); // end client addEvent
+
+        }); // end satelize
+      }
       
-        var location = obj.city + ", " + obj.region_code + ", " + obj.country_code3;
-        var isp = obj.isp;
-        var country = obj.country;
-        var timezone = obj.timezone;
-
-        console.log(location);
-
-        client.addEvent("on_start_server", {"location": location, "isp": isp, "country": country, "timezone": timezone}, function(err, res) {
-            if (err) {
-                console.log("Oh no, an error logging on_start_server".red);
-            } else {
-                console.log("Event on_start_server logged".green);
-            }
-        }); // end client addEvent
-
-      }); // end satelize
   }); // end getIP
 
 
@@ -133,11 +136,14 @@ app.post('/build-sandbox', function (req, res) {
 
       var ip = req.connection.remoteAddress;
 
-      satelize.satelize({ip:ip}, function(err, geoData) {
+      if (typeof client != "undefined") { // only run if the user has set up analytics
+        satelize.satelize({ip:ip}, function(err, geoData) {
           // if data is JSON, we may wrap it in js object 
           if (err) {
             console.log("There was an error getting the user's location.");
           } else {
+              console.log(geoData);
+
               var obj = JSON.parse(geoData);
             
               var location = obj.city + ", " + obj.region_code + ", " + obj.country_code3;
@@ -161,6 +167,8 @@ app.post('/build-sandbox', function (req, res) {
 
           } // end error handling
         }); // end satelize
+      }
+      
 
 
         console.log('Following sandbox executed at '+ new Date());
@@ -312,35 +320,41 @@ app.post('/create-project', function(req, res) {
 
         // analytics
         var ip = req.connection.remoteAddress;
+        console.log("Request made from: " + ip);
 
-        satelize.satelize({ip:ip}, function(err, geoData) {
-            // if data is JSON, we may wrap it in js object 
-            if (err) {
-              console.log("There was an error getting the user's location.");
-            } else {
-                var obj = JSON.parse(geoData);
-              
-                var location = obj.city + ", " + obj.region_code + ", " + obj.country_code3;
-                var isp = obj.isp;
-                var country = obj.country;
-                var timezone = obj.timezone;
+        if (typeof client != "undefined") {
+          satelize.satelize({ip:ip}, function(err, geoData) {
+              // if data is JSON, we may wrap it in js object 
+              if (err) {
+                console.log("There was an error getting the user's location.");
+              } else {
+                  console.log(geoData);
 
-                // console.log(location);
+                  var obj = JSON.parse(geoData);
+                
+                  var location = obj.city + ", " + obj.region_code + ", " + obj.country_code3;
+                  var isp = obj.isp;
+                  var country = obj.country;
+                  var timezone = obj.timezone;
 
-                var project_nomen = req.body.projectName
+                  // console.log(location);
 
-                client.addEvent("project_created", {"location": location, "isp": isp, "country": country, "timezone": timezone, "name": project_nomen}, function(err, res) {
-                    if (err) {
-                        console.log("Oh no, an error logging project_created".red);
-                    } else {
-                        console.log("Event project_created logged".green);
-                    }
-                }); // end client addEvent
+                  var project_nomen = req.body.projectName
+
+                  client.addEvent("project_created", {"location": location, "isp": isp, "country": country, "timezone": timezone, "name": project_nomen}, function(err, res) {
+                      if (err) {
+                          console.log("Oh no, an error logging project_created".red);
+                      } else {
+                          console.log("Event project_created logged".green);
+                      }
+                  }); // end client addEvent
 
 
 
-            } // end error handling
-          }); // end satelize
+              } // end error handling
+            }); // end satelize
+        }
+
 
 
 
@@ -421,6 +435,46 @@ app.post('/create-project', function(req, res) {
 app.get('/download-project/:id', function (req, res) {
   cd(buildProjects_path);
 
+
+  // analytics
+  var ip = req.connection.remoteAddress;
+  console.log("Request made from: " + ip);
+
+  if (typeof client != "undefined") {
+    satelize.satelize({ip:ip}, function(err, geoData) {
+        // if data is JSON, we may wrap it in js object 
+        if (err) {
+          console.log("There was an error getting the user's location.");
+        } else {
+            console.log(geoData);
+
+            var obj = JSON.parse(geoData);
+          
+            var location = obj.city + ", " + obj.region_code + ", " + obj.country_code3;
+            var isp = obj.isp;
+            var country = obj.country;
+            var timezone = obj.timezone;
+
+            // console.log(location);
+
+
+            client.addEvent("project_code_downloaded", {"location": location, "isp": isp, "country": country, "timezone": timezone, "project_id": req.param('id')}, function(err, res) {
+                if (err) {
+                    console.log("Oh no, an error logging project_code_downloaded".red);
+                } else {
+                    console.log("Event project_code_downloaded logged".green);
+                }
+            }); // end client addEvent
+
+
+
+        } // end error handling
+      }); // end satelize
+  } // end if undefined
+
+
+
+
   cd(req.param('id'));
 
 
@@ -466,6 +520,51 @@ app.post('/upload-project-zip', function (req, res) {
 
 
   if (req.body.file) {
+
+    // analytics
+    var ip = req.connection.remoteAddress;
+    console.log("Request made from: " + ip);
+    
+
+    if (typeof client != "undefined") {
+      satelize.satelize({ip:ip}, function(err, geoData) {
+          // if data is JSON, we may wrap it in js object 
+          if (err) {
+            console.log("There was an error getting the user's location.");
+          } else {
+              console.log(geoData);
+
+              var obj = JSON.parse(geoData);
+            
+              var location = obj.city + ", " + obj.region_code + ", " + obj.country_code3;
+              var isp = obj.isp;
+              var country = obj.country;
+              var timezone = obj.timezone;
+
+              // console.log(location);
+
+              var fileSize = ((req.body.file.length*3)/4)/1000000;
+              fileSize = Math.round(fileSize*2)/2;
+
+              console.log(fileSize + "MB");
+
+              client.addEvent("upload_project_zip", {"location": location, "isp": isp, "country": country, "timezone": timezone, "size_mb": fileSize}, function(err, res) {
+                  if (err) {
+                      console.log("Oh no, an error logging upload_project_zip".red);
+                  } else {
+                      console.log("Event upload_project_zip logged".green);
+                  }
+              }); // end client addEvent
+
+
+
+          } // end error handling
+        }); // end satelize
+    } // end if undefined
+
+
+
+
 
     cd(buildProjects_path);
 
