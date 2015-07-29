@@ -1,0 +1,14 @@
+{
+  "name": "ringo-load-balancer",
+  "version": "1.0.0",
+  "description": "Decides which Mac server to route the user to.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Ringo"
+  ],
+  "author": "Gautam Mittal",
+  "license": "MIT"
+}
