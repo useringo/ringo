@@ -132,6 +132,8 @@ app.get('/get-secure-tunnel', function (req, res) {
 // This has automatic handling to prevent a user from running infinite loops, the system just stops the script from running after a while.
 app.post('/build-sandbox', function (req, res) {
 
+  cd(buildProjects_path);
+
   if (req.body.code && (req.body.code).length != 0) {
 
       var ip = req.connection.remoteAddress;
