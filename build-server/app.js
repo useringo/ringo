@@ -1,4 +1,4 @@
-// Copyright 2015 Gautam Mittal
+// Copyright 2015 Gautam Mittal under MIT License
 
 /*
 
@@ -18,18 +18,21 @@
 var dotenv = require('dotenv');
 dotenv.load();
 
-var bodyParser = require('body-parser');
-var colors = require('colors');
-var express = require('express');
-var fs = require('fs');
-var getIP = require('external-ip')();
-var Keen = require("keen.io");
-var request = require('request');
-var satelize = require('satelize');
-require('shelljs/global');
+var bodyParser = require('body-parser'); // parsing post request data
+var colors = require('colors'); // colorful terminal messages
+var express = require('express'); // spin up the webserver
+var fs = require('fs'); // access the file system
+var getIP = require('external-ip')(); // analytics
+var Keen = require("keen.io"); // analytics
+var request = require('request'); // making requests to external sources
+var satelize = require('satelize'); // analytics
+var serialNumber = require('serial-number'); // unique server id
+serialNumber.preferUUID = true; // 
+require('shelljs/global'); // running shell commands
+
+
 
  
-
 // internal analytics service
 var client;
 
@@ -43,7 +46,7 @@ if (process.env.KEEN_PROJECT_ID) {
 
 }
 
-var exec = require('child_process').exec;
+var exec = require('child_process').exec; // running shell commands
 
 // open the localhost tunnel to the rest of the world!
 var ngrok = require('ngrok');
@@ -61,7 +64,7 @@ app.use(function(req, res, next) {
   next();
 });
 
-var port = 3000;
+var port = 3000; // port which the server will run on
 
 
 var build_serverURL = process.env.HOSTNAME;
