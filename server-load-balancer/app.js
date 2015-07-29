@@ -15,20 +15,27 @@ var currentServer = 0;
 
 // Endpoint to serve the user so that it 
 app.get('/get-server-url', function (req, res) {
-	var numRegisteredServers = 0;
-	for (var id in servers) {
-		numRegisteredServers++;
+	if (ids.length > 0) {
+		var numRegisteredServers = 0;
+		for (var id in servers) {
+			numRegisteredServers++;
+		}
+
+		console.log("Number of registered servers: " + numRegisteredServers);
+
+		console.log("Server with tunnel " + servers[ids[currentServer]] + " should meet users needs right now.");
+		res.send(servers[ids[currentServer]]);
+
+		currentServer++;
+	  	if (currentServer > numRegisteredServers) {
+	  		currentServer = 0;
+	  	}
+
+	} else {
+		res.send("No servers have been registered.");
 	}
 
-	console.log(numRegisteredServers);
 
-
-	res.send(servers[ids[currentServer]]);
-
-	currentServer++;
-  	if (currentServer > numRegisteredServers) {
-  		currentServer = 0;
-  	}
 
 });
 
