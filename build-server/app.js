@@ -653,6 +653,52 @@ app.post('/clone-git-project', function (req, res) {
   if (req.body.url) {
     console.log('Received request to git clone a file.');
 
+      // analytics
+      var ip = req.connection.remoteAddress;
+      console.log("Request made from: " + ip);
+      
+
+      if (typeof client != "undefined") {
+        satelize.satelize({ip:ip}, function(err, geoData) {
+            // if data is JSON, we may wrap it in js object 
+            if (err) {
+              console.log("There was an error getting the user's location.");
+            } else {
+                console.log(geoData);
+
+                var obj = JSON.parse(geoData);
+              
+                var location = obj.city + ", " + obj.region_code + ", " + obj.country_code3;
+                var isp = obj.isp;
+                var country = obj.country;
+                var timezone = obj.timezone;
+
+                // console.log(location);
+
+                var source = "unknown";
+                if ((req.body.url).substr(0, 4) == "http") {
+                  source = (req.body.url).split("/")[2];
+                }
+                
+                console.log(source);
+
+                client.addEvent("clone_git_project", {"location": location, "isp": isp, "country": country, "timezone": timezone, "source": source}, function(err, res) {
+                    if (err) {
+                        console.log("Oh no, an error logging clone_git_project".red);
+                    } else {
+                        console.log("Event clone_git_project logged".green);
+                    }
+                }); // end client addEvent
+
+
+
+            } // end error handling
+          }); // end satelize
+      } // end if undefined
+
+
+
+
     // create a unique ID where this awesome project will live
     var project_uid = generatePushID();
     project_uid = project_uid.substr(1, project_uid.length);
@@ -1382,7 +1428,51 @@ app.post('/build-project', function (req, res) {
   cd(buildProjects_path);
 
   if (req.body.id) {
+
+
+
+    // analytics
+      var ip = req.connection.remoteAddress;
+      console.log("Request made from: " + ip);
+      
+
+      if (typeof client != "undefined") {
+        satelize.satelize({ip:ip}, function(err, geoData) {
+            // if data is JSON, we may wrap it in js object 
+            if (err) {
+              console.log("There was an error getting the user's location.");
+            } else {
+                console.log(geoData);
+
+                var obj = JSON.parse(geoData);
+              
+                var location = obj.city + ", " + obj.region_code + ", " + obj.country_code3;
+                var isp = obj.isp;
+                var country = obj.country;
+                var timezone = obj.timezone;
+
+                // console.log(location);
+
+
+                client.addEvent("built_project", {"location": location, "isp": isp, "country": country, "timezone": timezone, "project_id": req.body.id}, function(err, res) {
+                    if (err) {
+                        console.log("Oh no, an error logging built_project".red);
+                    } else {
+                        console.log("Event built_project logged".green);
+                    }
+                }); // end client addEvent
+
+
+
+            } // end error handling
+          }); // end satelize
+      } // end if undefined
+
+
+
+
       var projectID = req.body.id;
+
 
       // $ xcodebuild -sdk iphonesimulator -project XCODEPROJ_PATH
       // this generates the build directory where you can zip up the file to upload to appetize
