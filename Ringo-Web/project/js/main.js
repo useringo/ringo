@@ -2,8 +2,13 @@
 var typingTimer;                //timer identifier
 var doneTypingInterval = 1000;  //time in ms, 5 second for example
 
+var lb = "http://localhost:3001";
+var hostname = "";
 
-var hostname = "http://localhost:3000"; // https://33983d9e.ngrok.com
+$.get(lb+"/get-server-url", function (server_tunnel) {
+	hostname = server_tunnel;
+});
+
 
 var project_id = ""; //prompt("Type your Ringo Project ID");
 var project_name = "";

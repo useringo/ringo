@@ -6,6 +6,12 @@ var port = 3001;
 
 app.use(bodyParser());
 
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
 
 var servers = {};
 var ids = [];
@@ -23,11 +29,11 @@ app.get('/get-server-url', function (req, res) {
 
 		console.log("Number of registered servers: " + numRegisteredServers);
 
-		console.log("Server with tunnel " + servers[ids[currentServer]] + " should meet users needs right now.");
+		console.log("Server with tunnel " + currentServer + ":" + servers[ids[currentServer]] + " should meet users needs right now.");
 		res.send(servers[ids[currentServer]]);
 
 		currentServer++;
-	  	if (currentServer > numRegisteredServers) {
+	  	if (currentServer >= numRegisteredServers) {
 	  		currentServer = 0;
 	  	}
 

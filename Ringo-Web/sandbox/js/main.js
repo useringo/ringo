@@ -2,7 +2,13 @@
 var typingTimer;                //timer identifier
 var doneTypingInterval = 1000;  //time in ms, 5 second for example
 
-var hostname = "http://localhost:3000"
+var lb = "http://localhost:3001";
+var hostname = "";
+
+$.get(lb+"/get-server-url", function (server_tunnel) {
+	hostname = server_tunnel;
+});
+
 
 //on keyup, start the countdown
 $('#editor').keyup(function(){
