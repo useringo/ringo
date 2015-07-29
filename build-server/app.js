@@ -22,17 +22,19 @@ var bodyParser = require('body-parser');
 var colors = require('colors');
 var express = require('express');
 var fs = require('fs');
+var getIP = require('external-ip')();
 var Keen = require("keen.io");
 var request = require('request');
 var satelize = require('satelize');
 require('shelljs/global');
 
+ 
+
 // internal analytics service
-
-
 var client;
 
 if (process.env.KEEN_PROJECT_ID) {
+  console.log("Keen analytics starting up...");
 
   client = Keen.configure({
       projectId: process.env.KEEN_PROJECT_ID,
@@ -65,8 +67,42 @@ var port = 3000;
 var build_serverURL = process.env.HOSTNAME;
 var secure_serverURL = process.env.SECURE_HOSTNAME;
 
+
+  getIP(function (err, ip) {
+      if (err) {
+          // every service in the list has failed 
+          console.log(err);
+      }
+      console.log(("Server IP address: " + ip).cyan);
+
+      satelize.satelize({ip:ip}, function(err, geoData) {
+        // if data is JSON, we may wrap it in js object 
+        var obj = JSON.parse(geoData);
+      
+        var location = obj.city + ", " + obj.region_code + ", " + obj.country_code3;
+        var isp = obj.isp;
+        var country = obj.country;
+        var timezone = obj.timezone;
+
+        console.log(location);
+
+        client.addEvent("on_start_server", {"location": location, "isp": isp, "country": country, "timezone": timezone}, function(err, res) {
+            if (err) {
+                console.log("Oh no, an error logging on_start_server".red);
+            } else {
+                console.log("Event on_start_server logged".green);
+            }
+        }); // end client addEvent
+
+      }); // end satelize
+  }); // end getIP
+
+
+
+
 // initialize the ngrok tunnel
 ngrok.connect(port, function (err, url) {
+
   console.log("Tunnel open: " + url.red + " at "+ new Date());
 
   // rewrite the env variables
@@ -92,8 +128,41 @@ app.get('/get-secure-tunnel', function (req, res) {
 // Try running a while true loop :P
 // This has automatic handling to prevent a user from running infinite loops, the system just stops the script from running after a while.
 app.post('/build-sandbox', function (req, res) {
+
+  var ip = req.connection.remoteAddress;
+
+  satelize.satelize({ip:ip}, function(err, geoData) {
+      // if data is JSON, we may wrap it in js object 
+      if (err) {
+        console.log("There was an error getting the user's location.");
+      } else {
+          var obj = JSON.parse(geoData);
+        
+          var location = obj.city + ", " + obj.region_code + ", " + obj.country_code3;
+          var isp = obj.isp;
+          var country = obj.country;
+          var timezone = obj.timezone;
+
+          // console.log(location);
+
+          var lengthOfCode = (req.body.code).length
+
+          client.addEvent("built_sandbox", {"location": location, "isp": isp, "country": country, "timezone": timezone, "code_length": lengthOfCode}, function(err, res) {
+              if (err) {
+                  console.log("Oh no, an error logging built_sandbox".red);
+              } else {
+                  console.log("Event built_sandbox logged".green);
+              }
+          }); // end client addEvent
+
+
+
+      } // end error handling
+    }); // end satelize
+
+
   	console.log('Following sandbox executed at '+ new Date());
-  	console.log(req.body.code.orange);
+  	console.log((req.body.code).blue);
 
 	// console.log((req.body.code).length);
 
