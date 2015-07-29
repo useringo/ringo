@@ -29,7 +29,7 @@ app.get('/get-server-url', function (req, res) {
 
 		console.log("Number of registered servers: " + numRegisteredServers);
 
-		console.log("Server with tunnel " + currentServer + ":" + servers[ids[currentServer]] + " should meet users needs right now.");
+		console.log("Server with tunnel [" + currentServer + "]:" + servers[ids[currentServer]] + " should meet users needs right now.");
 		res.send(servers[ids[currentServer]]);
 
 		currentServer++;

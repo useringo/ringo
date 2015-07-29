@@ -2,6 +2,7 @@
 var typingTimer;                //timer identifier
 var doneTypingInterval = 1000;  //time in ms, 5 second for example
 
+// IF YOU WANT TO USE YOUR OWN DEV SERVER RUNNING THE RINGO SERVER, SET HOSTNAME TO YOUR SERVERS ADDRESS
 var lb = "http://localhost:3001";
 var hostname = "";
 
