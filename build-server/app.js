@@ -129,44 +129,46 @@ app.get('/get-secure-tunnel', function (req, res) {
 // This has automatic handling to prevent a user from running infinite loops, the system just stops the script from running after a while.
 app.post('/build-sandbox', function (req, res) {
 
-  var ip = req.connection.remoteAddress;
-
-  satelize.satelize({ip:ip}, function(err, geoData) {
-      // if data is JSON, we may wrap it in js object 
-      if (err) {
-        console.log("There was an error getting the user's location.");
-      } else {
-          var obj = JSON.parse(geoData);
-        
-          var location = obj.city + ", " + obj.region_code + ", " + obj.country_code3;
-          var isp = obj.isp;
-          var country = obj.country;
-          var timezone = obj.timezone;
-
-          // console.log(location);
-
-          var lengthOfCode = (req.body.code).length
-
-          client.addEvent("built_sandbox", {"location": location, "isp": isp, "country": country, "timezone": timezone, "code_length": lengthOfCode}, function(err, res) {
-              if (err) {
-                  console.log("Oh no, an error logging built_sandbox".red);
-              } else {
-                  console.log("Event built_sandbox logged".green);
-              }
-          }); // end client addEvent
-
-
-
-      } // end error handling
-    }); // end satelize
-
-
-  	console.log('Following sandbox executed at '+ new Date());
-  	console.log((req.body.code).blue);
-
-	// console.log((req.body.code).length);
-
   if (req.body.code && (req.body.code).length != 0) {
+
+      var ip = req.connection.remoteAddress;
+
+      satelize.satelize({ip:ip}, function(err, geoData) {
+          // if data is JSON, we may wrap it in js object 
+          if (err) {
+            console.log("There was an error getting the user's location.");
+          } else {
+              var obj = JSON.parse(geoData);
+            
+              var location = obj.city + ", " + obj.region_code + ", " + obj.country_code3;
+              var isp = obj.isp;
+              var country = obj.country;
+              var timezone = obj.timezone;
+
+              // console.log(location);
+
+              var lengthOfCode = (req.body.code).length
+
+              client.addEvent("built_sandbox", {"location": location, "isp": isp, "country": country, "timezone": timezone, "code_length": lengthOfCode}, function(err, res) {
+                  if (err) {
+                      console.log("Oh no, an error logging built_sandbox".red);
+                  } else {
+                      console.log("Event built_sandbox logged".green);
+                  }
+              }); // end client addEvent
+
+
+
+          } // end error handling
+        }); // end satelize
+
+
+        console.log('Following sandbox executed at '+ new Date());
+        console.log((req.body.code).blue);
+
+
+
+
   	fs.writeFile("code.swift", req.body.code, function(err) {
 	    if(err) {
 	        return console.log(err);
@@ -299,12 +301,52 @@ function cleanBuildProjects() {
 // Request to make a new Xcode project
 app.post('/create-project', function(req, res) {
 
+
   cd(buildProjects_path);
 
 
 
   // only execute if they specify the required parameters
   if (req.body.projectName) {
+
+
+        // analytics
+        var ip = req.connection.remoteAddress;
+
+        satelize.satelize({ip:ip}, function(err, geoData) {
+            // if data is JSON, we may wrap it in js object 
+            if (err) {
+              console.log("There was an error getting the user's location.");
+            } else {
+                var obj = JSON.parse(geoData);
+              
+                var location = obj.city + ", " + obj.region_code + ", " + obj.country_code3;
+                var isp = obj.isp;
+                var country = obj.country;
+                var timezone = obj.timezone;
+
+                // console.log(location);
+
+                var project_nomen = req.body.projectName
+
+                client.addEvent("project_created", {"location": location, "isp": isp, "country": country, "timezone": timezone, "name": project_nomen}, function(err, res) {
+                    if (err) {
+                        console.log("Oh no, an error logging project_created".red);
+                    } else {
+                        console.log("Event project_created logged".green);
+                    }
+                }); // end client addEvent
+
+
+
+            } // end error handling
+          }); // end satelize
+
+
+
+
+
+
         var projectName = req.body.projectName;
         var project_uid = generatePushID();
         project_uid = project_uid.substr(1, project_uid.length);
