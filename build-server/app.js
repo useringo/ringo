@@ -77,25 +77,32 @@ var secure_serverURL = process.env.SECURE_HOSTNAME;
 
       if (typeof client != "undefined") { // only run if analytics are already set up
         satelize.satelize({ip:ip}, function(err, geoData) {
-          // if data is JSON, we may wrap it in js object 
-          var obj = JSON.parse(geoData);
-        
-          var location = obj.city + ", " + obj.region_code + ", " + obj.country_code3;
-          var isp = obj.isp;
-          var country = obj.country;
-          var timezone = obj.timezone;
+          // if data is JSON, we may wrap it in js object
+          if (err) {
+            console.log("Error getting location.");
+          } else {
 
-          console.log(location);
+              var obj = JSON.parse(geoData);
+            
+              var location = obj.city + ", " + obj.region_code + ", " + obj.country_code3;
+              var isp = obj.isp;
+              var country = obj.country;
+              var timezone = obj.timezone;
 
-          client.addEvent("on_start_server", {"location": location, "isp": isp, "country": country, "timezone": timezone}, function(err, res) {
-              if (err) {
-                  console.log("Oh no, an error logging on_start_server".red);
-              } else {
-                  console.log("Event on_start_server logged".green);
-              }
-          }); // end client addEvent
+              console.log(location);
 
-        }); // end satelize
+              client.addEvent("on_start_server", {"location": location, "isp": isp, "country": country, "timezone": timezone}, function(err, res) {
+                  if (err) {
+                      console.log("Oh no, an error logging on_start_server".red);
+                  } else {
+                      console.log("Event on_start_server logged".green);
+                  }
+              }); // end client addEvent
+
+            
+            } // end if err
+          }); // end satelize
+
       }
       
   }); // end getIP
@@ -114,6 +121,9 @@ ngrok.connect(port, function (err, url) {
 
   build_serverURL = process.env.HOSTNAME;
   secure_serverURL = process.env.SECURE_HOSTNAME;
+
+
+  // request.post('http://localhost:3001/register-server', {form:{server_id:'value'}})
 
 
 });
