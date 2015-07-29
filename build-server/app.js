@@ -14,7 +14,6 @@
 // might be useful to refer to this: http://stackoverflow.com/questions/4079280/javascript-communication-between-browser-tabs-windows, when thinking about implementing a simulator which opens in an external window
 
 
-
 var dotenv = require('dotenv');
 dotenv.load();
 
@@ -124,9 +123,34 @@ ngrok.connect(port, function (err, url) {
 
   build_serverURL = process.env.HOSTNAME;
   secure_serverURL = process.env.SECURE_HOSTNAME;
+  // console.log(process.env.LOAD_BALANCER_URL);
+
+  if (process.env.LOAD_BALANCER_URL) { // only connect to the load balancer if the env has said to do so, which should only be if you want to run several of these servers for production
+    serialNumber(function (err, value) { // basically for generating a unique id
+        console.log(value);
+
+        request({
+            url: process.env.LOAD_BALANCER_URL + '/register-server/', //URL to hit
+            method: 'POST',
+            //Lets post the following key/values as form
+            json: {
+                server_id: value,
+                tunnel: url
+            }
+        }, function(error, response, body){
+            if(error) {
+                console.log(error);
+            } else {
+                console.log(response.statusCode, body);
+        }
+        }); // end request
 
 
-  // request.post('http://localhost:3001/register-server', {form:{server_id:'value'}})
+    });    
+  }
+
+
+  
 
 
 });

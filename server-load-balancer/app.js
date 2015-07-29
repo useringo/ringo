@@ -7,7 +7,7 @@ var port = 3001;
 app.use(bodyParser());
 
 
-var servers = [];
+var servers = {};
 var currentServer = 0;
 
 // We only have two servers at the moment
@@ -23,14 +23,16 @@ app.get('/get-server-url', function (req, res) {
 });
 
 
-app.get('/register-server', function (req, res) {
+app.post('/register-server', function (req, res) {
 	if (req.body.tunnel) {
 		if (req.body.server_id) {
-			var server_data = {};
-			server_data[req.body.server_id] = req.body.tunnel;
-			servers.push(server_data);
-			
+			// var server_data = {};
+			// server_data[req.body.server_id] = req.body.tunnel;
+			servers[req.body.server_id] = req.body.tunnel;
+
 			console.log(servers);
+			res.send("Successfully registered server in the load balancer.");
+
 		
 		}
 		
