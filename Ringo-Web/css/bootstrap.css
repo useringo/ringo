@@ -4101,7 +4101,7 @@ input[type="submit"].btn.btn-mini {
   -webkit-border-radius: 5px;
      -moz-border-radius: 5px;
           border-radius: 5px;
-  color: #d35400;
+  color: white;
 }
 
 .nav-pills > .active > a,

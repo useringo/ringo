@@ -906,6 +906,15 @@
   .modal.fade.in {
     top: 20px;
   }
+
+  .span4 {
+    margin-top: 50px;
+  }
+
+  #firstSpan4 {
+    margin-top: 0px;
+  }
+
 }
 
 @media (max-width: 480px) {
