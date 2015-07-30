@@ -18,6 +18,7 @@ $('#editor').keyup(function(){
     typingTimer = setTimeout(doneTyping, doneTypingInterval);
 });
 
+
 //on keydown, clear the countdown 
 $('#editor').keydown(function(){
     clearTimeout(typingTimer);
@@ -52,6 +53,11 @@ function doneTyping () {
 
 }
 
+
+// execute onload
+$(document).ready(function () {
+	setTimeout(doneTyping, 2000); // wait after 2 seconds	
+});
 
 
 

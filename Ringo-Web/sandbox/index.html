@@ -237,14 +237,18 @@
         <!--[if lt IE 8]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
-
         <div class="header">
-            <h1 class="tapRoom">Project Ringo</h1>
+            <h1 class="tapRoom">Sandbox</h1>
             <div class="status"><span id="statusValue">Ready</span> <span style="color:black; font-size: 9pt;">|</span> <span id="statusTime">Now</span></div>
         </div>
 
 
-        <div id="editor"></div>
+        <div id="editor">
+// Sandbox (noun): a virtual space in which new or untested software can be run
+
+println("Hello, world");
+// This is where you write code
+        </div>
 
         <div id="outputArea">    
 
@@ -270,7 +274,7 @@
         <script src="//cdnjs.cloudflare.com/ajax/libs/ace/1.1.9/ace.js" type="text/javascript" charset="utf-8"></script>
         <script>
             var editor = ace.edit("editor");
-            editor.setTheme("ace/theme/monokai");
+            editor.setTheme("ace/theme/cobalt");
             editor.getSession().setMode("ace/mode/rust");
 
             editor.resize()
