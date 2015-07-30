@@ -230,11 +230,22 @@
 
       <div class="masthead">
         <ul class="nav nav-pills pull-right">
-          <li><a href="/build">Build</a></li>
+          <li class="dropdown">
+          <a class="dropdown-toggle"
+             data-toggle="dropdown"
+             href="#">
+              Build
+              <b class="caret"></b>
+            </a>
+          <ul class="dropdown-menu">
+            <li><a href="/project">Create a Project</a></li>
+            <li><a href="/sandbox">Use a Sandbox</a></li>
+          </ul>
           <li><a href="https://github.com/SwiftEducation">Learn</a></li>
         </ul>
         <h3 class="muted">RINGO</h3>
       </div>
+
 
 
       <div class="jumbotron">
@@ -242,7 +253,7 @@
         <h1><img id="logo-img" src="img/Ringo-Logo.png" /></h1>
         <h2 style="color:white;">Develop native iOS applications the easy way.</h2>
         <p class="lead" style="color:white;">Harness the power of Xcode from the comfort of your favorite browser.</p>
-        <a class="btn btn-large btn-inverse btn-awesome" href="/build">Start Building</a>
+        <a class="btn btn-large btn-inverse btn-awesome" href="/project">Start Building</a>
       </div>
     </div>
 
