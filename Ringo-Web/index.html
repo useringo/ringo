@@ -35,6 +35,11 @@
         font-weight: 900;
       }
 
+      @font-face {
+        font-family: 'Abeat'; src: url('img/Abeat.ttf');
+        /*font-weight: 900;*/
+      }
+
       body {
         padding-top: 20px;
         padding-bottom: 40px;
@@ -78,7 +83,8 @@
 
       #logo-img {
         width: 80px;
-        border-radius: 15px;
+        border-radius: 20px;
+        border: 5px solid white;
       }
 
       #background-header {
@@ -95,6 +101,8 @@
 
       .muted {
         font-weight: 400;
+        color:white;
+        font-family: 'Abeat';
       }
 
       .headerTOP {
@@ -131,23 +139,22 @@
           <li><a href="#">Learn</a></li>
           <li><a href="#">Developers</a></li>
         </ul>
-        <h3 class="muted"><img id="logo-img" src="img/Ringo-Logo.png" /></h3>
+        <h3 class="muted">RINGO</h3>
       </div>
 
 
       <div class="jumbotron">
       
-        <h1>Ringo</h1>
-        <h2>Develop native iOS applications the easy way.</h2>
-        <p class="lead">Harness the power of Xcode from the comfort of your favorite browser.</p>
-        <a class="btn btn-large btn-default" href="#">Try It Out</a>
-        <a class="btn btn-large btn-default" href="#">Learn More</a>
+        <h1><img id="logo-img" src="img/Ringo-Logo.png" /></h1>
+        <h2 style="color:white;">Develop native iOS applications the easy way.</h2>
+        <p class="lead" style="color:white;">Harness the power of Xcode from the comfort of your favorite browser.</p>
+        <a class="btn btn-large btn-inverse" href="#">Try It Out</a>
       </div>
     </div>
 
     <hr style="visibility: hidden;">
 </div>
-
+<div class="infoBOTTOM">
     <div class="container-narrow">
       
 
@@ -182,7 +189,7 @@
       </div>
 
     </div> <!-- /container -->
-
+</div>
     <!-- Le javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
