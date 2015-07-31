@@ -90,50 +90,52 @@ $("#statusTime").text(moment().calendar());
 
 //user is "finished typing," do something
 function doneTyping () {
-    var code = editor.getValue();
+	if (project_id.length > 0) {
+		    var code = editor.getValue();
 
-    if (code != currentData) {
+		    if (code != currentData) {
 
-    	currentData = code;
+		    	currentData = code;
 
-	    for (var k = 0; k < files.length; k++) {
-	    	var filedata = files[k];
-	    	if (filedata.name == currentFile) {
-	    		filedata.data = code;
-	    	}
-	    }
+			    for (var k = 0; k < files.length; k++) {
+			    	var filedata = files[k];
+			    	if (filedata.name == currentFile) {
+			    		filedata.data = code;
+			    	}
+			    }
 
-	    var withoutImages = [];
+			    var withoutImages = [];
 
-	    for (var j = 0; j < files.length; j++) {
-	    	if (files[j].type != "xcasset") { // we don't want to resave the image files
-	    		withoutImages.push(files[j]);
-	    	}
-	    }
-	    //tests
-	    // console.log("File list without imagesets: "+ JSON.stringify(withoutImages));
+			    for (var j = 0; j < files.length; j++) {
+			    	if (files[j].type != "xcasset") { // we don't want to resave the image files
+			    		withoutImages.push(files[j]);
+			    	}
+			    }
+			    //tests
+			    // console.log("File list without imagesets: "+ JSON.stringify(withoutImages));
 
-		$.ajax({
-			type: 'POST',
-			url: hostname+'/update-project-contents',
-			data: {"id": project_id, "files": withoutImages},
-			error: function (err) {
-				console.log(err);
-			}, 
-			success: function (data) {
-				console.log(data);
+				$.ajax({
+					type: 'POST',
+					url: hostname+'/update-project-contents',
+					data: {"id": project_id, "files": withoutImages},
+					error: function (err) {
+						console.log(err);
+					}, 
+					success: function (data) {
+						console.log(data);
 
-				// $("#statusValue").text("Ready");
-			  	// $("#statusTime").text(moment().calendar());
+						// $("#statusValue").text("Ready");
+					  	// $("#statusTime").text(moment().calendar());
 
-				// $("#outputArea").html("<center>"+ data.fullDeviceEmbedCode +"</center>");
+						// $("#outputArea").html("<center>"+ data.fullDeviceEmbedCode +"</center>");
 
 
-			},
-			dataType: "json"
-		});
+					},
+					dataType: "json"
+				});
 
-	}
+			}
+	} // end if project_id.length
 
 
 }
