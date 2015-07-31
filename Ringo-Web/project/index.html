@@ -57,13 +57,13 @@
             font-weight: 100;
             font-size: 20px;
             position: absolute;
-            right: 15px;
+            left: 10px;
             top: -8px;
    
     
         }
         .header {
-            background-color:rgb(220, 220, 220);
+            background-color:rgb(26, 32, 38);
             width: 100%;
             /*position:relative;*/
 
@@ -154,7 +154,7 @@
             float:right;
             font-family:'Proxima Nova';
             color:white;
-            background-color: rgb(69, 69, 69);
+            background-color: rgb(57, 57, 57);
             height: calc(100% - 40px);
             height: -webkit-calc(100% - 40px);
             font-size:10pt;
@@ -169,7 +169,8 @@
         }
 
         .status {
-            background-color: rgb(251, 251, 251);
+            text-align: center;
+            background-color: rgb(57, 57, 57);
             height: 60%;
             width: 230px;
             position:absolute;
@@ -185,6 +186,7 @@
           -ms-transition: all 0.1s linear;
 
           /*font-size: 12pt;*/
+          color:white;
 
           box-shadow: 0px 0.5px 0px 0px;
           -webkit-box-shadow: 0px 0.5px 0px 0px;
@@ -192,14 +194,14 @@
         }
 
         .scheme {
-            background-color: rgb(251, 251, 251);
+            background-color: rgb(57, 57, 57);
             height: 60%;
             /*width: 200px;*/
             position:absolute;
             top: 7px;
             border-radius: 5px;
             margin: 0 auto;
-          left: 110px;
+          left: 150px;
           /*right: 0;*/
           font-family: 'Proxima Nova';
           -webkit-transition: all 0.1s linear;
@@ -213,7 +215,7 @@
         }
 
         .scheme #appName {
-            color:black;
+            color:white;
             /*font-weight: bold;*/
             margin-left: 8px;
             /*margin-top: 10px;*/
@@ -222,7 +224,7 @@
         }
 
         .scheme #deviceTarget {
-            color:black;
+            color:white;
             font-size: 10pt;
             margin-right: 8px;
         }
@@ -233,7 +235,7 @@
         }
 
         #statusValue {
-            color:black;
+            color:white;
             font-weight: bold;
             margin-left: 10px;
             /*margin-top: 10px;*/
@@ -241,7 +243,7 @@
         }
 
         #statusTime {
-            color:black;
+            color:white;
             font-size: 10pt;
         }
 
@@ -255,13 +257,12 @@
             height: calc(100% - 10px);
             /*height: -webkit-calc(100%-38px);*/
             /*height: calc(100%-38px);*/
-            background: white;
             position: absolute;
             left:0;
             z-index: 10000;
             font-size: 11pt;
-            color:black;
-            background-color:rgb(241,241, 241);
+            color:white;
+            background-color:rgb(57, 57, 57);
 
         }
 
@@ -272,9 +273,17 @@
             width: 40px;
             position:absolute;
             top: 6px;
-            left: 10px;
-            box-shadow: 0px 0.5px 0px 0px;
-          -webkit-box-shadow: 0px 0.5px 0px 0px;
+            left: 50px;
+            /*box-shadow: 0px 0.5px 0px 0px;*/
+          /*-webkit-box-shadow: 0px 0.5px 0px 0px;*/
+        }
+
+        .logo-toolbar {
+            height: 31px;
+            margin-top: -4px;
+            margin-left: -3px;
+            border-radius: 8px;
+            border: 2px solid rgba(255, 255, 255, 0.7);
         }
 
         #stopButton {
@@ -284,9 +293,9 @@
             width: 40px;
             position:absolute;
             top: 6px;
-            left: 60px;
-            box-shadow: 0px 0.5px 0px 0px;
-          -webkit-box-shadow: 0px 0.5px 0px 0px;
+            left: 100px;
+         /*   box-shadow: 0px 0.5px 0px 0px;
+          -webkit-box-shadow: 0px 0.5px 0px 0px;*/
         }
 
         #ipaDLButton {
@@ -297,8 +306,8 @@
             position:absolute;
             top: 6px;
             right: 10px;
-            box-shadow: 0px 0.5px 0px 0px;
-          -webkit-box-shadow: 0px 0.5px 0px 0px;
+/*            box-shadow: 0px 0.5px 0px 0px;
+          -webkit-box-shadow: 0px 0.5px 0px 0px;*/
         }
 
 
@@ -310,9 +319,9 @@
             position:absolute;
             top: 6px;
             right: 60px;
-            box-shadow: 0px 0.5px 0px 0px;
+    /*        box-shadow: 0px 0.5px 0px 0px;
             
-            -webkit-box-shadow: 0px 0.5px 0px 0px;
+            -webkit-box-shadow: 0px 0.5px 0px 0px;*/
         }
 
         #createProjectButton {
@@ -384,7 +393,7 @@
         }
 
         #stopButton:active {
-            /*background-color: rgb(227, 227, 227);*/ /* change to rgb(227, ...) when runButton clicked */
+            background-color: rgb(227, 227, 227);  
         }
 
         .arrow-right {
@@ -403,7 +412,7 @@
 
 
         .stop-box {
-            background-color:grey; /* change to black when run button is clicked */
+            background-color:black; /* change to black when run button is clicked */
             height: 16px;
             width: 16px;
             top: 5px;
@@ -679,11 +688,13 @@
 
 
         <div class="header">
-            <!-- <h1 class="tapRoom">Project Ringo</h1> -->
-            <div class="status"><span id="statusValue">Ready</span> <span style="color:black; font-size: 9pt;">|</span> <span id="statusTime">Now</span></div>
+            <h1 class="tapRoom"><img class="logo-toolbar" src="img/Ringo-Logo.png"/></h1>
+            
+
+            <div class="status"><span id="statusValue">Ready</span> <span style="color:white; font-size: 9pt;">|</span> <span id="statusTime">Now</span></div>
 
             <div id="runButton"><div class="arrow-right"></div></div>
-            <div id="stopButton"><div class="stop-box disabled"></div></div>
+            <div id="stopButton"><div class="stop-box"></div></div>
 
             <div id="createProjectButton"><img src="img/plus-empty.png" class="plus"/></div>
 
@@ -692,7 +703,7 @@
             <div id="ULButton"><div class="triangle-up"></div><div class="ul-box"></div></div>
             <div id="ipaDLButton"><div class="triangle-down"></div><div class="dl-box"></div></div>
 
-            <div class="scheme"><span id="appName">Loading...</span>&nbsp;&raquo; <span id="deviceTarget"><img src="img/iPhone-4-icon.svg" style="display: inline-block; height: 10pt;margin-top: -2px;"/> iPhone 6</span></div>
+            <div class="scheme"><span id="appName">Loading...</span>&nbsp;&raquo; <span id="deviceTarget"><img src="img/iPhone-4-icon.svg" style="display: inline-block; height: 10pt;margin-top: -2px; -webkit-filter:invert(100%); filter:invert(100%);"/> iPhone 6</span></div>
 
 
 
@@ -702,7 +713,7 @@
         </div>
 
         <div id="fileMenu">
-            <div style="margin-top: 5px;"><b><img height="20pt" style="vertical-align:middle;margin-top: -5px;" src="img/folder-icon.svg" />&nbsp;Welcome to Ringo</b></div>
+            <div style="margin-top: 5px;"><b><img height="20pt" style="vertical-align:middle;margin-top: -5px;-webkit-filter:invert(100%); filter:invert(100%);" src="img/folder-icon.svg" />&nbsp;Welcome to Ringo</b></div>
 
         </div>
 

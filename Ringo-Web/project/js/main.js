@@ -67,7 +67,7 @@ loadFiles(); // load the file menu
 
 
 // back up 
-$("#fileMenu").append("<div name=\"INTRODUCTION\" onclick=\"javascript: currentFile = $(this).attr('name'); $('#fileMenu div').css({'background-color': 'transparent', \'font-weight\': \'normal\', \'color\': \'black\'}); $(this).css({'background-color': 'rgb(14, 101, 227)', 'font-weight':'bold', 'color':'white'}); updateEditor();\">Getting Started.swift</div>");
+$("#fileMenu").append("<div name=\"INTRODUCTION\" onclick=\"javascript: currentFile = $(this).attr('name'); $('#fileMenu div').css({'background-color': 'transparent', \'font-weight\': \'normal\', \'color\': \'white\'}); $(this).css({'background-color': 'rgb(14, 101, 227)', 'font-weight':'bold', 'color':'white'}); updateEditor();\">Getting Started.swift</div>");
 editor.setValue(files[0].data, -1);
 editor.scrollToLine(0);
 
@@ -204,9 +204,9 @@ function loadFiles() {
 								console.log(files[i].name);
 
 								if (files[i].type == "xcasset") { // this would indicate that the file that is being processed is an imageset, a non-removable file
-									$("#fileMenu").append('<div name="'+ files[i].name +'" onclick=\"javascript: currentFile = $(this).attr(\'name\'); $(\'#fileMenu div\').css({\'background-color\': \'transparent\', \'font-weight\': \'normal\', \'color\': \'black\'}); $(this).css({\'background-color\': \'rgb(14, 101, 227)\', \'font-weight\':\'bold\', \'color\':\'white\'}); updateEditor();\">'+ start_and_end(files[i].name) + '</div>');
+									$("#fileMenu").append('<div name="'+ files[i].name +'" onclick=\"javascript: currentFile = $(this).attr(\'name\'); $(\'#fileMenu div\').css({\'background-color\': \'transparent\', \'font-weight\': \'normal\', \'color\': \'white\'}); $(this).css({\'background-color\': \'rgb(14, 101, 227)\', \'font-weight\':\'bold\', \'color\':\'white\'}); updateEditor();\">'+ start_and_end(files[i].name) + '</div>');
 								} else {
-									$("#fileMenu").append('<div name="'+ files[i].name +'" onclick=\"javascript: currentFile = $(this).attr(\'name\'); $(\'#fileMenu div\').css({\'background-color\': \'transparent\', \'font-weight\': \'normal\', \'color\': \'black\'}); $(this).css({\'background-color\': \'rgb(14, 101, 227)\', \'font-weight\':\'bold\', \'color\':\'white\'}); updateEditor();\">'+ start_and_end(files[i].name) + '</div><span class="deleteFileButton" name="'+ files[i].name +'" onclick="javascript: deleteFile($(this).attr(\'name\'));">-</span>');
+									$("#fileMenu").append('<div name="'+ files[i].name +'" onclick=\"javascript: currentFile = $(this).attr(\'name\'); $(\'#fileMenu div\').css({\'background-color\': \'transparent\', \'font-weight\': \'normal\', \'color\': \'white\'}); $(this).css({\'background-color\': \'rgb(14, 101, 227)\', \'font-weight\':\'bold\', \'color\':\'white\'}); updateEditor();\">'+ start_and_end(files[i].name) + '</div><span class="deleteFileButton" name="'+ files[i].name +'" onclick="javascript: deleteFile($(this).attr(\'name\'));">-</span>');
 								}
 
 								$("#fileMenu div:nth-child(1)").css({'background-color': 'rgb(14, 101, 227)', 'font-weight':'bold', 'color':'white'});
@@ -227,7 +227,7 @@ function loadFiles() {
 
 
 								$("#appName").text(start_and_end_title(project_name));
-								$("#fileMenu").prepend("<div style=\"margin-top: 5px;\"><b><img height=\"20pt\" style=\"vertical-align:middle;margin-top: -5px;\" src=\"img/folder-icon.svg\" />&nbsp;"+ start_and_end_title(project_name) +"</b></div><span id=\"addFileButton\">+</span>");
+								$("#fileMenu").prepend("<div style=\"margin-top: 5px;\"><b><img height=\"20pt\" style=\"vertical-align:middle;margin-top: -5px;-webkit-filter:invert(100%); filter:invert(100%);\" src=\"img/folder-icon.svg\" />&nbsp;"+ start_and_end_title(project_name) +"</b></div><span id=\"addFileButton\">+</span>");
 
 								// add addFileButton click listener
 								$("#addFileButton").click(function() { // add file to your project directory
@@ -275,6 +275,10 @@ $("#runButton").click(function() {
 
 });
 
+$("#stopButton").click(function() {
+	stopProject();
+});
+
 
 // enable keyboard shortcuts
 var listener = new window.keypress.Listener();
@@ -316,6 +320,15 @@ listener.simple_combo("alt d", function() {
 		location.href = (hostname + '/download-project/'+project_id);	
 	} 
 });
+
+
+
+function stopProject() {
+	if (document.getElementsByTag("iframe")[0]) { // basically check to see if the app iframe even exists
+		var sim = document.getElementsByTag("iframe")[0];
+		r.contentWindow.postMessage("endSession", r.src); // kill the app
+	}
+}
 
 
 
