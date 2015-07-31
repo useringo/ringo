@@ -284,7 +284,18 @@
             margin-left: -3px;
             border-radius: 8px;
             border: 2px solid rgba(255, 255, 255, 0.7);
+            -webkit-transition: all 0.1s linear;
+            -moz-transition: all 0.1s linear;
+            -o-transition: all 0.1s linear;
+            -ms-transition: all 0.1s linear;
         }
+
+        .logo-toolbar:hover {
+            cursor:pointer;
+            filter: grayscale(100%);
+            -webkit-filter: grayscale(100%);
+        }
+
 
         #stopButton {
             height: 65%;
@@ -690,7 +701,7 @@
 
 
         <div class="header">
-            <h1 class="tapRoom"><img class="logo-toolbar" src="img/Ringo-Logo.png"/></h1>
+            <h1 class="tapRoom"><img class="logo-toolbar" src="img/Ringo-Logo.png" onclick="javascript:location.href='/';"/></h1>
             
 
             <div class="status"><span id="statusValue">Ready</span> <span style="color:white; font-size: 9pt;">|</span> <span id="statusTime">Now</span></div>

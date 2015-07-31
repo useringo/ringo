@@ -1,3 +1,6 @@
+// Copyright 2015 Gautam Mittal under MIT License
+
+
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
@@ -17,11 +20,10 @@ var servers = {};
 var ids = [];
 var currentServer = 0;
 
-// We only have two servers at the moment
 
 // Endpoint to serve the user so that it 
 app.get('/get-server-url', function (req, res) {
-	if (ids.length > 0) {
+	if (ids.length > 0) { // at least one server has to have been registered
 		var numRegisteredServers = 0;
 		for (var id in servers) {
 			numRegisteredServers++;
