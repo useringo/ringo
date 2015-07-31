@@ -81,6 +81,11 @@ app.post('/unregister-server', function (req, res) {
 			ids.splice(idIndex, 1); // delete it from the server id array
 			delete servers[req.body.server_id]; // delete from the json object
 
+			console.log(servers);
+			console.log(ids);
+
+			res.send(200, "Server successfully removed from load balancer registry.");
+
 		} else {
 			res.send(500, "You cannot unregister servers that have not already been registered.");
 		}
@@ -95,5 +100,5 @@ var server = app.listen(port, function () {
   var host = server.address().address;
   var port = server.address().port;
 
-  console.log('Example app listening at http://%s:%s', host, port);
+  console.log(('Ringo load balancer listening at http://0.0.0.0:'+ port));
 });

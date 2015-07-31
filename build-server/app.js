@@ -1787,8 +1787,34 @@ app.post('/create-ipa', function (req, res) {
 
 // what happens when someone kills the server
 process.on('SIGINT', function() {
-    console.log("Caught interrupt signal");
-    process.exit();
+    console.log("Caught interrupt signal".red);
+
+    if (process.env.LOAD_BALANCER_URL) { // lets unregister this dead server
+          serialNumber(function (err, value) { // basically for generating a unique id
+              console.log(value);
+
+              request({
+                  url: process.env.LOAD_BALANCER_URL + '/unregister-server/', //URL to hit
+                  method: 'POST',
+                  //Lets post the following key/values as form
+                  json: {
+                      server_id: value,
+                  }
+              }, function(error, response, body){
+                  if(error) {
+                      console.log(error);
+                      console.log("Uh oh! The load balancer is probably down. Or there was an issue on our end. Either way, something isn't right here.".red);
+                      process.exit();
+                  } else {
+                      console.log((response.statusCode, body).green);
+                      process.exit();
+              }
+              }); // end request
+
+          }); // end serial
+
+    }
+
 });
 
 
@@ -1802,7 +1828,7 @@ var server = app.listen(port, function () {
   var host = server.address().address;
   var port = server.address().port;
 
-  console.log('Example app listening at http://%s:%s', host, port);
+  console.log(('Ringo core server listening at http://0.0.0.0:'+ port).blue);
 
 });
 
