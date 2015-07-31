@@ -276,6 +276,10 @@
             left: 50px;
             /*box-shadow: 0px 0.5px 0px 0px;*/
           /*-webkit-box-shadow: 0px 0.5px 0px 0px;*/
+          -webkit-transition: all 0.1s linear;
+            -moz-transition: all 0.1s linear;
+            -o-transition: all 0.1s linear;
+            -ms-transition: all 0.1s linear;
         }
 
         .logo-toolbar {
@@ -307,6 +311,10 @@
             left: 100px;
          /*   box-shadow: 0px 0.5px 0px 0px;
           -webkit-box-shadow: 0px 0.5px 0px 0px;*/
+          -webkit-transition: all 0.1s linear;
+            -moz-transition: all 0.1s linear;
+            -o-transition: all 0.1s linear;
+            -ms-transition: all 0.1s linear;
         }
 
         #ipaDLButton {
@@ -319,6 +327,10 @@
             right: 10px;
 /*            box-shadow: 0px 0.5px 0px 0px;
           -webkit-box-shadow: 0px 0.5px 0px 0px;*/
+          -webkit-transition: all 0.1s linear;
+            -moz-transition: all 0.1s linear;
+            -o-transition: all 0.1s linear;
+            -ms-transition: all 0.1s linear;
         }
 
 
@@ -333,6 +345,10 @@
     /*        box-shadow: 0px 0.5px 0px 0px;
             
             -webkit-box-shadow: 0px 0.5px 0px 0px;*/
+            -webkit-transition: all 0.1s linear;
+            -moz-transition: all 0.1s linear;
+            -o-transition: all 0.1s linear;
+            -ms-transition: all 0.1s linear;
         }
 
         #createProjectButton {
@@ -345,6 +361,10 @@
             right: 160px;
 /*            box-shadow: 0px 0.5px 0px 0px;
             -webkit-box-shadow: 0px 0.5px 0px 0px;*/
+            -webkit-transition: all 0.1s linear;
+            -moz-transition: all 0.1s linear;
+            -o-transition: all 0.1s linear;
+            -ms-transition: all 0.1s linear;
         }
 
         #GCButton {
@@ -357,6 +377,10 @@
             right: 110px;
      /*       box-shadow: 0px 0.5px 0px 0px;
             -webkit-box-shadow: 0px 0.5px 0px 0px;*/
+            -webkit-transition: all 0.1s linear;
+            -moz-transition: all 0.1s linear;
+            -o-transition: all 0.1s linear;
+            -ms-transition: all 0.1s linear;
         }
 
         #fileMenu div {
@@ -383,28 +407,59 @@
             top: 3px;
         }
 
+        #runButton:hover {
+            background-color:#1abc9c;
+            cursor: pointer;
+        }
+
+        #GCButton:hover {
+            background-color:#1abc9c;
+            cursor: pointer;
+        }
+
+        #ipaDLButton:hover {
+            background-color:#1abc9c;
+            cursor: pointer;
+        }
+
+        #ULButton:hover {
+            background-color:#1abc9c;
+            cursor: pointer;
+        }
+
+        #createProjectButton:hover {
+            background-color:#1abc9c;
+            cursor: pointer;
+        }
+
+        #stopButton:hover {
+            background-color:#1abc9c;
+            cursor: pointer;
+        }
+
+
         #runButton:active {
-            background-color: rgb(227, 227, 227);
+            background-color: #16a085;
         }
 
         #GCButton:active {
-            background-color: rgb(227, 227, 227);
+            background-color: #16a085;
         }
 
         #ipaDLButton:active {
-            background-color: rgb(227, 227, 227);
+            background-color: #16a085;
         }
 
         #ULButton:active {
-            background-color: rgb(227, 227, 227);
+            background-color: #16a085;
         }
 
         #createProjectButton:active {
-            background-color: rgb(227, 227, 227);
+            background-color: #16a085;
         }
 
         #stopButton:active {
-            background-color: rgb(227, 227, 227);  
+            background-color: #16a085;  
         }
 
         .arrow-right {
@@ -690,6 +745,25 @@
                 font-size: 1.5em;
             }
         }
+
+
+        /* custom scroll bar */
+        ::-webkit-scrollbar {
+            /*width: 1px;*/
+            background-color: transparent;
+        }
+         
+        ::-webkit-scrollbar-track {
+            background-color: transparent;
+            
+        }
+         
+        ::-webkit-scrollbar-thumb {
+            background-color:rgba(255,255,255,0.1);
+            border-radius: 10px;
+            /*-webkit-box-shadow: inset 0 0 6px rgba(255,255, 255, 1.0); */
+        }
+
         </style>
 
 
