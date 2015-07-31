@@ -70,7 +70,7 @@
             padding-top:20px;
             padding-bottom:20px;
             z-index: 100;
-            box-shadow: 0px 1px 1px 1px rgba(0, 0, 0, 0.2);
+            /*box-shadow: 0px 1px 1px 1px rgba(0, 0, 0, 0.2);*/
             position: relative;
         }
         #tapper {
@@ -187,9 +187,9 @@
 
           /*font-size: 12pt;*/
           color:white;
-
+/*
           box-shadow: 0px 0.5px 0px 0px;
-          -webkit-box-shadow: 0px 0.5px 0px 0px;
+          -webkit-box-shadow: 0px 0.5px 0px 0px;*/
 
         }
 
@@ -208,9 +208,9 @@
           -moz-transition: all 0.1s linear;
           -o-transition: all 0.1s linear;
           -ms-transition: all 0.1s linear;
-
+/*
           box-shadow: 0px 0.5px 0px 0px;
-          -webkit-box-shadow: 0px 0.5px 0px 0px;
+          -webkit-box-shadow: 0px 0.5px 0px 0px;*/
 
         }
 
@@ -269,7 +269,7 @@
         #runButton {
             height: 65%;
             border-radius: 4px;
-            background-color:rgb(251, 251, 251);
+            background-color:rgb(0, 145, 216);
             width: 40px;
             position:absolute;
             top: 6px;
@@ -289,7 +289,7 @@
         #stopButton {
             height: 65%;
             border-radius: 4px;
-            background-color:rgb(251, 251, 251);
+            background-color:rgb(0, 145, 216);
             width: 40px;
             position:absolute;
             top: 6px;
@@ -301,7 +301,7 @@
         #ipaDLButton {
             height: 65%;
             border-radius: 4px;
-            background-color:rgb(251, 251, 251);
+            background-color:rgb(0, 145, 216);
             width: 40px;
             position:absolute;
             top: 6px;
@@ -314,7 +314,7 @@
         #ULButton {
             height: 65%;
             border-radius: 4px;
-            background-color:rgb(251, 251, 251);
+            background-color:rgb(0, 145, 216);
             width: 40px;
             position:absolute;
             top: 6px;
@@ -327,25 +327,25 @@
         #createProjectButton {
             height: 65%;
             border-radius: 4px;
-            background-color:rgb(251, 251, 251);
+            background-color:rgb(0, 145, 216);
             width: 40px;
             position:absolute;
             top: 6px;
             right: 160px;
-            box-shadow: 0px 0.5px 0px 0px;
-            -webkit-box-shadow: 0px 0.5px 0px 0px;
+/*            box-shadow: 0px 0.5px 0px 0px;
+            -webkit-box-shadow: 0px 0.5px 0px 0px;*/
         }
 
         #GCButton {
             height: 65%;
             border-radius: 4px;
-            background-color:rgb(251, 251, 251);
+            background-color:rgb(0, 145, 216);
             width: 40px;
             position:absolute;
             top: 6px;
             right: 110px;
-            box-shadow: 0px 0.5px 0px 0px;
-            -webkit-box-shadow: 0px 0.5px 0px 0px;
+     /*       box-shadow: 0px 0.5px 0px 0px;
+            -webkit-box-shadow: 0px 0.5px 0px 0px;*/
         }
 
         #fileMenu div {
@@ -407,12 +407,12 @@
             border-top: 8px solid transparent;
             border-bottom: 8px solid transparent;
             
-            border-left: 16px solid black;
+            border-left: 16px solid #ecf0f1;
         }
 
 
         .stop-box {
-            background-color:black; /* change to black when run button is clicked */
+            background-color:#ecf0f1; /* change to black when run button is clicked */
             height: 16px;
             width: 16px;
             top: 5px;
@@ -427,7 +427,7 @@
             height: 0;
             border-left: 10px solid transparent;
             border-right: 10px solid transparent;
-            border-top: 10px solid black;
+            border-top: 10px solid #ecf0f1;
             left:0;
             right:0;
             margin: 0 auto;
@@ -440,7 +440,7 @@
             height: 0;
             border-left: 10px solid transparent;
             border-right: 10px solid transparent;
-            border-bottom: 10px solid black;
+            border-bottom: 10px solid #ecf0f1;
             left:0;
             right:0;
             margin: 0 auto;
@@ -456,7 +456,7 @@
             right:0;
             top: 3px;
             position:absolute;
-            background-color: black;
+            background-color: #ecf0f1;
         }
 
         .ul-box {
@@ -467,7 +467,7 @@
             right:0;
             bottom: 3px;
             position:absolute;
-            background-color: black;
+            background-color: #ecf0f1;
         }
 
         .plus {
@@ -478,6 +478,8 @@
             left: 0;
             margin: 0 auto;
             margin-top: -5px;
+            -webkit-filter:invert(100%);
+            filter:invert(100%);
         }
 
 
@@ -698,7 +700,7 @@
 
             <div id="createProjectButton"><img src="img/plus-empty.png" class="plus"/></div>
 
-            <div id="GCButton"><img src="img/Git-Icon-Black.png" style="height: 80%"/></div>
+            <div id="GCButton"><img src="img/Git-Icon-Black.png" style="height: 80%; -webkit-filter:invert(100%); filter:invert(100%);"/></div>
 
             <div id="ULButton"><div class="triangle-up"></div><div class="ul-box"></div></div>
             <div id="ipaDLButton"><div class="triangle-down"></div><div class="dl-box"></div></div>

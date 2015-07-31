@@ -1781,12 +1781,18 @@ app.post('/create-ipa', function (req, res) {
   }
 
   
-
-
-
-
-
 });
+
+
+
+// what happens when someone kills the server
+process.on('SIGINT', function() {
+    console.log("Caught interrupt signal");
+    process.exit();
+});
+
+
+
 
 
 
