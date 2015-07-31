@@ -21,7 +21,7 @@ var placeholderData = "// Welcome to Ringo \n\
 //	- Edit, modify, debug, and build iOS projects that you create or have already created \n\
 //	- Write iOS apps that use both Swift/Objective-C code \n\
 //	- Write and test Swift playgrounds in the browser \n\
-//  - View iOS apps through an online, in-browser iOS simulator at 60 FPS \n\
+//  - View iOS apps through an online, in-browser iOS simulator \n\
 //  - Harness the power of Xcode without the need for expensive hardware and software (you could use this on the Chromebook, and get nearly identical performance) \n\
 \n\
 \n\
@@ -227,7 +227,7 @@ function loadFiles() {
 
 
 								$("#appName").text(start_and_end_title(project_name));
-								$("#fileMenu").prepend("<div style=\"margin-top: 5px;\"><b><img height=\"20pt\" style=\"vertical-align:middle;margin-top: -5px;-webkit-filter:invert(100%); filter:invert(100%);\" src=\"img/folder-icon.svg\" />&nbsp;"+ start_and_end_title(project_name) +"</b></div><span id=\"addFileButton\">+</span>");
+								$("#fileMenu").prepend("<div style=\"margin-top: 5px;\"><b><img height=\"20pt\" style=\"vertical-align:middle;margin-top: -5px;-webkit-filter:invert(100%); filter:invert(100%);\" src=\"img/folder-icon.svg\" />&nbsp;&nbsp;"+ start_and_end_title(project_name) +"</b></div><span id=\"addFileButton\">+</span>");
 
 								// add addFileButton click listener
 								$("#addFileButton").click(function() { // add file to your project directory
@@ -340,7 +340,7 @@ function buildProject() {
 
 	    // if (code != currentData) {
 
-	    	$("#statusValue").html('<img src="img/loading.gif" />&nbsp;&nbsp;Building');
+	    	$("#statusValue").html('Building');
 			$("#outputArea").html('<center><img src="img/Preloader_3.gif" /><br/><br />Building your application...<center>');
 
 	    	// currentData = code;
