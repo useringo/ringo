@@ -211,8 +211,9 @@ function loadFiles() {
 
 								$("#fileMenu div:nth-child(1)").css({'background-color': 'rgb(14, 101, 227)', 'font-weight':'bold', 'color':'white'});
 								
-
 							}
+
+							$("#fileMenu").append("<br /><br /><br />"); // add some space to the end of the menu, super hacky, but oh well
 
 							editor.setValue(files[0].data, -1);
 							editor.scrollToLine(0);
