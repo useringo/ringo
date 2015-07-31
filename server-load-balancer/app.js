@@ -58,7 +58,6 @@ app.post('/register-server', function (req, res) {
 				ids.push(req.body.server_id);
 			}
 			
-
 			console.log(servers);
 			console.log(ids);
 			res.send("Successfully registered server in the load balancer.");
@@ -69,6 +68,24 @@ app.post('/register-server', function (req, res) {
 		
 	} else {
 		res.send(500, "There was an error registering the server with the load balancer.");
+	}
+});
+
+
+
+// When a server dies, the load balancer should know
+app.post('/unregister-server', function (req, res) {
+	if (req.body.server_id) {
+		var idIndex = ids.indexOf(req.body.server_id);
+		if (idIndex !== -1) { // make sure it exists
+			ids.splice(idIndex, 1); // delete it from the server id array
+			delete servers[req.body.server_id]; // delete from the json object
+
+		} else {
+			res.send(500, "You cannot unregister servers that have not already been registered.");
+		}
+	} else {
+		res.send(500, "Invalid parameters. Error unregistering server with load balancer.");
 	}
 });
 
