@@ -30,6 +30,12 @@ serialNumber.preferUUID = true; //
 require('shelljs/global'); // running shell commands
 
 
+// init internal error email reporting service
+var sendgrid;
+
+if (process.env.REPORT_TO && process.env.SEND_REPORTS == "YES") {
+  sendgrid = require('sendgrid')(process.env.SENDGRID_KEY);
+}
 
  
 // internal analytics service
@@ -1684,7 +1690,6 @@ app.get('/get-project-details/:app_id', function (req, res) {
     }
   }
 
-  console.log(('Xcode Project File Name: ' + xc_projName).red);
   console.log(JSON.stringify({"project": {"name": xc_projName}}).green);
 
   res.send({"project": {"name": xc_projName}});
@@ -1818,8 +1823,36 @@ process.on('SIGINT', function() {
 });
 
 
+// what happens when an error occurs
+process.on('uncaughtException', function (uncaughterr) {
+  console.log(('Caught exception: ' + uncaughterr).red);
+
+  if (typeof sendgrid !== "undefined") {
+      getIP(function (err, ip) {
+          if (err) {
+              // every service in the list has failed 
+              console.log(err);
+          } else {
+              console.log("Attempting to send error report to " + process.env.REPORT_TO);
+            
+              sendgrid.send({
+                to:       process.env.REPORT_TO,
+                from:     'ringo-error@useringo.github.io',
+                subject:  'Ringo Internal Error',
+                text:     'The Ringo internal server error on machine with address ' + ip + ' ran into error: \n\n' + uncaughterr
+              }, function(err, json) {
+                if (err) { return console.error(err); }
+                console.log(json);
+              });
+          }
+        
 
 
+      }); // end getIP
+  } // end typeof sendgrid
+
+
+});
 
 
 // fire up the server!
