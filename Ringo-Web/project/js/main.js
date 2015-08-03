@@ -10,10 +10,8 @@ $.get(lb+"/get-server-url", function (server_tunnel) {
 	hostname = server_tunnel;
 });
 
-
 var project_id = ""; //prompt("Type your Ringo Project ID");
 var project_name = "";
-
 var placeholderData = "// Welcome to Ringo \n\
 // A portable Xcode-based IDE in your browser \n\
 // Built by Gautam Mittal \n\n\
@@ -50,23 +48,15 @@ var placeholderData = "// Welcome to Ringo \n\
 \
 ";
 
-
 var files = [{"name": "INTRODUCTION", "data": placeholderData}];
-
-
 var currentFile = "";
-
 var currentData = editor.getValue();
-
 var currentUploadedFileData = "";
-
 var currentUploadAssetData = "";
-
 
 loadFiles(); // load the file menu
 
-
-// back up 
+// back up
 $("#fileMenu").append("<div name=\"INTRODUCTION\" onclick=\"javascript: currentFile = $(this).attr('name'); $('#fileMenu div').css({'background-color': 'transparent', \'font-weight\': \'normal\', \'color\': \'white\'}); $(this).css({'background-color': 'rgb(14, 101, 227)', 'font-weight':'bold', 'color':'white'}); updateEditor();\">Getting Started.swift</div>");
 editor.setValue(files[0].data, -1);
 editor.scrollToLine(0);
@@ -79,14 +69,12 @@ $('#editor').keyup(function(){
     typingTimer = setTimeout(doneTyping, doneTypingInterval);
 });
 
-//on keydown, clear the countdown 
+//on keydown, clear the countdown
 $('#editor').keydown(function(){
     clearTimeout(typingTimer);
 });
 
 $("#statusTime").text(moment().calendar());
-
-// var contentType ="application/x-www-form-urlencoded; charset=utf-8";
 
 //user is "finished typing," do something
 function doneTyping () {
@@ -120,7 +108,7 @@ function doneTyping () {
 					data: {"id": project_id, "files": withoutImages},
 					error: function (err) {
 						console.log(err);
-					}, 
+					},
 					success: function (data) {
 						console.log(data);
 
@@ -143,12 +131,7 @@ function doneTyping () {
 
 function loadFiles() {
 	if (project_id.length > 0) {
-
-
-
-
 		$("#fileMenu").html("");
-
 
 		$.ajax({
 			type: 'POST',
@@ -163,20 +146,19 @@ function loadFiles() {
 
 				files = data.files;
 
-
 				// get the .xcassets files
 				$.ajax({
 				    type: 'POST',
 				    url: hostname+'/get-image-xcassets',
 				    data: {"id": project_id},
 				    error: function (err) {
-				    	
+
 				    	if (err) {
 							// Do nothin'
 							console.log(err);
 				    	}
 
-				    }, 
+				    },
 				    success: function (imageData) {
 				        // console.log(data);
 
@@ -191,13 +173,9 @@ function loadFiles() {
 					        	tmp["type"] = "xcasset";
 					        	images[l] = tmp;
 					        }
-					      
+
 							files = files.concat(images);
-
-
-							// console.log()
 							console.log(files);
-
 
 							for (var i = 0; i < files.length; i++) {
 
@@ -210,7 +188,7 @@ function loadFiles() {
 								}
 
 								$("#fileMenu div:nth-child(1)").css({'background-color': 'rgb(14, 101, 227)', 'font-weight':'bold', 'color':'white'});
-								
+
 							}
 
 							$("#fileMenu").append("<br /><br /><br />"); // add some space to the end of the menu, super hacky, but oh well
@@ -234,31 +212,21 @@ function loadFiles() {
 								$("#addFileButton").click(function() { // add file to your project directory
 									if (project_id.length > 0) {
 										// console.log("Openi);
-										location.href = "#addFileFork";	
-									} 
-									
+										location.href = "#addFileFork";
+									}
+
 								});
 
 
 								// update the editor
 								updateEditor();
 
-							});							
-
-							
-
-
+							});
 
 				        }
-
 				    },
 				    dataType: "json"
 				});	// end ajax request
-
-
-
-
-
 
 			},
 			dataType: "json"
@@ -267,8 +235,6 @@ function loadFiles() {
 	} // end if project_id.length > 0
 
 }
-
-
 
 // run the app on the iOS simulator
 $("#runButton").click(function() {
@@ -279,7 +245,6 @@ $("#runButton").click(function() {
 $("#stopButton").click(function() {
 	stopProject();
 });
-
 
 // enable keyboard shortcuts
 var listener = new window.keypress.Listener();
@@ -318,8 +283,8 @@ listener.simple_combo("alt d", function() {
 
     if (project_id.length > 0) {
 		console.log("Requesting a ZIP file with your code...");
-		location.href = (hostname + '/download-project/'+project_id);	
-	} 
+		location.href = (hostname + '/download-project/'+project_id);
+	}
 });
 
 
@@ -334,9 +299,9 @@ function stopProject() {
 
 
 function buildProject() {
-	
+
 	if (project_id.length > 0) {
-	// save files, then build	
+	// save files, then build
 	    var code = editor.getValue();
 
 	    // if (code != currentData) {
@@ -377,7 +342,7 @@ function buildProject() {
 							data: {"id": project_id},
 							error: function (err) {
 								console.log(err);
-							}, 
+							},
 							success: function (data) {
 								console.log(data);
 
@@ -400,12 +365,12 @@ function buildProject() {
 
 
 
-				}, 
+				},
 				success: function (data) {
 					console.log(data);
 
 
-					
+
 
 				},
 				dataType: "json"
@@ -435,9 +400,9 @@ $("#fileMenu").click(function() {
 $("#ipaDLButton").click(function() { // download your code from the server
 	if (project_id.length > 0) {
 		console.log("Requesting a ZIP file with your code...");
-		location.href = (hostname + '/download-project/'+project_id);	
-	} 
-	
+		location.href = (hostname + '/download-project/'+project_id);
+	}
+
 });
 
 
@@ -472,7 +437,7 @@ function updateEditor() {
 			} else {
 				editor.session.setMode(modelist.getModeForPath(fileExt).mode);
 			}
-			
+
 		}
 	}
 
@@ -530,14 +495,14 @@ function handleFileSelect(evt) {
 	      // Closure to capture the file information.
 	      reader.onload = (function(theFile) {
 	        return function(e) {
-	  
+
 
 	          console.log(e.target.result);
 	          currentUploadedFileData = e.target.result;
 
 
 
-	            
+
 
 
 
@@ -590,16 +555,10 @@ function handleFileSelect(evt) {
 		      // Closure to capture the file information.
 		      reader.onload = (function(theFile) {
 		        return function(e) {
-		  
+
 
 		          console.log(e.target.result);
 		          currentUploadAssetData = e.target.result;
-
-
-
-		            
-
-
 
 		        };
 		      })(f);
@@ -619,7 +578,7 @@ function handleFileSelect(evt) {
 
 
 		function addXcasset() {
-			
+
 
 			if ($("#assetList").text().length > 0) {
 				if ($("#addXcassetModal").children("div").children("center").children("#xcassetNameInput").val().length > 0) {
@@ -642,19 +601,19 @@ function handleFileSelect(evt) {
 					        // 	console.log("THERE WAS AN ERROR UPLOADING THE FILE");
 					        // }
 
-					    }, 
+					    },
 					    success: function (data) {
 					        console.log(data);
 
-					        
 
-					        // if (data.Error) 
+
+					        // if (data.Error)
 					        // {
 					        // 	$("output").text("");
 					        // 	$("output").append('<br /><br /><span style="color:red;">An error occurred. Try again.</span>');
 					        // } else {
 					        // 	location.href = "#";
-						        
+
 					        // }
 
 					        if (data) {
@@ -676,7 +635,7 @@ function handleFileSelect(evt) {
 			;
 
 
-					        
+
 
 					    },
 					    dataType: "json"
@@ -709,13 +668,13 @@ function handleFileSelect(evt) {
 			        // 	console.log("THERE WAS AN ERROR UPLOADING THE FILE");
 			        // }
 
-			    }, 
+			    },
 			    success: function (data) {
 			        console.log(data);
 
-			        
 
-			        if (data.Error) 
+
+			        if (data.Error)
 			        {
 			        	$("#list").text("");
 			        	$("#list").append('<br /><br /><span style="color:red;">An error occurred. Try again.</span>');
@@ -728,7 +687,7 @@ function handleFileSelect(evt) {
 			        $(".awesomeButton").prop("disabled", false);
 
 
-			        
+
 
 			    },
 			    dataType: "json"
@@ -747,7 +706,7 @@ function handleFileSelect(evt) {
 				    url: hostname+'/clone-git-project',
 				    data: {"url": $("#gitModal").children("div").children("center").children("#gitCloneURL").val()},
 				    error: function (err) {
-				    	
+
 
 				    	if (err) {
 				    		$("#gitModal").children("div").children("center").children("#gitCloneURL").val("There was an error. Try again.");
@@ -760,10 +719,10 @@ function handleFileSelect(evt) {
 				    		}, 3000);
 				    	}
 				        // console.log(err);
-				    }, 
+				    },
 				    success: function (data) {
 				        console.log(data);
-				        
+
 
 				        if (data) {
 				        	$("#gitModal").children("div").children("center").children("#gitCloneURL").val("Success!");
@@ -783,9 +742,9 @@ function handleFileSelect(evt) {
 
 				    },
 				    dataType: "json"
-				});	
-	  		}	
-			
+				});
+	  		}
+
 	  	}
 
 
@@ -805,7 +764,7 @@ function handleFileSelect(evt) {
 				    url: hostname+'/create-project',
 				    data: {"projectName": $("#createModal").children("div").children("center").children("#createName").val(), "template": templateType},
 				    error: function (err) {
-				    	
+
 
 				    	if (err) {
 				    		$("#createModal").children("div").children("center").children("#createName").val("There was an error. Try again.");
@@ -816,11 +775,11 @@ function handleFileSelect(evt) {
 				    		}, 3000);
 				    	}
 				        // console.log(err);
-				    }, 
+				    },
 				    success: function (data) {
 				        console.log(data);
 
-				        
+
 
 				        if (data) {
 				        	$("#createModal").children("div").children("center").children("#createName").val("Success!");
@@ -858,7 +817,7 @@ function handleFileSelect(evt) {
 				    url: hostname+'/add-file',
 				    data: {"fileName": $("#addFileModal").children("div").children("center").children("#newFileNameInput").val(), "id": project_id},
 				    error: function (err) {
-				    	
+
 
 				    	if (err) {
 				    		$("#addFileModal").children("div").children("center").children("#newFileNameInput").val("There was an error. Try again.");
@@ -869,11 +828,11 @@ function handleFileSelect(evt) {
 				    		}, 3000);
 				    	}
 				        // console.log(err);
-				    }, 
+				    },
 				    success: function (data) {
 				        console.log(data);
 
-				        
+
 
 				        if (data) {
 				        	$("#addFileModal").children("div").children("center").children("#newFileNameInput").val("Success!");
@@ -909,18 +868,18 @@ function handleFileSelect(evt) {
 			    url: hostname+'/delete-file',
 			    data: {"fileName": fileElement, "id": project_id},
 			    error: function (err) {
-			    	
+
 
 			    	if (err) {
 						// Do nothin'
 						console.log(err);
 			    	}
 
-			    }, 
+			    },
 			    success: function (data) {
 			        console.log(data);
 
-			        
+
 
 			        if (data) {
 			        	// that means it worked...
@@ -955,8 +914,3 @@ function handleFileSelect(evt) {
 
 			loadFiles(); // load the file menu with the new updated data
 	  	}
-
-
-
-
-
