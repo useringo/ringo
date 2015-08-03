@@ -804,8 +804,6 @@ app.post('/update-project-contents', function (req, res) {
   var project_id = req.body.id;
   var files = req.body.files;
 
-
-
   console.log(files.length + " files need to be saved.");
 
   cd(buildProjects_path);
@@ -865,8 +863,6 @@ app.post('/get-project-contents', function(req, res) {
   cd(buildProjects_path);
 
   var id_dir = ls(project_id)[0];
-  console.log(id_dir);
-  // var files = ls(project_id+"/"+id_dir+"/"+id_dir);
 
   var xc_projName = ""; // suprisingly enough, people like to name their repository name differently than their .xcodeproj name
 
@@ -877,7 +873,6 @@ app.post('/get-project-contents', function(req, res) {
   }
 
   console.log(('Xcode Project File Name: ' + xc_projName).red);
-
 
   // crawl the file tree
   walk(buildProjects_path + "/" + project_id+"/"+id_dir+"/"+xc_projName, function(err, results) {
@@ -890,9 +885,6 @@ app.post('/get-project-contents', function(req, res) {
       var tmp = results[i];
 
       tmp = tmp.split("/");
-
-      // console.log(tmp);
-
 
       // find all of the unnecessary top level directories
       var dirCount = 0;
@@ -947,33 +939,46 @@ app.post('/get-project-contents', function(req, res) {
 
     function loopFiles() {
         var file = files[i];
-        // console.log(file);
+
+        // var contentForFile = {};
+        // contentForFile["name"] = file;
+        //
+        // var fileChunks = fs.createReadStream(project_id+"/"+id_dir+"/"+xc_projName+"/"+file, {encoding: 'utf-8'});
+        // fileChunks.pipe(res);
+        //
+        // fileChunks.on('end', function() {
+        //   if (i < files.length) {
+        //
+        //       loopFiles();
+        //       i++;
+        //     } else {
+        //       res.send();
+        //
+        //       // res.send({"files": filesContents});
+        //       cd(buildProjects_path);
+        //     }
+        // });
+
 
           fs.readFile(project_id+"/"+id_dir+"/"+xc_projName+"/"+file, 'utf8', function (err, data) {
             if (err) {
               return console.log(err);
             }
 
-
-
             var contentForFile = {};
             contentForFile["name"] = file;
 
-            // console.log(data);
             contentForFile["data"] = data;
 
             filesContents.push(contentForFile);
 
-            // console.log(filesContents)
 
             if (i < files.length) {
 
-              // console.log(i);
               loopFiles();
               i++;
             } else {
 
-              // console.log("HELLO")
               res.send({"files": filesContents});
               cd(buildProjects_path);
             }
