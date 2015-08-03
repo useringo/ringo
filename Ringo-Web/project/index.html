@@ -21,7 +21,7 @@
         <style>
   /*      .content {
             text-align: center;
-            margin-top: 10%;   
+            margin-top: 10%;
             position:relative;
             margin:auto;
         }*/
@@ -59,8 +59,8 @@
             position: absolute;
             left: 10px;
             top: -8px;
-   
-    
+
+
         }
         .header {
             background-color:rgb(26, 32, 38);
@@ -94,7 +94,7 @@
         }
         html {
             color: #888;
-     
+
         }
         .content {
             left: 50%;
@@ -114,7 +114,7 @@
             line-height: 1.2;
         }
 
-                #editor { 
+                #editor {
             position: absolute;
             bottom: 0;
             right: 0;
@@ -123,7 +123,7 @@
             /*height: calc(100%-50px);*/
             /*width: 70%;*/
             width: -webkit-calc(100% - 580px);
-            width: calc(100% - 580px); 
+            width: calc(100% - 580px);
             height: calc(100% - 42px);
             height: -webkit-calc(100% - 42px);
         }
@@ -144,7 +144,7 @@
             /*padding-top: 0.1%;*/
             /*padding-top: 10px;*/
             padding-right: 1%;
-            
+
         }
 
         #outputArea {
@@ -179,7 +179,7 @@
             margin: 0 auto;
           left: 0;
           right: 0;
-          font-family: 'Roboto';
+          font-family: 'Proxima Nova';
           -webkit-transition: all 0.1s linear;
           -moz-transition: all 0.1s linear;
           -o-transition: all 0.1s linear;
@@ -236,14 +236,14 @@
 
         #statusValue {
             color:white;
-            font-weight: 500;
+            font-weight:bold;
             font-size: 10pt;
         }
 
         #statusTime {
             color:white;
             font-size: 10pt;
-            font-weight: 300;
+
         }
 
         #fileMenu {
@@ -283,11 +283,11 @@
         }
 
         .logo-toolbar {
-            height: 31px;
+            height: 25px;
             margin-top: -4px;
-            margin-left: -3px;
-            border-radius: 8px;
-            border: 2px solid rgba(255, 255, 255, 0.7);
+            margin-left: 0px;
+            border-radius: 50%;
+            border: 2px solid rgba(57, 57, 57, 1.0);
             -webkit-transition: all 0.1s linear;
             -moz-transition: all 0.1s linear;
             -o-transition: all 0.1s linear;
@@ -296,8 +296,8 @@
 
         .logo-toolbar:hover {
             cursor:pointer;
-            filter: grayscale(100%);
-            -webkit-filter: grayscale(100%);
+            filter: invert(100%);
+            -webkit-filter: invert(100%);
         }
 
 
@@ -343,7 +343,7 @@
             top: 6px;
             right: 60px;
     /*        box-shadow: 0px 0.5px 0px 0px;
-            
+
             -webkit-box-shadow: 0px 0.5px 0px 0px;*/
             -webkit-transition: all 0.1s linear;
             -moz-transition: all 0.1s linear;
@@ -459,7 +459,7 @@
         }
 
         #stopButton:active {
-            background-color: #16a085;  
+            background-color: #16a085;
         }
 
         .arrow-right {
@@ -468,11 +468,11 @@
             right:0;
             margin: 0 auto;
             margin-top: 5px;
-            width: 0; 
-            height: 0; 
+            width: 0;
+            height: 0;
             border-top: 8px solid transparent;
             border-bottom: 8px solid transparent;
-            
+
             border-left: 16px solid #ecf0f1;
         }
 
@@ -752,17 +752,17 @@
             height: 1px;
             background-color:transparent;
         }
-         
+
         ::-webkit-scrollbar-track {
-            -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+            -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
             border-radius: 10px;
 
         }
-         
+
         ::-webkit-scrollbar-thumb {
             border-radius: 10px;
             -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
-            background-color: rgb(255, 195, 0); 
+            background-color: rgb(255, 195, 0);
         }
 
         </style>
@@ -777,7 +777,7 @@
 
         <div class="header">
             <h1 class="tapRoom"><img class="logo-toolbar" src="img/Ringo-Logo.png" onclick="javascript:location.href='/';"/></h1>
-            
+
 
             <div class="status"><span id="statusValue">Ready</span> <span style="color:white; font-size: 10pt;">|</span> <span id="statusTime">Now</span></div>
 
@@ -807,7 +807,7 @@
 
         <div id="editor"></div>
 
-        <div id="outputArea">    
+        <div id="outputArea">
 
         </div>
 
@@ -930,7 +930,7 @@
         <script type='text/javascript' src="http://cdnjs.cloudflare.com/ajax/libs/jquery-ajaxtransport-xdomainrequest/1.0.1/jquery.xdomainrequest.min.js"></script>
         <script type="text/javascript" src="http://momentjs.com/downloads/moment.min.js"></script>
         <script src="js/plugins.js"></script>
-        
+
 
         <script src="//cdnjs.cloudflare.com/ajax/libs/ace/1.1.9/ace.js" type="text/javascript" charset="utf-8"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/ace/1.2.0/ext-modelist.js" type="text/javascript" charset="utf-8"></script>
