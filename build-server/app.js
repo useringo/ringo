@@ -27,7 +27,6 @@ var serialNumber = require('serial-number'); // unique server id
 serialNumber.preferUUID = true; //
 require('shelljs/global'); // running shell commands
 
-
 // init internal error email reporting service
 var sendgrid;
 
@@ -68,6 +67,19 @@ app.use(function(req, res, next) {
 });
 
 var port = 3000; // port which the server will run on
+
+
+// fire up the http server!
+var server = app.listen(port, function () {
+
+  var host = server.address().address;
+  var port = server.address().port;
+
+  console.log(('Ringo core server listening at http://0.0.0.0:'+ port).blue);
+
+});
+
+var io = require('socket.io')(server); // realtime server abilities
 
 
 var build_serverURL = process.env.HOSTNAME;
@@ -1849,17 +1861,6 @@ process.on('uncaughtException', function (uncaughterr) {
       }); // end getIP
   } // end typeof sendgrid
 
-
-});
-
-
-// fire up the server!
-var server = app.listen(port, function () {
-
-  var host = server.address().address;
-  var port = server.address().port;
-
-  console.log(('Ringo core server listening at http://0.0.0.0:'+ port).blue);
 
 });
 
