@@ -940,50 +940,55 @@ app.post('/get-project-contents', function(req, res) {
     function loopFiles() {
         var file = files[i];
 
-        // var contentForFile = {};
-        // contentForFile["name"] = file;
-        //
-        // var fileChunks = fs.createReadStream(project_id+"/"+id_dir+"/"+xc_projName+"/"+file, {encoding: 'utf-8'});
-        // fileChunks.pipe(res);
-        //
-        // fileChunks.on('end', function() {
-        //   if (i < files.length) {
-        //
-        //       loopFiles();
-        //       i++;
-        //     } else {
-        //       res.send();
-        //
-        //       // res.send({"files": filesContents});
-        //       cd(buildProjects_path);
-        //     }
-        // });
+        var contentForFile = {};
+        contentForFile["name"] = file;
+        contentForFile["data"] = "";
 
+        var fileChunks = fs.createReadStream(project_id+"/"+id_dir+"/"+xc_projName+"/"+file, {encoding: 'utf-8'});
 
-          fs.readFile(project_id+"/"+id_dir+"/"+xc_projName+"/"+file, 'utf8', function (err, data) {
-            if (err) {
-              return console.log(err);
-            }
+        fileChunks.on('data', function (chunk) {
+            contentForFile["data"] += chunk;
+        });
 
-            var contentForFile = {};
-            contentForFile["name"] = file;
-
-            contentForFile["data"] = data;
-
-            filesContents.push(contentForFile);
-
-
-            if (i < files.length) {
+        fileChunks.on('end', function() {
+          console.log(contentForFile["data"]);
+          if (i < files.length) {
 
               loopFiles();
               i++;
             } else {
+              res.send();
 
-              res.send({"files": filesContents});
+              // res.send({"files": filesContents});
               cd(buildProjects_path);
             }
+        });
 
-          });
+          //
+          // fs.readFile(project_id+"/"+id_dir+"/"+xc_projName+"/"+file, 'utf8', function (err, data) {
+          //   if (err) {
+          //     return console.log(err);
+          //   }
+          //
+          //   var contentForFile = {};
+          //   contentForFile["name"] = file;
+          //
+          //   contentForFile["data"] = data;
+          //
+          //   filesContents.push(contentForFile);
+          //
+          //
+          //   if (i < files.length) {
+          //
+          //     loopFiles();
+          //     i++;
+          //   } else {
+          //
+          //     res.send({"files": filesContents});
+          //     cd(buildProjects_path);
+          //   }
+          //
+          // });
 
 
     }
