@@ -19,7 +19,7 @@ $('#editor').keyup(function(){
 });
 
 
-//on keydown, clear the countdown 
+//on keydown, clear the countdown
 $('#editor').keydown(function(){
     clearTimeout(typingTimer);
 });
@@ -32,7 +32,7 @@ $("#statusTime").text(moment().calendar());
 function doneTyping () {
     var code = editor.getValue();
 
-    $("#statusValue").html('<img src="img/loading.gif" />&nbsp;&nbsp;Compiling');
+    $("#statusValue").html('Compiling');
 
     $.ajax({
 	  type: "POST",
@@ -56,7 +56,7 @@ function doneTyping () {
 
 // execute onload
 $(document).ready(function () {
-	setTimeout(doneTyping, 2000); // wait after 2 seconds	
+	setTimeout(doneTyping, 2000); // wait after 2 seconds
 });
 
 
@@ -74,6 +74,3 @@ require(["ace/range"], function(range) {
 setTimeout(function() {
   return editor.getSession().removeMarker(marker);
 }, 3000);
-
-
-

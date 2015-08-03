@@ -20,7 +20,7 @@
         <style>
   /*      .content {
             text-align: center;
-            margin-top: 10%;   
+            margin-top: 10%;
             position:relative;
             margin:auto;
         }*/
@@ -68,11 +68,12 @@
             position: absolute;
             right: 15px;
             top: -8px;
-   
-    
+            color:white;
+
+
         }
         .header {
-            background-color:rgb(220, 220, 220);
+            background-color:rgb(26, 32, 38);
             width: 100%;
             /*position:relative;*/
 
@@ -89,7 +90,7 @@
         }
         html {
             color: #888;
-     
+
         }
         .content {
             left: 50%;
@@ -109,14 +110,14 @@
             line-height: 1.2;
         }
 
-        #editor { 
+        #editor {
             position: absolute;
             bottom: 0;
             right: 0;
             bottom: 0;
             left: 0;
             /*height: calc(100%-50px);*/
-            width: 70%; 
+            width: 70%;
             height: calc(100% - 42px);
             height: -webkit-calc(100% - 42px);
         }
@@ -137,7 +138,7 @@
             /*padding-top: 0.1%;*/
             /*padding-top: 10px;*/
             padding-right: 1%;
-            
+
         }
 
         #outputArea {
@@ -147,7 +148,7 @@
             float:right;
             font-family:'Proxima Nova';
             color:white;
-            background-color: rgb(69, 69, 69);
+            background-color: rgb(57, 57, 57);
             height: calc(100% - 40px);
             height: -webkit-calc(100% - 40px);
             font-size:10pt;
@@ -165,8 +166,9 @@
         }
 
         .status {
-            background-color: rgb(251, 251, 251);
-            height: 60%;
+          text-align: center;
+            background-color: rgb(57, 57, 57);
+            height: 65%;
             width: 230px;
             position:absolute;
             top: 7px;
@@ -179,11 +181,12 @@
           -moz-transition: all 0.1s linear;
           -o-transition: all 0.1s linear;
           -ms-transition: all 0.1s linear;
-
+          /*position:relative;*/
+          color:white;
           /*font-size: 12pt;*/
-
+/*
           box-shadow: 0px 0.5px 0px 0px;
-          -webkit-box-shadow: 0px 0.5px 0px 0px;
+          -webkit-box-shadow: 0px 0.5px 0px 0px;*/
 
         }
 
@@ -192,14 +195,15 @@
         }
 
         #statusValue {
-            color:black;
+        
+            color:white;
             font-weight: bold;
-            margin-left: 10px;
+            /*margin-left: 10px;*/
             font-size: 10pt;
         }
 
         #statusTime {
-            color:black;
+            color:white;
             font-size: 10pt;
         }
 
@@ -216,7 +220,7 @@
             height: 10px;
             width: 10px;
             border-radius: 2px;
-            
+
         }
 
         .y {
@@ -245,7 +249,7 @@
         <![endif]-->
         <div class="header">
             <h1 class="tapRoom">Sandbox</h1>
-            <div class="status"><span id="statusValue">Ready</span> <span style="color:black; font-size: 9pt;">|</span> <span id="statusTime">Now</span></div>
+            <div class="status"><span id="statusValue">Ready</span> <span style="color:white; font-size: 11pt;">|</span> <span id="statusTime">Now</span></div>
         </div>
 
 
@@ -260,7 +264,7 @@ println("Hello, world");
 
         </div>
 
-        <div id="outputArea">    
+        <div id="outputArea">
 
         </div>
 
@@ -270,17 +274,17 @@ println("Hello, world");
   <!--       <span id="outputArea">
         // Output goes here
         </span> -->
-     
+
 
 
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.3.min.js"><\/script>')</script>
         <script type='text/javascript' src="http://cdnjs.cloudflare.com/ajax/libs/jquery-ajaxtransport-xdomainrequest/1.0.1/jquery.xdomainrequest.min.js"></script>
-        
+
         <script type="text/javascript" src="http://momentjs.com/downloads/moment.min.js"></script>
         <script src="js/plugins.js"></script>
-        
+
         <script src="//cdnjs.cloudflare.com/ajax/libs/ace/1.1.9/ace.js" type="text/javascript" charset="utf-8"></script>
         <script>
             var editor = ace.edit("editor");
