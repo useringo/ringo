@@ -4,12 +4,10 @@
 
   Dependencies:
   NODE.JS + Xcode 6.3
-  
+
   You will also need to populate the .env file with the necessary environment variables in order for this script to run effectively
 
-
 */
-
 
 // might be useful to refer to this: http://stackoverflow.com/questions/4079280/javascript-communication-between-browser-tabs-windows, when thinking about implementing a simulator which opens in an external window
 
@@ -26,7 +24,7 @@ var Keen = require("keen.io"); // analytics
 var request = require('request'); // making requests to external sources
 var satelize = require('satelize'); // analytics
 var serialNumber = require('serial-number'); // unique server id
-serialNumber.preferUUID = true; // 
+serialNumber.preferUUID = true; //
 require('shelljs/global'); // running shell commands
 
 
@@ -37,7 +35,7 @@ if (process.env.REPORT_TO && process.env.SEND_REPORTS == "YES") {
   sendgrid = require('sendgrid')(process.env.SENDGRID_KEY);
 }
 
- 
+
 // internal analytics service
 var client;
 
@@ -78,7 +76,7 @@ var secure_serverURL = process.env.SECURE_HOSTNAME;
 
   getIP(function (err, ip) {
       if (err) {
-          // every service in the list has failed 
+          // every service in the list has failed
           console.log(err);
       }
       console.log(("Server IP address: " + ip).cyan);
@@ -91,7 +89,7 @@ var secure_serverURL = process.env.SECURE_HOSTNAME;
           } else {
 
               var obj = JSON.parse(geoData);
-            
+
               var location = obj.city + ", " + obj.region_code + ", " + obj.country_code3;
               var isp = obj.isp;
               var country = obj.country;
@@ -107,12 +105,12 @@ var secure_serverURL = process.env.SECURE_HOSTNAME;
                   }
               }); // end client addEvent
 
-            
+
             } // end if err
           }); // end satelize
 
       }
-      
+
   }); // end getIP
 
 
@@ -152,11 +150,11 @@ ngrok.connect(port, function (err, url) {
         }); // end request
 
 
-    });    
+    });
   }
 
 
-  
+
 
 
 });
@@ -183,14 +181,14 @@ app.post('/build-sandbox', function (req, res) {
 
       if (typeof client != "undefined") { // only run if the user has set up analytics
         satelize.satelize({ip:ip}, function(err, geoData) {
-          // if data is JSON, we may wrap it in js object 
+          // if data is JSON, we may wrap it in js object
           if (err) {
             console.log("There was an error getting the user's location.");
           } else {
               console.log(geoData);
 
               var obj = JSON.parse(geoData);
-            
+
               var location = obj.city + ", " + obj.region_code + ", " + obj.country_code3;
               var isp = obj.isp;
               var country = obj.country;
@@ -213,7 +211,7 @@ app.post('/build-sandbox', function (req, res) {
           } // end error handling
         }); // end satelize
       }
-      
+
 
 
         console.log('Following sandbox executed at '+ new Date());
@@ -231,13 +229,13 @@ app.post('/build-sandbox', function (req, res) {
         if (stderror) { // if user has buggy code, tell them what they did wrong
           res.send(stderror);
         } else { // if user doesn't, show them the given output
-          res.send(out);  
+          res.send(out);
         }
-        
+
       });
 
-	    
-	}); 
+
+	});
 
   } else {
   	res.send("Nothing to compile.");
@@ -266,7 +264,7 @@ exec('cd build-projects', function (err, out, stderror) {
 
     exec('mkdir build-projects', function (err, out, stderror) {
       cd('build-projects');
-      
+
       // download the great
       exec('wget http://cdn.rawgit.com/gmittal/ringoPeripherals/master/cli-helpers/renameXcodeProject.sh && wget http://cdn.rawgit.com/gmittal/ringoPeripherals/master/cli-helpers/XcodeProjAdder', function (err, out, stderror) {
         console.log(out);
@@ -341,7 +339,7 @@ function cleanBuildProjects() {
           });
       } // end if not renameXcodeProject.sh
     } // end if not XcodeProjAdder
-  
+
   } // end loopFiles()
 } // end cleanBuildProjects
 
@@ -369,14 +367,14 @@ app.post('/create-project', function(req, res) {
 
         if (typeof client != "undefined") {
           satelize.satelize({ip:ip}, function(err, geoData) {
-              // if data is JSON, we may wrap it in js object 
+              // if data is JSON, we may wrap it in js object
               if (err) {
                 console.log("There was an error getting the user's location.");
               } else {
                   console.log(geoData);
 
                   var obj = JSON.parse(geoData);
-                
+
                   var location = obj.city + ", " + obj.region_code + ", " + obj.country_code3;
                   var isp = obj.isp;
                   var country = obj.country;
@@ -455,12 +453,12 @@ app.post('/create-project', function(req, res) {
 
               // don't send back the code until its actually done
               res.send({"uid": project_uid});
-          
+
             });
 
-            
 
-        });  
+
+        });
   } else {
     res.statusCode = 500;
     res.send({"Error": "Invalid parameters."});
@@ -487,14 +485,14 @@ app.get('/download-project/:id', function (req, res) {
 
   if (typeof client != "undefined") {
     satelize.satelize({ip:ip}, function(err, geoData) {
-        // if data is JSON, we may wrap it in js object 
+        // if data is JSON, we may wrap it in js object
         if (err) {
           console.log("There was an error getting the user's location.");
         } else {
             console.log(geoData);
 
             var obj = JSON.parse(geoData);
-          
+
             var location = obj.city + ", " + obj.region_code + ", " + obj.country_code3;
             var isp = obj.isp;
             var country = obj.country;
@@ -535,7 +533,7 @@ app.get('/download-project/:id', function (req, res) {
     console.log(out);
 
     console.log('Successfully cleaned up the build directory from the project that will be downloaded.');
-  
+
     // now that we've removed the build projects directory, we need to move back up to the ID directory
     cd(buildProjects_path + '/' + req.param('id'));
 
@@ -549,7 +547,7 @@ app.get('/download-project/:id', function (req, res) {
 
   });
 
-  
+
 });
 
 
@@ -561,7 +559,7 @@ app.post('/upload-project-zip', function (req, res) {
 
   res.setHeader('Content-Type', 'application/json');
 
-  
+
 
 
   if (req.body.file) {
@@ -569,18 +567,18 @@ app.post('/upload-project-zip', function (req, res) {
     // analytics
     var ip = req.connection.remoteAddress;
     console.log("Request made from: " + ip);
-    
+
 
     if (typeof client != "undefined") {
       satelize.satelize({ip:ip}, function(err, geoData) {
-          // if data is JSON, we may wrap it in js object 
+          // if data is JSON, we may wrap it in js object
           if (err) {
             console.log("There was an error getting the user's location.");
           } else {
               console.log(geoData);
 
               var obj = JSON.parse(geoData);
-            
+
               var location = obj.city + ", " + obj.region_code + ", " + obj.country_code3;
               var isp = obj.isp;
               var country = obj.country;
@@ -628,9 +626,9 @@ app.post('/upload-project-zip', function (req, res) {
 
           require("fs").writeFile("anonymous_project.zip", base64Data, 'base64', function(err) {
             if (err) {
-              console.log(err);  
+              console.log(err);
             }
-            
+
             console.log('User ZIP project successfully received.'.magenta);
 
             exec('unzip anonymous_project.zip && rm -rf anonymous_project.zip', function (err, out, stderror) {
@@ -647,7 +645,7 @@ app.post('/upload-project-zip', function (req, res) {
 
 
                 var xc_projName = ""; // suprisingly enough, people like to name their repository name differently than their .xcodeproj name
-                
+
                 for (var z = 0; z < ls(project_uid + "/" + id_dir).length; z++) {
                   if (ls(project_uid + "/" + id_dir)[z].indexOf('.xcodeproj') > -1) {
                     xc_projName = ls(project_uid + "/" + id_dir)[z].replace('.xcodeproj', '');
@@ -658,20 +656,20 @@ app.post('/upload-project-zip', function (req, res) {
 
 
                 if (xc_projName.length !== 0) {
-                  res.send({"id": project_uid});    
+                  res.send({"id": project_uid});
                 } else {
                   console.log("Does not comply with the standard Xcode project file tree...".red);
                   res.statusCode = 500;
                   res.send({"Error": "Invalid parameters"});
                 }
 
-              
+
 
               // cd(buildProjects_path);
             });
 
 
-            
+
 
           }); // end write ZIP file
 
@@ -693,7 +691,7 @@ app.post('/clone-git-project', function (req, res) {
 
   cd(buildProjects_path);
 
-  
+
 
   if (req.body.url) {
     console.log('Received request to git clone a file.');
@@ -701,18 +699,18 @@ app.post('/clone-git-project', function (req, res) {
       // analytics
       var ip = req.connection.remoteAddress;
       console.log("Request made from: " + ip);
-      
+
 
       if (typeof client != "undefined") {
         satelize.satelize({ip:ip}, function(err, geoData) {
-            // if data is JSON, we may wrap it in js object 
+            // if data is JSON, we may wrap it in js object
             if (err) {
               console.log("There was an error getting the user's location.");
             } else {
                 console.log(geoData);
 
                 var obj = JSON.parse(geoData);
-              
+
                 var location = obj.city + ", " + obj.region_code + ", " + obj.country_code3;
                 var isp = obj.isp;
                 var country = obj.country;
@@ -724,7 +722,7 @@ app.post('/clone-git-project', function (req, res) {
                 if ((req.body.url).substr(0, 4) == "http") {
                   source = (req.body.url).split("/")[2];
                 }
-                
+
                 console.log(source);
 
                 client.addEvent("clone_git_project", {"location": location, "isp": isp, "country": country, "timezone": timezone, "source": source}, function(err, res) {
@@ -756,19 +754,19 @@ app.post('/clone-git-project', function (req, res) {
       // actually clone the repository
       exec('git clone ' + req.body.url, function (err, out, stderror) {
         if (out !== undefined) {
-          console.log(out.cyan);  
+          console.log(out.cyan);
         }
-        
+
         if (err) {
           console.log(err.red);
           res.statusCode = 500;
-          res.send({"Error":"Something did not go as expected."});  
+          res.send({"Error":"Something did not go as expected."});
         } else {
-          res.send({"uid": project_uid});  
+          res.send({"uid": project_uid});
         }
-        
 
-        
+
+
       });
 
 
@@ -803,7 +801,7 @@ app.post('/update-project-contents', function (req, res) {
   var id_dir = ls(project_id)[0];
 
   var xc_projName = ""; // suprisingly enough, people like to name their repository name differently than their .xcodeproj name
-  
+
   for (var z = 0; z < ls(project_id + "/" + id_dir).length; z++) {
     if (ls(project_id + "/" + id_dir)[z].indexOf('.xcodeproj') > -1) {
       xc_projName = ls(project_id + "/" + id_dir)[z].replace('.xcodeproj', '');
@@ -837,7 +835,7 @@ app.post('/update-project-contents', function (req, res) {
 
   } // end writeFiles()
 
-  
+
 });
 
 
@@ -859,7 +857,7 @@ app.post('/get-project-contents', function(req, res) {
   // var files = ls(project_id+"/"+id_dir+"/"+id_dir);
 
   var xc_projName = ""; // suprisingly enough, people like to name their repository name differently than their .xcodeproj name
-  
+
   for (var z = 0; z < ls(project_id + "/" + id_dir).length; z++) {
     if (ls(project_id + "/" + id_dir)[z].indexOf('.xcodeproj') > -1) {
       xc_projName = ls(project_id + "/" + id_dir)[z].replace('.xcodeproj', '');
@@ -884,9 +882,9 @@ app.post('/get-project-contents', function(req, res) {
       // console.log(tmp);
 
 
-      // find all of the unnecessary top level directories 
+      // find all of the unnecessary top level directories
       var dirCount = 0;
-      
+
       for (var k = 0; k < tmp.length; k++) {
         if (tmp[k] == project_id) {
           break;
@@ -902,22 +900,22 @@ app.post('/get-project-contents', function(req, res) {
       }
 
       tmp = tmp.join("/");
-      
+
 
       if (!(tmp.indexOf(".xcassets") > -1)) {
         if (!(tmp.indexOf(".DS_Store") > -1)) {
           if (!(tmp.indexOf(".sks") > -1)) {
             if (!(tmp.indexOf(".playground") > -1)) {
               if (!(tmp.indexOf(".png") > -1)) {
-                filtered.push(tmp); 
+                filtered.push(tmp);
               }
-                  
-            } 
+
+            }
           }
-                
+
         }
       } // end filters
-    
+
 
     } // end for loop
 
@@ -927,7 +925,7 @@ app.post('/get-project-contents', function(req, res) {
 
     res.setHeader('Content-Type', 'application/json');
 
-    console.log(files);  
+    console.log(files);
 
     var filesContents = []; // final array of json data
 
@@ -957,7 +955,7 @@ app.post('/get-project-contents', function(req, res) {
             // console.log(filesContents)
 
             if (i < files.length) {
-              
+
               // console.log(i);
               loopFiles();
               i++;
@@ -995,7 +993,7 @@ app.post('/add-image-xcasset', function (req, res) {
     var id_dir = ls(project_id)[0];
 
     var xc_projName = ""; // suprisingly enough, people like to name their repository name differently than their .xcodeproj name
-    
+
     for (var z = 0; z < ls(project_id + "/" + id_dir).length; z++) {
       if (ls(project_id + "/" + id_dir)[z].indexOf('.xcodeproj') > -1) {
         xc_projName = ls(project_id + "/" + id_dir)[z].replace('.xcodeproj', '');
@@ -1085,7 +1083,7 @@ app.post('/add-image-xcasset', function (req, res) {
     }); // end exec mkdir
 
 
-  
+
 
 
 
@@ -1096,7 +1094,7 @@ app.post('/add-image-xcasset', function (req, res) {
 
   } // end if req.body.id
 
-  
+
 });
 
 
@@ -1113,7 +1111,7 @@ app.post('/get-image-xcassets', function (req, res) {
       // var files = ls(project_id+"/"+id_dir+"/"+id_dir);
 
       var xc_projName = ""; // suprisingly enough, people like to name their repository name differently than their .xcodeproj name
-      
+
       for (var z = 0; z < ls(project_id + "/" + id_dir).length; z++) {
         if (ls(project_id + "/" + id_dir)[z].indexOf('.xcodeproj') > -1) {
           xc_projName = ls(project_id + "/" + id_dir)[z].replace('.xcodeproj', '');
@@ -1135,9 +1133,9 @@ app.post('/get-image-xcassets', function (req, res) {
 
           tmp = tmp.split("/");
 
-          // find all of the unnecessary top level directories 
+          // find all of the unnecessary top level directories
           var dirCount = 0;
-          
+
           for (var k = 0; k < tmp.length; k++) {
             if (tmp[k] == project_id) {
               break;
@@ -1152,7 +1150,7 @@ app.post('/get-image-xcassets', function (req, res) {
           }
 
           tmp = tmp.join("/");
-          
+
           // filter through all of the stuff that we don't want
           if (!(tmp.indexOf(".swift") > -1)) {
             if (!(tmp.indexOf(".lproj") > -1)) {
@@ -1165,20 +1163,20 @@ app.post('/get-image-xcassets', function (req, res) {
                           if (!(tmp.indexOf(".DS_Store") > -1)) {
                             filtered.push(tmp);
                           }
-                          
+
                         }
-                         
+
                       }
                     }
-                    
+
                   }
-                      
-                } 
+
+                }
               }
-                    
+
             }
           } // end filters
-        
+
 
         } // end for loop
 
@@ -1214,9 +1212,9 @@ app.post('/get-image-xcassets', function (req, res) {
 
         res.setHeader('Content-Type', 'application/json');
 
-        
+
         console.log(filtered)
-        console.log(files);  
+        console.log(files);
 
         var filesContents = []; // final array of json data
 
@@ -1246,7 +1244,7 @@ app.post('/get-image-xcassets', function (req, res) {
                 // console.log(filesContents)
 
                 if (i < files.length) {
-                  
+
                   // console.log(i);
                   loopFiles();
                   i++;
@@ -1288,7 +1286,7 @@ app.post('/add-file', function (req, res) {
     var id_dir = ls(project_uid)[0];
 
     var xc_projName = ""; // suprisingly enough, people like to name their repository name differently than their .xcodeproj name
-    
+
     for (var z = 0; z < ls(project_uid + "/" + id_dir).length; z++) {
       if (ls(project_uid + "/" + id_dir)[z].indexOf('.xcodeproj') > -1) {
         xc_projName = ls(project_uid + "/" + id_dir)[z].replace('.xcodeproj', '');
@@ -1302,7 +1300,7 @@ app.post('/add-file', function (req, res) {
     // make sure there are no copies of the exact same file
     var currentFiles = ls();
 
-    
+
     for (var l = 0; l < currentFiles.length; l++) {
       if (currentFiles[l] == newFileName + ".swift") {
         console.log("The file that is being added already exists".red);
@@ -1328,17 +1326,17 @@ app.post('/add-file', function (req, res) {
         // now the important step: adding the file reference to the .xcodeproj file
         cd(buildProjects_path);
         exec('./XcodeProjAdder -XCP "'+xcpath+'" -SCSV "'+ filePath + '"', function (err, out, stderror) {
-          
+
           console.log(xcpath);
 
-          res.send({"Success":"Successfully added file named "+newFileName+".swift"});          
-        
+          res.send({"Success":"Successfully added file named "+newFileName+".swift"});
+
         });
 
 
 
 
-      }); 
+      });
 
     });
 
@@ -1376,7 +1374,7 @@ app.post('/delete-file', function (req, res) {
         var id_dir = ls(project_uid)[0];
 
         var xc_projName = ""; // suprisingly enough, people like to name their repository name differently than their .xcodeproj name
-        
+
         for (var z = 0; z < ls(project_uid + "/" + id_dir).length; z++) {
           if (ls(project_uid + "/" + id_dir)[z].indexOf('.xcodeproj') > -1) {
             xc_projName = ls(project_uid + "/" + id_dir)[z].replace('.xcodeproj', '');
@@ -1405,12 +1403,12 @@ app.post('/delete-file', function (req, res) {
 
             // Again another test to figure out which directory the server is in
             // console.log(ls());
-            
+
             // unfortunately we have to dig down to farthest depths of the project filetree to delete the file, as well as modify the core file of the .xcodeproj
             fs.readFile("project.pbxproj", 'utf-8', function (err, data) {
               if (err) {
                 res.statusCode = 500;
-                res.send({"Error": "There was an error deleting the file."});                
+                res.send({"Error": "There was an error deleting the file."});
               } else {
                 // console.log(data);
                 var lines = data.split('\n');
@@ -1430,8 +1428,8 @@ app.post('/delete-file', function (req, res) {
                 fs.writeFile("project.pbxproj", newFile, function (err) {
                   if (err) {
                     res.statusCode = 500;
-                    res.send({"Error": "There was an error deleting the file."}); 
-                  
+                    res.send({"Error": "There was an error deleting the file."});
+
                   } else {
                     console.log(('Successfully rewrote project.pbxproj and deleted file named '+deleteFileName).green);
 
@@ -1447,7 +1445,7 @@ app.post('/delete-file', function (req, res) {
             }); // end readFile
 
 
-            
+
           } // end if err rm -rf
 
 
@@ -1479,18 +1477,18 @@ app.post('/build-project', function (req, res) {
     // analytics
       var ip = req.connection.remoteAddress;
       console.log("Request made from: " + ip);
-      
+
 
       if (typeof client != "undefined") {
         satelize.satelize({ip:ip}, function(err, geoData) {
-            // if data is JSON, we may wrap it in js object 
+            // if data is JSON, we may wrap it in js object
             if (err) {
               console.log("There was an error getting the user's location.");
             } else {
                 console.log(geoData);
 
                 var obj = JSON.parse(geoData);
-              
+
                 var location = obj.city + ", " + obj.region_code + ", " + obj.country_code3;
                 var isp = obj.isp;
                 var country = obj.country;
@@ -1548,7 +1546,7 @@ app.post('/build-project', function (req, res) {
       exec('xcodebuild -sdk iphonesimulator -configuration Release -verbose | grep -A 5 error:', function (err, xcode_out, stderror) {
         cd('build/Release-iphonesimulator');
 
-        
+
         console.log(xcode_out.green);
 
         // console.log(normalized);
@@ -1556,7 +1554,7 @@ app.post('/build-project', function (req, res) {
         cd(buildProjects_path);
 
         var xc_projName = ""; // suprisingly enough, people like to name their repository name differently than their .xcodeproj name
-  
+
         for (var z = 0; z < ls(projectID + "/" + id_dir).length; z++) {
           if (ls(projectID + "/" + id_dir)[z].indexOf('.xcodeproj') > -1) {
             xc_projName = ls(projectID + "/" + id_dir)[z].replace('.xcodeproj', '');
@@ -1577,9 +1575,9 @@ app.post('/build-project', function (req, res) {
 
         // zip up the simulator executable
         exec('zip -r "'+projectID+'" "'+xc_projName+'.app"', function (err, out, stderror) {
-          
+
           cd(buildProjects_path); // enter build-projects once again (using absolute paths!)
-          
+
           console.log(out.green);
           // console.log(err.red);
 
@@ -1629,11 +1627,11 @@ app.post('/build-project', function (req, res) {
                           res.send({"BUILD_FAILED": "There was an error building your application."});
                         }
 
-          
 
-                      
 
-                      
+
+
+
 
 
 
@@ -1649,14 +1647,14 @@ app.post('/build-project', function (req, res) {
 
 
         }); // end zip exec
-        
+
 
 
       }); // end xcodebuild exec
 
 
     /* SIMULATOR EMBED CODE:
-    
+
       <iframe src="https://appetize.io/embed/<PUBLIC KEY>?device=iphone6&scale=75&autoplay=true&orientation=portrait&deviceColor=white" width="312px" height="653px" frameborder="0" scrolling="no"></iframe>
 
 
@@ -1683,7 +1681,7 @@ app.get('/get-project-details/:app_id', function (req, res) {
   var id_dir = ls(project_id)[0]; // project directory
 
   var xc_projName = ""; // suprisingly enough, people like to name their repository name differently than their .xcodeproj name
-  
+
   for (var z = 0; z < ls(project_id + "/" + id_dir).length; z++) {
     if (ls(project_id + "/" + id_dir)[z].indexOf('.xcodeproj') > -1) {
       xc_projName = ls(project_id + "/" + id_dir)[z].replace('.xcodeproj', '');
@@ -1706,7 +1704,7 @@ app.post('/create-ipa', function (req, res) {
 
   // take the app back to the build-projects directory, as another route may have thrown the build server into a project directory instead
   cd(buildProjects_path);
-  
+
   // json headers
   res.setHeader('Content-Type', 'application/json');
 
@@ -1722,7 +1720,7 @@ app.post('/create-ipa', function (req, res) {
       cd(projectID+"/"+id_dir);
 
       exec('ipa build -c Release', function (err, out, stderror) {
-        
+
         if (err) {
           res.send({"Error": "There was an error generating your IPA file. Please double check that there are no syntax errors or other issues with your code."});
         } else {
@@ -1730,7 +1728,7 @@ app.post('/create-ipa', function (req, res) {
           console.log("\n");
 
           var xc_projName = ""; // suprisingly enough, people like to name their repository name differently than their .xcodeproj name
-          
+
           for (var z = 0; z < ls(project_id + "/" + id_dir).length; z++) {
             if (ls(project_id + "/" + id_dir)[z].indexOf('.xcodeproj') > -1) {
               xc_projName = ls(project_id + "/" + id_dir)[z].replace('.xcodeproj', '');
@@ -1757,7 +1755,7 @@ app.post('/create-ipa', function (req, res) {
               }
 
               var mainfest_plist_url = secure_serverURL + "/" + projectID +"/"+ id_dir + "/manifest.plist";
-              console.log(mainfest_plist_url);            
+              console.log(mainfest_plist_url);
 
               console.log('Successfully generated IPA manifest.plist.');
 
@@ -1765,13 +1763,13 @@ app.post('/create-ipa', function (req, res) {
               console.log(signed_dl_url.cyan);
 
               // raw_ipa_url is the link that directly downloads the IPA file, the signed_dl_url allows you to download the IPA file on an iOS device
-              res.send({"raw_ipa_url": ipa_dl_url, "signed_dl_url": signed_dl_url}); 
-          
-          }); 
+              res.send({"raw_ipa_url": ipa_dl_url, "signed_dl_url": signed_dl_url});
+
+          });
 
 
 
-           
+
 
 
 
@@ -1785,7 +1783,7 @@ app.post('/create-ipa', function (req, res) {
     res.send({"Error": "Invalid parameters."});
   }
 
-  
+
 });
 
 
@@ -1830,11 +1828,11 @@ process.on('uncaughtException', function (uncaughterr) {
   if (typeof sendgrid !== "undefined") {
       getIP(function (err, ip) {
           if (err) {
-              // every service in the list has failed 
+              // every service in the list has failed
               console.log(err);
           } else {
               console.log("Attempting to send error report to " + process.env.REPORT_TO);
-            
+
               sendgrid.send({
                 to:       process.env.REPORT_TO,
                 from:     'ringo-error@useringo.github.io',
@@ -1845,7 +1843,7 @@ process.on('uncaughtException', function (uncaughterr) {
                 console.log(json);
               });
           }
-        
+
 
 
       }); // end getIP
@@ -1873,7 +1871,7 @@ var server = app.listen(port, function () {
       fs.readdir(dir, function(err, list) {
         if (err) return done(err);
         var i = 0;
-      
+
           (function next() {
         var file = list[i++];
         if (!file) return done(null, results);
@@ -1889,7 +1887,7 @@ var server = app.listen(port, function () {
                 next();
             }
             });
-          })();   
+          })();
     });
   };
 
@@ -1920,21 +1918,21 @@ Array.prototype.remove = function() {
 generatePushID = (function() {
   // Modeled after base64 web-safe chars, but ordered by ASCII.
   var PUSH_CHARS = '-0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz';
- 
+
   // Timestamp of last push, used to prevent local collisions if you push twice in one ms.
   var lastPushTime = 0;
- 
+
   // We generate 72-bits of randomness which get turned into 12 characters and appended to the
   // timestamp to prevent collisions with other clients.  We store the last characters we
   // generated because in the event of a collision, we'll use those same characters except
   // "incremented" by one.
   var lastRandChars = [];
- 
+
   return function() {
     var now = new Date().getTime();
     var duplicateTime = (now === lastPushTime);
     lastPushTime = now;
- 
+
     var timeStampChars = new Array(8);
     for (var i = 7; i >= 0; i--) {
       timeStampChars[i] = PUSH_CHARS.charAt(now % 64);
@@ -1942,9 +1940,9 @@ generatePushID = (function() {
       now = Math.floor(now / 64);
     }
     if (now !== 0) throw new Error('We should have converted the entire timestamp.');
- 
+
     var id = timeStampChars.join('');
- 
+
     if (!duplicateTime) {
       for (i = 0; i < 12; i++) {
         lastRandChars[i] = Math.floor(Math.random() * 64);
@@ -1960,8 +1958,7 @@ generatePushID = (function() {
       id += PUSH_CHARS.charAt(lastRandChars[i]);
     }
     if(id.length != 20) throw new Error('Length should be 20.');
- 
+
     return id;
   };
 })();
-
