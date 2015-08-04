@@ -952,14 +952,13 @@ app.post('/get-project-contents', function(req, res) {
 
         fileChunks.on('end', function() {
           console.log(contentForFile["data"]);
-          if (i < files.length) {
+          filesContents.push(contentForFile);
 
+          if (i < files.length) {
               loopFiles();
               i++;
             } else {
-              res.send();
-
-              // res.send({"files": filesContents});
+              res.send({"files": filesContents});
               cd(buildProjects_path);
             }
         });
