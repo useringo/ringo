@@ -923,20 +923,20 @@ app.post('/get-project-contents', function(req, res) {
 
     } // end for loop
 
-    console.log(filtered)
 
     var files = filtered;
 
     res.setHeader('Content-Type', 'application/json');
 
-    console.log(files);
+    // console.log(files);
 
-    var filesContents = []; // final array of json data
+    var filesContents = "["; // final stringified array of json data
 
     var i = 0;
 
     loopFiles();
 
+    // uses file streams to grab contents of each file without maxing out RAM
     function loopFiles() {
         var file = files[i];
 
@@ -951,43 +951,27 @@ app.post('/get-project-contents', function(req, res) {
         });
 
         fileChunks.on('end', function() {
-          console.log(contentForFile["data"]);
-          filesContents.push(contentForFile);
+          // console.log(contentForFile["data"]);
 
-          if (i < files.length) {
-              loopFiles();
+
+          console.log(file);
+
+          if (i < files.length-1) {
+
+              filesContents += JSON.stringify(contentForFile) + ", ";
+              res.write(filesContents);
+
               i++;
+              loopFiles();
             } else {
-              res.send({"files": filesContents});
+              filesContents += JSON.stringify(contentForFile);
+              res.write(filesContents);
+              res.write("]");
+
+              res.send();
               cd(buildProjects_path);
             }
         });
-
-          //
-          // fs.readFile(project_id+"/"+id_dir+"/"+xc_projName+"/"+file, 'utf8', function (err, data) {
-          //   if (err) {
-          //     return console.log(err);
-          //   }
-          //
-          //   var contentForFile = {};
-          //   contentForFile["name"] = file;
-          //
-          //   contentForFile["data"] = data;
-          //
-          //   filesContents.push(contentForFile);
-          //
-          //
-          //   if (i < files.length) {
-          //
-          //     loopFiles();
-          //     i++;
-          //   } else {
-          //
-          //     res.send({"files": filesContents});
-          //     cd(buildProjects_path);
-          //   }
-          //
-          // });
 
 
     }

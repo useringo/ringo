@@ -138,10 +138,13 @@ function loadFiles() {
 			url: hostname+'/get-project-contents',
 			data: {"id": project_id},
 			error: function (err) {
+
 				console.log(err);
 			},
 			success: function (data) {
 				console.log(data);
+				data = JSON.parse(data);
+
 				data.files.shift();
 
 				files = data.files;
@@ -229,7 +232,7 @@ function loadFiles() {
 				});	// end ajax request
 
 			},
-			dataType: "json"
+			dataType: "text"
 		});
 
 	} // end if project_id.length > 0
