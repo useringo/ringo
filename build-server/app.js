@@ -930,7 +930,7 @@ app.post('/get-project-contents', function(req, res) {
 
     // console.log(files);
 
-    var filesContents = "["; // final stringified array of json data
+    var filesContents = ""; // final stringified array of json data
 
     var i = 0;
 
@@ -966,8 +966,7 @@ app.post('/get-project-contents', function(req, res) {
             } else {
               filesContents += JSON.stringify(contentForFile);
               res.write(filesContents);
-              res.write("]");
-
+              res.write(', {"count" : '+ files.length + '}');
               res.send();
               cd(buildProjects_path);
             }

@@ -21,7 +21,7 @@ var ids = [];
 var currentServer = 0;
 
 
-// Endpoint to serve the user so that it 
+// Endpoint to serve the user so that it
 app.get('/get-server-url', function (req, res) {
 	if (ids.length > 0) { // at least one server has to have been registered
 		var numRegisteredServers = 0;
@@ -57,15 +57,15 @@ app.post('/register-server', function (req, res) {
 			if (ids.indexOf(req.body.server_id) == -1) { // basically, if it doesn't already exist
 				ids.push(req.body.server_id);
 			}
-			
+
 			console.log(servers);
 			console.log(ids);
 			res.send("Successfully registered server in the load balancer.");
-		
+
 		} else {
 			res.send(500, "There was an error registering the server with the load balancer.");
 		}
-		
+
 	} else {
 		res.send(500, "There was an error registering the server with the load balancer.");
 	}
