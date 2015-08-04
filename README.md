@@ -43,6 +43,8 @@ Firstly, you're going to need to have the latest GM release of Xcode (currently 
 
 ```$ xcode-select --install```
 
+You'll also need to have ngrok installed. You can download ngrok for you system at [ngrok.io](http://www.ngrok.io)
+
 Clone the repository and navigate to your local copy of the build server:
 
 ``` $ git clone https://www.github.com/gmittal/ringo.git && cd ringo/build-server ```
