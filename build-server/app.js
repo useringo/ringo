@@ -128,13 +128,15 @@ var secure_serverURL = process.env.SECURE_HOSTNAME;
 
 
 // initialize the ngrok tunnel
-ngrok.connect(port, function (err, url) {
-
-  console.log("Tunnel open: " + url.red + " at "+ new Date());
+ngrok.start(port).then(function (tunnel) {
+  console.log("Tunnel open: " + (tunnel.url).red + " at "+ new Date());
 
   // rewrite the env variables
-  process.env["SECURE_HOSTNAME"] = url;
-  process.env["HOSTNAME"] = url.replace('https', 'http');
+  process.env["SECURE_HOSTNAME"] = tunnel.url;
+  process.env["HOSTNAME"] = tunnel.url.replace('https', 'http');
+
+  // grab the ngrok tunnel PID and write it to the env so we can kill the process later
+  process.env["NGROK_TUNNEL_PID"] = tunnel.pid;
 
   build_serverURL = process.env.HOSTNAME;
   secure_serverURL = process.env.SECURE_HOSTNAME;
@@ -142,6 +144,9 @@ ngrok.connect(port, function (err, url) {
 
   if (process.env.LOAD_BALANCER_URL) { // only connect to the load balancer if the env has said to do so, which should only be if you want to run several of these servers for production
     serialNumber(function (err, value) { // basically for generating a unique id
+        if (err) {
+          console.log('Error getting the server unique ID, will have difficulty registering with the load balancer'.red);
+        }
         console.log(value);
 
         request({
@@ -150,7 +155,7 @@ ngrok.connect(port, function (err, url) {
             //Lets post the following key/values as form
             json: {
                 server_id: value,
-                tunnel: url
+                tunnel: tunnel.url
             }
         }, function(error, response, body){
             if(error) {
@@ -163,9 +168,6 @@ ngrok.connect(port, function (err, url) {
 
     });
   }
-
-
-
 
 
 });
@@ -1810,9 +1812,19 @@ process.on('SIGINT', function() {
                   if(error) {
                       console.log(error);
                       console.log("Uh oh! The load balancer is probably down. Or there was an issue on our end. Either way, something isn't right here.".red);
-                      process.exit();
+                      if (process.env.NGROK_TUNNEL_PID) {
+                        ngrok.stop(process.env.NGROK_TUNNEL_PID);
+                      }
+
+                      process.exit(); // kill the application
+
                   } else {
                       console.log((response.statusCode, body).green);
+
+                      if (process.env.NGROK_TUNNEL_PID) {
+                        ngrok.stop(process.env.NGROK_TUNNEL_PID);
+                      }
+
                       process.exit();
               }
               }); // end request
