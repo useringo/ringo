@@ -51,7 +51,7 @@ if (process.env.KEEN_PROJECT_ID) {
 var exec = require('child_process').exec; // running shell commands
 
 // open the localhost tunnel to the rest of the world!
-var ngrok = require('ngrok');
+var ngrok = require('ngrok-daemon');
 
 var app = express();
 
@@ -79,7 +79,6 @@ var server = app.listen(port, function () {
 
 });
 
-var io = require('socket.io')(server); // realtime server abilities
 
 
 var build_serverURL = process.env.HOSTNAME;
