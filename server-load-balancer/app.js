@@ -34,8 +34,6 @@ app.get('/get-server-url', function (req, res) {
 		res.send("No servers have been registered.");
 	}
 
-
-
 });
 
 
@@ -80,6 +78,13 @@ app.post('/unregister-server', function (req, res) {
 		var idIndex = ids.indexOf(req.body.server_id);
 		if (idIndex !== -1) { // make sure it exists
 			ids.splice(idIndex, 1); // delete it from the server id array
+
+      // delete the load value from the loadStats array
+      for (var i = 0; i < loadStats.length; i++) {
+        if (loadStats[i] == servers[req.body.server_id].load) {
+          loadStats.splice(i, 1);
+        }
+      }
 
 			delete servers[req.body.server_id]; // delete from the json object
 
