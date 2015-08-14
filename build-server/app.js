@@ -1799,7 +1799,7 @@ process.on('SIGINT', function() {
                   method: 'POST',
                   //Lets post the following key/values as form
                   json: {
-                      server_id: value,
+                      server_id: 'CHROMEBOOK',
                   }
               }, function(error, response, body){
                   if(error) {
