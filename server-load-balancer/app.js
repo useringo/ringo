@@ -23,20 +23,16 @@ var currentServer = 0;
 // Endpoint to serve the user so that it
 app.get('/get-server-url', function (req, res) {
 	if (ids.length > 0) { // at least one server has to have been registered
-		var numRegisteredServers = 0;
-		for (var id in servers) {
-			numRegisteredServers++;
-		}
+		var relaxedServer = loadStats[0];
+    for (var id in servers) {
+      if (servers[id].load == relaxedServer) {
+        console.log(id);
+      }
+    }
 
-		console.log("Number of registered servers: " + numRegisteredServers);
-
-		console.log("Server with tunnel [" + currentServer + "]:" + servers[ids[currentServer]] + " should meet users needs right now.");
-		res.send(servers[ids[currentServer]]);
-
-		currentServer++;
-	  	if (currentServer >= numRegisteredServers) {
-	  		currentServer = 0;
-	  	}
+		// console.log("Number of registered servers: " + numRegisteredServers);
+		// console.log("Server with tunnel [" + currentServer + "]:" + servers[ids[currentServer]] + " should meet users needs right now.");
+		// res.send(servers[ids[currentServer]]);
 
 	} else {
 		res.send("No servers have been registered.");
@@ -88,6 +84,7 @@ app.post('/unregister-server', function (req, res) {
 		var idIndex = ids.indexOf(req.body.server_id);
 		if (idIndex !== -1) { // make sure it exists
 			ids.splice(idIndex, 1); // delete it from the server id array
+
 			delete servers[req.body.server_id]; // delete from the json object
 
 			console.log(servers);
