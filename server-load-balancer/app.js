@@ -8,7 +8,6 @@ var bodyParser = require('body-parser');
 var port = 3001;
 
 app.use(bodyParser());
-
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
@@ -18,8 +17,8 @@ app.use(function(req, res, next) {
 
 var servers = {};
 var ids = [];
+var loadStats = [];
 var currentServer = 0;
-
 
 // Endpoint to serve the user so that it
 app.get('/get-server-url', function (req, res) {
@@ -52,15 +51,25 @@ app.get('/get-server-url', function (req, res) {
 app.post('/register-server', function (req, res) {
 	if (req.body.tunnel) {
 		if (req.body.server_id) {
-			servers[req.body.server_id] = req.body.tunnel;
+      if (req.body.load) {
+        servers[req.body.server_id] = {
+            'accessURL': req.body.tunnel,
+            'load': req.body.load
+        };
 
-			if (ids.indexOf(req.body.server_id) == -1) { // basically, if it doesn't already exist
-				ids.push(req.body.server_id);
-			}
+        if (ids.indexOf(req.body.server_id) == -1) { // if it doesn't already exist
+          ids.push(req.body.server_id);
+          loadStats.push(req.body.load);
+          loadStats.sort(function(a,b){return a-b}); // sort the server loads in ascending order
+        }
 
-			console.log(servers);
-			console.log(ids);
-			res.send("Successfully registered server in the load balancer.");
+        console.log(servers);
+        console.log(ids);
+        console.log(loadStats);
+        res.send("Successfully registered server in the load balancer.");
+      } else {
+        res.send(500, "There was an error registering the server with the load balancer.");
+      } // end if req.body.load
 
 		} else {
 			res.send(500, "There was an error registering the server with the load balancer.");

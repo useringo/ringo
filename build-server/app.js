@@ -23,7 +23,7 @@ var getIP = require('external-ip')(); // analytics
 var Keen = require("keen.io"); // analytics
 var request = require('request'); // making requests to external sources
 var satelize = require('satelize'); // analytics
-var serialNumber = require('serial-number'); // unique server id
+var serialNumber = require('serial-number'); // unique server id, used for registration with the load balancer
 serialNumber.preferUUID = true; //
 require('shelljs/global'); // running shell commands
 
@@ -56,10 +56,7 @@ var ngrok = require('ngrok-daemon');
 var app = express();
 
 app.use(bodyParser({limit: '50mb'}));
-// console.log('Limit file size: '+limit);
-
-app.use(express.static(__dirname + '/build-projects'));
-
+app.use(express.static(__dirname + '/build-projects')); // serve the files within build-projects
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
@@ -68,17 +65,12 @@ app.use(function(req, res, next) {
 
 var port = 3000; // port which the server will run on
 
-
 // fire up the http server!
 var server = app.listen(port, function () {
-
   var host = server.address().address;
   var port = server.address().port;
-
   console.log(('Ringo core server listening at http://0.0.0.0:'+ port).blue);
-
 });
-
 
 
 var build_serverURL = process.env.HOSTNAME;
@@ -1868,32 +1860,49 @@ process.on('uncaughtException', function (uncaughterr) {
 });
 
 
+// function that returns the CPU load of the server
+function getServerLoad() {
+  exec('uptime', function (err, out, stderror) {
+    var uptimeStr = out;
+    var loadLastMin = parseFloat(uptimeStr.split(' ')[11].replace(',', ''), 10); // find the amount of stress the server CPU was under for the last minute
 
-  // function that invokes a crawl through all of the directories and files
-  var walk = function(dir, done) {
-      var results = [];
-      fs.readdir(dir, function(err, list) {
-        if (err) return done(err);
-        var i = 0;
-
-          (function next() {
-        var file = list[i++];
-        if (!file) return done(null, results);
-        file = dir + '/' + file;
-        fs.stat(file, function(err, stat) {
-            if (stat && stat.isDirectory()) {
-                walk(file, function(err, res) {
-                  results = results.concat(res);
-                  next();
-              });
-            } else {
-                results.push(file);
-                next();
-            }
-            });
-          })();
+    // find the number of CPUs
+    exec('grep processor /proc/cpuinfo | wc -l', function (grepErr, grepOut, grepSTDError) {
+      var numCPU = parseInt(grepOut.replace('\n', ''), 10);
+      
     });
-  };
+
+  }); // end $ uptime
+
+} // end getServerLoad
+
+console.log(getServerLoad());
+
+// function that invokes a crawl through all of the directories and files
+var walk = function(dir, done) {
+    var results = [];
+    fs.readdir(dir, function(err, list) {
+      if (err) return done(err);
+      var i = 0;
+
+        (function next() {
+      var file = list[i++];
+      if (!file) return done(null, results);
+      file = dir + '/' + file;
+      fs.stat(file, function(err, stat) {
+          if (stat && stat.isDirectory()) {
+              walk(file, function(err, res) {
+                results = results.concat(res);
+                next();
+            });
+          } else {
+              results.push(file);
+              next();
+          }
+          });
+        })();
+  });
+};
 
 
 // remove array objects
