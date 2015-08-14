@@ -1861,7 +1861,8 @@ process.on('uncaughtException', function (uncaughterr) {
 
 
 // function that returns the CPU load of the server
-function getServerLoad() {
+// meant to be used as getServerLoad(function(out) { console.log(out); });
+function getServerLoad(callback) {
   exec('uptime', function (err, out, stderror) {
     var uptimeStr = out;
     var loadLastMin = parseFloat(uptimeStr.split(' ')[11].replace(',', ''), 10); // find the amount of stress the server CPU was under for the last minute
@@ -1869,14 +1870,18 @@ function getServerLoad() {
     // find the number of CPUs
     exec('grep processor /proc/cpuinfo | wc -l', function (grepErr, grepOut, grepSTDError) {
       var numCPU = parseInt(grepOut.replace('\n', ''), 10);
-      
+      // console.log("CPU load last minute: " + (loadLastMin/numCPU)*100);
+
+      var loadPercentage = (loadLastMin/numCPU)*100;
+      callback(loadPercentage); // return the load in a callback
+
     });
 
   }); // end $ uptime
 
 } // end getServerLoad
 
-console.log(getServerLoad());
+
 
 // function that invokes a crawl through all of the directories and files
 var walk = function(dir, done) {
