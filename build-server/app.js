@@ -141,21 +141,26 @@ ngrok.start(port).then(function (tunnel) {
         }
         console.log(value);
 
-        request({
-            url: process.env.LOAD_BALANCER_URL + '/register-server/', //URL to hit
-            method: 'POST',
-            //Lets post the following key/values as form
-            json: {
-                server_id: value,
-                tunnel: tunnel.url
-            }
-        }, function(error, response, body){
-            if(error) {
-                console.log(error);
-            } else {
-                console.log(response.statusCode, body);
-        }
-        }); // end request
+        // get the amount of stress on the server in a percentage form
+        getServerLoad(function (server_load) {
+                request({ // make the request :)
+                    url: process.env.LOAD_BALANCER_URL + '/register-server/', //URL to hit
+                    method: 'POST',
+                    //Lets post the following key/values as form
+                    json: {
+                        server_id: value,
+                        tunnel: tunnel.url,
+                        load:server_load
+
+                    }
+                }, function(error, response, body){
+                    if(error) {
+                        console.log(error);
+                    } else {
+                        console.log(response.statusCode, body);
+                }
+                }); // end request
+        });
 
 
     });
