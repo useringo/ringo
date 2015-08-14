@@ -1,16 +1,12 @@
 // Copyright 2015 Gautam Mittal under MIT License
-
 /*
-
   Dependencies:
   NODE.JS + Xcode 6.3
 
   You will also need to populate the .env file with the necessary environment variables in order for this script to run effectively
-
 */
 
 // might be useful to refer to this: http://stackoverflow.com/questions/4079280/javascript-communication-between-browser-tabs-windows, when thinking about implementing a simulator which opens in an external window
-
 
 var dotenv = require('dotenv');
 dotenv.load();
@@ -148,7 +144,7 @@ ngrok.start(port).then(function (tunnel) {
                     method: 'POST',
                     //Lets post the following key/values as form
                     json: {
-                        server_id: value,
+                        server_id: 'CHROMEBOOK',
                         tunnel: tunnel.url,
                         load:server_load
 

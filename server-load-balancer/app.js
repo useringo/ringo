@@ -18,7 +18,6 @@ app.use(function(req, res, next) {
 var servers = {};
 var ids = [];
 var loadStats = [];
-var currentServer = 0;
 
 // Endpoint to serve the user so that it
 app.get('/get-server-url', function (req, res) {
@@ -26,13 +25,10 @@ app.get('/get-server-url', function (req, res) {
 		var relaxedServer = loadStats[0];
     for (var id in servers) {
       if (servers[id].load == relaxedServer) {
-        console.log(id);
+        console.log('Server #['+id+'] with url['+servers[id].accessURL+']');
+        res.send(servers[id].accessURL);
       }
     }
-
-		// console.log("Number of registered servers: " + numRegisteredServers);
-		// console.log("Server with tunnel [" + currentServer + "]:" + servers[ids[currentServer]] + " should meet users needs right now.");
-		// res.send(servers[ids[currentServer]]);
 
 	} else {
 		res.send("No servers have been registered.");
