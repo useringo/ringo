@@ -144,7 +144,7 @@ ngrok.start(port).then(function (tunnel) {
                     method: 'POST',
                     //Lets post the following key/values as form
                     json: {
-                        server_id: 'CHROMEBOOK',
+                        server_id: value,
                         tunnel: tunnel.url,
                         load:server_load
 
@@ -1799,7 +1799,7 @@ process.on('SIGINT', function() {
                   method: 'POST',
                   //Lets post the following key/values as form
                   json: {
-                      server_id: 'CHROMEBOOK',
+                      server_id: value,
                   }
               }, function(error, response, body){
                   if(error) {
