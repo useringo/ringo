@@ -1,8 +1,12 @@
 // Copyright 2015 Gautam Mittal under MIT License
 
+var dotenv = require('dotenv');
+dotenv.load();
+
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
+
 
 var port = 3001;
 
@@ -19,6 +23,8 @@ var loadStats = [];
 
 // Endpoint to serve the user so that it
 app.get('/get-server-url', function (req, res) {
+  console.log(req.get("origin"));
+
 	if (ids.length > 0) { // at least one server has to have been registered
 		var relaxedServer = loadStats[0];
     for (var id in servers) {
