@@ -156,8 +156,8 @@ function reportToLoadBalancer() {
                     json: {
                         server_id: value,
                         tunnel: process.env.HOSTNAME,
-                        load:server_load
-
+                        load:server_load,
+                        key: process.env.BALANCER_AUTH_KEY
                     }
                 }, function(error, response, body){
                     if(error) {
@@ -1561,6 +1561,7 @@ process.on('SIGINT', function() {
                   //Lets post the following key/values as form
                   json: {
                       server_id: value,
+                      key: process.env.BALANCER_AUTH_KEY
                   }
               }, function(error, response, body){
                   if(error) {

@@ -23,8 +23,6 @@ var loadStats = [];
 
 // Endpoint to serve the user so that it
 app.get('/get-server-url', function (req, res) {
-  console.log(req.get("origin"));
-
 	if (ids.length > 0) { // at least one server has to have been registered
 		var relaxedServer = loadStats[0];
     for (var id in servers) {
@@ -43,66 +41,72 @@ app.get('/get-server-url', function (req, res) {
 
 // Register the server with the load balancer
 app.post('/register-server', function (req, res) {
-	if (req.body.tunnel) {
-		if (req.body.server_id) {
-      if (req.body.load) {
-        servers[req.body.server_id] = {
-            'accessURL': req.body.tunnel,
-            'load': req.body.load
-        };
+  if (req.body.key == process.env.BALANCER_AUTH_KEY) { // for security reasons, we have a secret key which prevents random people from registering their own servers with the production load balancer
+  	if (req.body.tunnel) {
+  		if (req.body.server_id) {
+        if (req.body.load) {
+          servers[req.body.server_id] = {
+              'accessURL': req.body.tunnel,
+              'load': req.body.load
+          };
 
-        if (ids.indexOf(req.body.server_id) == -1) { // if it doesn't already exist
-          ids.push(req.body.server_id);
-          loadStats.push(req.body.load);
-          loadStats.sort(function(a,b){return a-b}); // sort the server loads in ascending order
-        }
+          if (ids.indexOf(req.body.server_id) == -1) { // if it doesn't already exist
+            ids.push(req.body.server_id);
+            loadStats.push(req.body.load);
+            loadStats.sort(function(a,b){return a-b}); // sort the server loads in ascending order
+          }
 
-        console.log(servers);
-        console.log(ids);
-        console.log(loadStats);
-        res.send("Successfully registered server in the load balancer.");
-      } else {
-        res.send(500, "There was an error registering the server with the load balancer. Missing load parameter.");
-      } // end if req.body.load
+          console.log(servers);
+          console.log(ids);
+          console.log(loadStats);
+          res.send("Successfully registered server in the load balancer.");
+        } else {
+          res.send(500, "There was an error registering the server with the load balancer. Missing load parameter.");
+        } // end if req.body.load
 
-		} else {
-			res.send(500, "There was an error registering the server with the load balancer. Missing server_id parameter.");
-		}
+  		} else {
+  			res.send(500, "There was an error registering the server with the load balancer. Missing server_id parameter.");
+  		}
 
-	} else {
-		res.send(500, "There was an error registering the server with the load balancer. Missing tunnel parameter.");
-	}
+  	} else {
+  		res.send(500, "There was an error registering the server with the load balancer. Missing tunnel parameter.");
+  	}
+  } else {
+    res.send(500, "Error. Unauthorized request.");
+  }// end auth
 });
 
 
 
 // When a server dies, the load balancer should know
 app.post('/unregister-server', function (req, res) {
-	if (req.body.server_id) {
-		var idIndex = ids.indexOf(req.body.server_id);
-		if (idIndex !== -1) { // make sure it exists
-			ids.splice(idIndex, 1); // delete it from the server id array
+if (req.body.key == process.env.BALANCER_AUTH_KEY) { // more security
+  	if (req.body.server_id) {
+  		var idIndex = ids.indexOf(req.body.server_id);
+  		if (idIndex !== -1) { // make sure it exists
+  			ids.splice(idIndex, 1); // delete it from the server id array
 
-      // delete the load value from the loadStats array
-      for (var i = 0; i < loadStats.length; i++) {
-        if (loadStats[i] == servers[req.body.server_id].load) {
-          loadStats.splice(i, 1);
+        // delete the load value from the loadStats array
+        for (var i = 0; i < loadStats.length; i++) {
+          if (loadStats[i] == servers[req.body.server_id].load) {
+            loadStats.splice(i, 1);
+          }
         }
-      }
 
-			delete servers[req.body.server_id]; // delete from the json object
+  			delete servers[req.body.server_id]; // delete from the json object
 
-			console.log(servers);
-			console.log(ids);
+  			console.log(servers);
+  			console.log(ids);
 
-			res.send(200, "Server successfully removed from load balancer registry.");
+  			res.send(200, "Server successfully removed from load balancer registry.");
 
-		} else {
-			res.send(500, "You cannot unregister servers that have not already been registered.");
-		}
-	} else {
-		res.send(500, "Invalid parameters. Error unregistering server with load balancer.");
-	}
+  		} else {
+  			res.send(500, "You cannot unregister servers that have not already been registered.");
+  		}
+  	} else {
+  		res.send(500, "Invalid parameters. Error unregistering server with load balancer.");
+  	}
+  }
 });
 
 
