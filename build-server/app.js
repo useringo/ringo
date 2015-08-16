@@ -665,9 +665,6 @@ app.post('/upload-project-zip', function (req, res) {
                   }
                 }
 
-                // console.log("XC " + xc_projName.length);
-
-
                 if (xc_projName.length !== 0) {
                   res.send({"id": project_uid});
                 } else {
@@ -675,20 +672,11 @@ app.post('/upload-project-zip', function (req, res) {
                   res.statusCode = 500;
                   res.send({"Error": "Invalid parameters"});
                 }
-
-
-
-              // cd(buildProjects_path);
             });
-
-
-
 
           }); // end write ZIP file
 
     }); // end create project directory
-
-
 
   } else {
     res.statusCode = 500;
@@ -700,11 +688,8 @@ app.post('/upload-project-zip', function (req, res) {
 
 
 app.post('/clone-git-project', function (req, res) {
-  res.setHeader('Content-Type', 'application/json');
-
   cd(buildProjects_path);
-
-
+  res.setHeader('Content-Type', 'application/json');
 
   if (req.body.url) {
     console.log('Received request to git clone a file.');
@@ -713,23 +698,17 @@ app.post('/clone-git-project', function (req, res) {
       var ip = req.connection.remoteAddress;
       console.log("Request made from: " + ip);
 
-
       if (typeof client != "undefined") {
         satelize.satelize({ip:ip}, function(err, geoData) {
             // if data is JSON, we may wrap it in js object
             if (err) {
               console.log("There was an error getting the user's location.");
             } else {
-                console.log(geoData);
-
                 var obj = JSON.parse(geoData);
-
                 var location = obj.city + ", " + obj.region_code + ", " + obj.country_code3;
                 var isp = obj.isp;
                 var country = obj.country;
                 var timezone = obj.timezone;
-
-                // console.log(location);
 
                 var source = "unknown";
                 if ((req.body.url).substr(0, 4) == "http") {
@@ -745,15 +724,9 @@ app.post('/clone-git-project', function (req, res) {
                         console.log("Event clone_git_project logged".green);
                     }
                 }); // end client addEvent
-
-
-
             } // end error handling
           }); // end satelize
       } // end if undefined
-
-
-
 
     // create a unique ID where this awesome project will live
     var project_uid = generatePushID();
@@ -764,7 +737,7 @@ app.post('/clone-git-project', function (req, res) {
     exec('mkdir '+ project_uid, function (err, out, stderror) {
       cd(project_uid);
 
-      // actually clone the repository
+      // clone the repository
       exec('git clone ' + req.body.url, function (err, out, stderror) {
         if (out !== undefined) {
           console.log(out.cyan);
@@ -778,13 +751,9 @@ app.post('/clone-git-project', function (req, res) {
           res.send({"uid": project_uid});
         }
 
-
-
       });
 
-
     }); // end $ mkdir project_uid
-
 
   } else {
     res.statusCode = 500;
@@ -792,9 +761,6 @@ app.post('/clone-git-project', function (req, res) {
   }
 
 });
-
-
-
 
 
 
@@ -810,7 +776,6 @@ app.post('/update-project-contents', function (req, res) {
   cd(buildProjects_path);
 
   var id_dir = ls(project_id)[0];
-
   var xc_projName = ""; // suprisingly enough, people like to name their repository name differently than their .xcodeproj name
 
   for (var z = 0; z < ls(project_id + "/" + id_dir).length; z++) {
@@ -846,25 +811,16 @@ app.post('/update-project-contents', function (req, res) {
 
   } // end writeFiles()
 
-
 });
-
-
-
-
 
 
 
 // GET all of the files and their contents within an Xcode project
 app.post('/get-project-contents', function(req, res) {
-  var project_id = req.body.id;
-
-  // console.log(req.body.id);
-
   cd(buildProjects_path);
 
+  var project_id = req.body.id;
   var id_dir = ls(project_id)[0];
-
   var xc_projName = ""; // suprisingly enough, people like to name their repository name differently than their .xcodeproj name
 
   for (var z = 0; z < ls(project_id + "/" + id_dir).length; z++) {
@@ -924,15 +880,11 @@ app.post('/get-project-contents', function(req, res) {
 
     } // end for loop
 
-
     var files = filtered;
 
     res.setHeader('Content-Type', 'application/json');
 
-    // console.log(files);
-
     var filesContents = ""; // final stringified array of json data
-
     var i = 0;
 
     loopFiles();
@@ -952,16 +904,11 @@ app.post('/get-project-contents', function(req, res) {
         });
 
         fileChunks.on('end', function() {
-          // console.log(contentForFile["data"]);
-
-
           console.log(file);
 
           if (i < files.length-1) {
-
               filesContents += JSON.stringify(contentForFile) + ", ";
               res.write(filesContents);
-
               i++;
               loopFiles();
             } else {
@@ -973,16 +920,11 @@ app.post('/get-project-contents', function(req, res) {
             }
         });
 
-
     }
-
 
   });
 
-
 });
-
-
 
 
 
@@ -994,9 +936,7 @@ app.post('/add-image-xcasset', function (req, res) {
     var project_id = req.body.id;
     var newImage = req.body.file;
     var xcassetName = req.body.assetName;
-
     var id_dir = ls(project_id)[0];
-
     var xc_projName = ""; // suprisingly enough, people like to name their repository name differently than their .xcodeproj name
 
     for (var z = 0; z < ls(project_id + "/" + id_dir).length; z++) {
@@ -1007,14 +947,12 @@ app.post('/add-image-xcasset', function (req, res) {
 
     console.log(('Xcode Project File Name: ' + xc_projName).red);
 
-
     var xcassetsDirName = "";
 
     // contents of the xcode project files directory (one level below the .xcodeproj file's directory)
     var xcProjDirectory = ls(project_id + "/" + id_dir + "/" + xc_projName);
 
     for (var z = 0; z < xcProjDirectory.length; z++) {
-
       if (xcProjDirectory[z].indexOf('.xcassets') > -1) {
         xcassetsDirName = xcProjDirectory[z];
       }
@@ -1024,16 +962,12 @@ app.post('/add-image-xcasset', function (req, res) {
 
     var base64Data = req.body.file.replace(/^data:image\/png;base64,/, "");
 
-
     cd(project_id + "/" + id_dir + "/" + xc_projName + "/" + xcassetsDirName);
-
-    // console.log(ls());
 
     exec('mkdir "'+xcassetName+'.imageset"', function (err, out, stderror) {
         if (err) {
           console.log(err);
         }
-
           cd(buildProjects_path + "/"+project_id + "/" + id_dir + "/" + xc_projName + "/" + xcassetsDirName); // lets take it from the top
 
           fs.writeFile(xcassetName + ".imageset/"+xcassetName+".png", base64Data, 'base64', function (err) {
@@ -1045,7 +979,6 @@ app.post('/add-image-xcasset', function (req, res) {
                 res.statusCode = 500;
                 res.send({"Error": "There was an error creating your xcasset"});
               } else {
-
 
                   var imageSetJSON = '{\n\
   "images" : [\n\
@@ -1075,8 +1008,6 @@ app.post('/add-image-xcasset', function (req, res) {
                       res.statusCode = 500;
                       res.send({"Error": "There was an error creating your xcasset"});
                     } else {
-                      // console.log();
-
                       res.send({"Success":"Image xcasset successfully added."});
 
                     }
@@ -1087,18 +1018,11 @@ app.post('/add-image-xcasset', function (req, res) {
           }); // end writeFile PNG
     }); // end exec mkdir
 
-
-
-
-
-
-
   } else {
     res.statusCode = 500;
     res.send({"Error": "Invalid parameters"});
 
   } // end if req.body.id
-
 
 });
 
@@ -1108,12 +1032,9 @@ app.post('/get-image-xcassets', function (req, res) {
   cd(buildProjects_path);
 
   if (req.body.id) {
-
       var project_id = req.body.id;
-
       var id_dir = ls(project_id)[0];
       console.log(id_dir);
-      // var files = ls(project_id+"/"+id_dir+"/"+id_dir);
 
       var xc_projName = ""; // suprisingly enough, people like to name their repository name differently than their .xcodeproj name
 
@@ -1124,7 +1045,6 @@ app.post('/get-image-xcassets', function (req, res) {
       }
 
       console.log(('Xcode Project File Name: ' + xc_projName).red);
-
 
       // crawl the file tree
       walk(buildProjects_path + "/" + project_id+"/"+id_dir+"/"+xc_projName, function(err, results) {
@@ -1182,9 +1102,7 @@ app.post('/get-image-xcassets', function (req, res) {
             }
           } // end filters
 
-
         } // end for loop
-
 
         var files = [];
 
@@ -1198,38 +1116,29 @@ app.post('/get-image-xcassets', function (req, res) {
           var imageSetName = imageSetPathSplit[1]; // usually the second folder's name in the path hierarchy
 
           filtered[n] = imageSetName;
-
-
         }
 
         // only present one of the many images that may be within an imageset
         for (var o = 0; o < filtered.length; o++) {
           var u = filtered[o];
-
           if (u == filtered[o+1]) {
             filtered.splice(o, 1);
             files.splice(o, 1)
           }
-
-
         }
 
-
         res.setHeader('Content-Type', 'application/json');
-
 
         console.log(filtered)
         console.log(files);
 
         var filesContents = []; // final array of json data
-
         var i = 0;
 
         loopFiles();
 
         function loopFiles() {
             var file = files[i];
-
             console.log(file);
 
               fs.readFile(project_id+"/"+id_dir+"/"+xc_projName+"/"+file, function (err, data) {
@@ -1237,48 +1146,30 @@ app.post('/get-image-xcassets', function (req, res) {
                   return console.log(err);
                 }
 
-
                 var contentForFile = {};
                 contentForFile["name"] = filtered[i];
 
-                // console.log(data);
                 contentForFile["data"] = new Buffer(data).toString('base64');
-
                 filesContents.push(contentForFile);
 
-                // console.log(filesContents)
-
                 if (i < files.length) {
-
-                  // console.log(i);
                   loopFiles();
                   i++;
                 } else {
-
-
                   res.send({"files": filesContents});
                   cd(buildProjects_path);
                 }
-
               });
-
-
         }
 
-
       });
-
   }
-
-
-
 });
 
 
 // add new files to the project directory
 app.post('/add-file', function (req, res) {
   cd(buildProjects_path);
-
   res.setHeader('Content-Type', 'application/json');
 
   if (req.body.id) {
@@ -1289,7 +1180,6 @@ app.post('/add-file', function (req, res) {
     newFileName = newFileName.split(" ").join("");
 
     var id_dir = ls(project_uid)[0];
-
     var xc_projName = ""; // suprisingly enough, people like to name their repository name differently than their .xcodeproj name
 
     for (var z = 0; z < ls(project_uid + "/" + id_dir).length; z++) {
@@ -1299,68 +1189,43 @@ app.post('/add-file', function (req, res) {
     }
 
     var xcpath = buildProjects_path + "/" + project_uid + "/" + id_dir + "/"+ xc_projName + ".xcodeproj";
-
     cd(project_uid + "/" + id_dir + "/" + xc_projName);
 
     // make sure there are no copies of the exact same file
     var currentFiles = ls();
 
-
     for (var l = 0; l < currentFiles.length; l++) {
       if (currentFiles[l] == newFileName + ".swift") {
         console.log("The file that is being added already exists".red);
-
         newFileName += "Copy";
       }
     }
 
-
-    // Simple test to know which directory the server is in
-    // console.log(ls());
-
     // download a vanilla swift class file
     exec('wget cdn.rawgit.com/gmittal/ringoPeripherals/master/new-class-templates/R6roHpOHU8qa3Z2TvHsG.swift', function (err, out, stderror) {
-
       // rename file after downloading from GitHub
       exec('mv "R6roHpOHU8qa3Z2TvHsG.swift" "'+ newFileName + '.swift"', function (err, out, stderror) {
-
-        // another debugging step which allows you to see what's happening in the current directory
-        // console.log(ls());
         var filePath = xc_projName + "/" + newFileName + '.swift';
 
         // now the important step: adding the file reference to the .xcodeproj file
         cd(buildProjects_path);
         exec('./XcodeProjAdder -XCP "'+xcpath+'" -SCSV "'+ filePath + '"', function (err, out, stderror) {
-
           console.log(xcpath);
-
           res.send({"Success":"Successfully added file named "+newFileName+".swift"});
 
-        });
-
-
-
+        }); // end exec
 
       });
 
     });
-
-
-
-
   } else {
     res.statusCode = 500;
     res.send({"Error": "Invalid parameters"});
 
   }
 
-
-
   // note: the file has to already have been made and added into the directory, the following command just links it to the .xcodeproj so Xcode can run its debuggers through it
-
   // $ ./XcodeProjAdder -XCP PROJECT_ID/XC_PROJECT_NAME/XC_PROJECT_NAME.xcodeproj -SCSV PROJECT_NAME/NEW_FILE.swift
-
-  // Also need some kind of error handling for this file (if someone clones or deletes build-projects, this file will disappear)
 
 });
 
@@ -1368,16 +1233,13 @@ app.post('/add-file', function (req, res) {
 // Delete a file from the Xcode project directory
 app.post('/delete-file', function (req, res) {
     cd(buildProjects_path);
-
     res.setHeader('Content-Type', 'application/json');
 
     if (req.body.id) {
         var project_uid = req.body.id;
         var deleteFileName = req.body.fileName;
 
-
         var id_dir = ls(project_uid)[0];
-
         var xc_projName = ""; // suprisingly enough, people like to name their repository name differently than their .xcodeproj name
 
         for (var z = 0; z < ls(project_uid + "/" + id_dir).length; z++) {
@@ -1387,11 +1249,7 @@ app.post('/delete-file', function (req, res) {
         }
 
         var xcpath = buildProjects_path + "/" + project_uid + "/" + id_dir + "/"+ xc_projName + ".xcodeproj";
-
         cd(project_uid + "/" + id_dir + "/" + xc_projName);
-
-        // Simple test to know which directory the server is in
-        // console.log(ls());
 
         // delete the file (this is way simpler than adding a new file)
         exec('rm -rf "'+ deleteFileName +'"', function (err, out, stderror) {
@@ -1403,11 +1261,7 @@ app.post('/delete-file', function (req, res) {
             res.send({"Error": "There was an error deleting the file."});
 
           } else {
-
             cd(buildProjects_path + "/" + project_uid + "/" + id_dir + "/" + xc_projName + ".xcodeproj");
-
-            // Again another test to figure out which directory the server is in
-            // console.log(ls());
 
             // unfortunately we have to dig down to farthest depths of the project filetree to delete the file, as well as modify the core file of the .xcodeproj
             fs.readFile("project.pbxproj", 'utf-8', function (err, data) {
@@ -1437,36 +1291,22 @@ app.post('/delete-file', function (req, res) {
 
                   } else {
                     console.log(('Successfully rewrote project.pbxproj and deleted file named '+deleteFileName).green);
-
                     res.send({"Success": "Successfully deleted file named "+deleteFileName}); // finally, after that long process, we can finally notify the user that all is well
 
                   } //
                 }); // end writeFile
 
-
               } // end if err within readFile
 
-
             }); // end readFile
-
-
-
           } // end if err rm -rf
 
-
-
         }); // end exec rm -rf
-
-
-
     } else {
       res.statusCode = 500;
       res.send({"Error": "Invalid parameters"});
 
     }
-
-
-
 });
 
 
@@ -1476,13 +1316,9 @@ app.post('/build-project', function (req, res) {
   cd(buildProjects_path);
 
   if (req.body.id) {
-
-
-
     // analytics
       var ip = req.connection.remoteAddress;
       console.log("Request made from: " + ip);
-
 
       if (typeof client != "undefined") {
         satelize.satelize({ip:ip}, function(err, geoData) {
@@ -1490,17 +1326,11 @@ app.post('/build-project', function (req, res) {
             if (err) {
               console.log("There was an error getting the user's location.");
             } else {
-                console.log(geoData);
-
                 var obj = JSON.parse(geoData);
-
                 var location = obj.city + ", " + obj.region_code + ", " + obj.country_code3;
                 var isp = obj.isp;
                 var country = obj.country;
                 var timezone = obj.timezone;
-
-                // console.log(location);
-
 
                 client.addEvent("built_project", {"location": location, "isp": isp, "country": country, "timezone": timezone, "project_id": req.body.id}, function(err, res) {
                     if (err) {
@@ -1510,54 +1340,36 @@ app.post('/build-project', function (req, res) {
                     }
                 }); // end client addEvent
 
-
-
             } // end error handling
           }); // end satelize
       } // end if undefined
 
-
-
-
       var projectID = req.body.id;
-
 
       // $ xcodebuild -sdk iphonesimulator -project XCODEPROJ_PATH
       // this generates the build directory where you can zip up the file to upload to appetize
 
-
-
       var id_dir = ls(projectID)[0]; // project name e.g. WWDC
       var project_dir = ls(projectID+"/"+id_dir);
-      // console.log(project_dir);
 
       // go into the directory
       cd(projectID+"/"+id_dir);
 
-
-
       // various methods of filtering through the success build logs
       // $ xcodebuild -sdk iphonesimulator -configuration Debug -verbose > /dev/null
 
-
       // various methods of filtering the error logs
-
       // $ xcodebuild -sdk iphonesimulator -configuration Release -verbose | egrep '^(/.+:[0-9+:[0-9]+:.(error|warning):|fatal|===)' -
       // $ xcodebuild -sdk iphonesimulator -configuration Release -verbose | grep -A 5 error:
 
-
       console.log('Attempting to build the project...'.red);
 
+      // build using Xcode
       exec('xcodebuild -sdk iphonesimulator -configuration Release -verbose | grep -A 5 error:', function (err, xcode_out, stderror) {
         cd('build/Release-iphonesimulator');
-
-
         console.log(xcode_out.green);
 
-        // console.log(normalized);
-
         cd(buildProjects_path);
-
         var xc_projName = ""; // suprisingly enough, people like to name their repository name differently than their .xcodeproj name
 
         for (var z = 0; z < ls(projectID + "/" + id_dir).length; z++) {
@@ -1567,38 +1379,26 @@ app.post('/build-project', function (req, res) {
         }
 
         var normalized = xc_projName.split(' ').join('\ ');
-
         console.log('Normalized NAME: ' + normalized);
-
-        // cd(projectID+"/"+id_dir);
         // well this is important
         cd(projectID+"/"+id_dir + '/build/Release-iphonesimulator');
-
         console.log(pwd());
-
         console.log('zip -r "'+projectID+'" "'+xc_projName+'.app"'.green);
 
         // zip up the simulator executable
         exec('zip -r "'+projectID+'" "'+xc_projName+'.app"', function (err, out, stderror) {
-
           cd(buildProjects_path); // enter build-projects once again (using absolute paths!)
-
           console.log(out.green);
-          // console.log(err.red);
-
-          // console.log(pwd());
 
           var path = projectID + "/" + id_dir + "/build/Release-iphonesimulator/" + projectID + ".zip";
           console.log(buildProjects_path + path);
 
           var zip_dl_url = build_serverURL + "/" + path;
           console.log(".zip of simulator executable: " + zip_dl_url.cyan);
-
           console.log(typeof xcode_out)
 
           // check if the build succeeded
           if (xcode_out == "") { //.indexOf("** BUILD SUCCEEDED **") > -1) {
-
               // use the 'request' module from npm
               var request = require('request');
               request.post({
@@ -1617,7 +1417,6 @@ app.post('/build-project', function (req, res) {
                   } else {
                       // success
                       console.log(message.body);
-
                       console.log(message.body.publicURL != null);
 
                       if (message.body.publicURL != null) {
@@ -1631,38 +1430,17 @@ app.post('/build-project', function (req, res) {
                         } else {
                           res.send({"BUILD_FAILED": "There was an error building your application."});
                         }
-
-
-
-
-
-
-
-
-
                   }
               }); // end request
           } else {// end if build succeeded
             res.send({"BUILD_FAILED": xcode_out});
-            // console.log(out);
-
 
           }
-
-
-
         }); // end zip exec
-
-
-
       }); // end xcodebuild exec
 
-
     /* SIMULATOR EMBED CODE:
-
       <iframe src="https://appetize.io/embed/<PUBLIC KEY>?device=iphone6&scale=75&autoplay=true&orientation=portrait&deviceColor=white" width="312px" height="653px" frameborder="0" scrolling="no"></iframe>
-
-
     */
 
   } else {
@@ -1677,10 +1455,7 @@ app.post('/build-project', function (req, res) {
 // allow user to grab project information such as name, bundle ID, etc.
 app.get('/get-project-details/:app_id', function (req, res) {
   cd(buildProjects_path);
-
   res.setHeader('Content-Type', 'application/json');
-
-
 
   var project_id = req.param('app_id');
   var id_dir = ls(project_id)[0]; // project directory
@@ -1694,19 +1469,15 @@ app.get('/get-project-details/:app_id', function (req, res) {
   }
 
   console.log(JSON.stringify({"project": {"name": xc_projName}}).green);
-
   res.send({"project": {"name": xc_projName}});
 
 });
 
 
 
-
-
 // Route that generates an ad-hoc IPA file for the user to download onto their device (is this against Apple's terms?)
 app.post('/create-ipa', function (req, res) {
   // $ ipa build
-
   // take the app back to the build-projects directory, as another route may have thrown the build server into a project directory instead
   cd(buildProjects_path);
 
@@ -1731,7 +1502,6 @@ app.post('/create-ipa', function (req, res) {
         } else {
           console.log(out);
           console.log("\n");
-
           var xc_projName = ""; // suprisingly enough, people like to name their repository name differently than their .xcodeproj name
 
           for (var z = 0; z < ls(project_id + "/" + id_dir).length; z++) {
@@ -1739,21 +1509,13 @@ app.post('/create-ipa', function (req, res) {
               xc_projName = ls(project_id + "/" + id_dir)[z].replace('.xcodeproj', '');
             }
           }
-
           console.log(('Xcode Project File Name: ' + xc_projName).red);
-
           console.log('IPA for project '+ projectID + ' generated at '+ new Date());
           var ipa_path = projectID +"/"+ id_dir + "/" + xc_projName + ".ipa";
           var ipa_dl_url = secure_serverURL + "/" + ipa_path;
-
           console.log(ipa_dl_url.cyan);
-
           console.log('Generating manifest.plist...');
-
           var manifest_plist_data = '<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd"><plist version="1.0"><dict><key>items</key><array><dict><key>assets</key><array><dict><key>kind</key><string>software-package</string><key>url</key><string>'+ ipa_dl_url +'</string></dict></array><key>metadata</key><dict><key>bundle-identifier</key><string>com.Ringo.'+ id_dir +'</string><key>bundle-version</key><string>1</string><key>kind</key><string>software</string><key>title</key><string>'+id_dir+'</string></dict></dict></array></dict></plist>';
-
-
-
           fs.writeFile("manifest.plist", manifest_plist_data, function(err) {
               if(err) {
                   return console.log(err);
@@ -1771,15 +1533,6 @@ app.post('/create-ipa', function (req, res) {
               res.send({"raw_ipa_url": ipa_dl_url, "signed_dl_url": signed_dl_url});
 
           });
-
-
-
-
-
-
-
-
-
 
         }
 
