@@ -44,13 +44,15 @@ if (process.env.KEEN_PROJECT_ID) {
 
 }
 
+// init load balancer timer
+var reportBalancerTimer;
+
 var exec = require('child_process').exec; // running shell commands
 
 // open the localhost tunnel to the rest of the world!
 var ngrok = require('ngrok-daemon');
 
 var app = express();
-
 app.use(bodyParser({limit: '50mb'}));
 app.use(express.static(__dirname + '/build-projects')); // serve the files within build-projects
 app.use(function(req, res, next) {
@@ -68,50 +70,47 @@ var server = app.listen(port, function () {
   console.log(('Ringo core server listening at http://0.0.0.0:'+ port).blue);
 });
 
-
 var build_serverURL = process.env.HOSTNAME;
 var secure_serverURL = process.env.SECURE_HOSTNAME;
 
+getIP(function (err, ip) {
+    if (err) {
+        // every service in the list has failed
+        console.log(err);
+    }
+    console.log(("Server IP address: " + ip).cyan);
 
-  getIP(function (err, ip) {
-      if (err) {
-          // every service in the list has failed
-          console.log(err);
-      }
-      console.log(("Server IP address: " + ip).cyan);
+    if (typeof client != "undefined") { // only run if analytics are already set up
+      satelize.satelize({ip:ip}, function(err, geoData) {
+        // if data is JSON, we may wrap it in js object
+        if (err) {
+          console.log("Error getting location.");
+        } else {
 
-      if (typeof client != "undefined") { // only run if analytics are already set up
-        satelize.satelize({ip:ip}, function(err, geoData) {
-          // if data is JSON, we may wrap it in js object
-          if (err) {
-            console.log("Error getting location.");
-          } else {
+            var obj = JSON.parse(geoData);
 
-              var obj = JSON.parse(geoData);
+            var location = obj.city + ", " + obj.region_code + ", " + obj.country_code3;
+            var isp = obj.isp;
+            var country = obj.country;
+            var timezone = obj.timezone;
 
-              var location = obj.city + ", " + obj.region_code + ", " + obj.country_code3;
-              var isp = obj.isp;
-              var country = obj.country;
-              var timezone = obj.timezone;
+            console.log(location);
 
-              console.log(location);
-
-              client.addEvent("on_start_server", {"location": location, "isp": isp, "country": country, "timezone": timezone}, function(err, res) {
-                  if (err) {
-                      console.log("Oh no, an error logging on_start_server".red);
-                  } else {
-                      console.log("Event on_start_server logged".green);
-                  }
-              }); // end client addEvent
+            client.addEvent("on_start_server", {"location": location, "isp": isp, "country": country, "timezone": timezone}, function(err, res) {
+                if (err) {
+                    console.log("Oh no, an error logging on_start_server".red);
+                } else {
+                    console.log("Event on_start_server logged".green);
+                }
+            }); // end client addEvent
 
 
-            } // end if err
-          }); // end satelize
+          } // end if err
+        }); // end satelize
 
-      }
+    }
 
-  }); // end getIP
-
+}); // end getIP
 
 
 
@@ -128,42 +127,50 @@ ngrok.start(port).then(function (tunnel) {
 
   build_serverURL = process.env.HOSTNAME;
   secure_serverURL = process.env.SECURE_HOSTNAME;
-  // console.log(process.env.LOAD_BALANCER_URL);
 
+  // report to load balancer every 1 second
+  reportBalancerTimer = setInterval(reportToLoadBalancer, 1000);
+
+
+
+});
+
+
+// load balancer reporting function
+function reportToLoadBalancer() {
   if (process.env.LOAD_BALANCER_URL) { // only connect to the load balancer if the env has said to do so, which should only be if you want to run several of these servers for production
     serialNumber(function (err, value) { // basically for generating a unique id
         if (err) {
           console.log('Error getting the server unique ID, will have difficulty registering with the load balancer'.red);
         }
+
         console.log(value);
 
         // get the amount of stress on the server in a percentage form
         getServerLoad(function (server_load) {
-                request({ // make the request :)
+                console.log(server_load);
+                request({ // make the request
                     url: process.env.LOAD_BALANCER_URL + '/register-server/', //URL to hit
                     method: 'POST',
                     //Lets post the following key/values as form
                     json: {
                         server_id: value,
-                        tunnel: tunnel.url,
+                        tunnel: process.env.HOSTNAME,
                         load:server_load
 
                     }
                 }, function(error, response, body){
                     if(error) {
                         console.log(error);
-                    } else {
-                        console.log(response.statusCode, body);
-                }
+                    }
                 }); // end request
         });
 
 
     });
   }
+}
 
-
-});
 
 
 app.get('/get-secure-tunnel', function (req, res) {
@@ -1791,6 +1798,8 @@ process.on('SIGINT', function() {
     console.log("Caught interrupt signal".red);
 
     if (process.env.LOAD_BALANCER_URL) { // lets unregister this dead server
+          clearInterval(reportBalancerTimer); // stop sending events to the load balancer
+
           serialNumber(function (err, value) { // basically for generating a unique id
               console.log(value);
 
@@ -1866,7 +1875,15 @@ process.on('uncaughtException', function (uncaughterr) {
 function getServerLoad(callback) {
   exec('uptime', function (err, out, stderror) {
     var uptimeStr = out;
-    var loadLastMin = parseFloat(uptimeStr.split(' ')[11].replace(',', ''), 10); // find the amount of stress the server CPU was under for the last minute
+    // find the amount of stress being put on the server CPU
+    var loadLastMin;
+
+    for (var i = 0; i < sysValues.length; i++) {
+      if (sysValues[i].indexOf("load average") > -1) {
+        var loadAvg = sysValues[i];
+        loadLastMin = parseFloat(sysValues[i].split(' ')[3], 10);
+      }
+    }
 
     // find the number of CPUs
     exec('grep processor /proc/cpuinfo | wc -l', function (grepErr, grepOut, grepSTDError) {
@@ -1874,6 +1891,8 @@ function getServerLoad(callback) {
       // console.log("CPU load last minute: " + (loadLastMin/numCPU)*100);
 
       var loadPercentage = (loadLastMin/numCPU)*100;
+      console.log(loadPercentage);
+
       callback(loadPercentage); // return the load in a callback
 
     });

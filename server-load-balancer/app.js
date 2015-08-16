@@ -58,15 +58,15 @@ app.post('/register-server', function (req, res) {
         console.log(loadStats);
         res.send("Successfully registered server in the load balancer.");
       } else {
-        res.send(500, "There was an error registering the server with the load balancer.");
+        res.send(500, "There was an error registering the server with the load balancer. Missing load parameter.");
       } // end if req.body.load
 
 		} else {
-			res.send(500, "There was an error registering the server with the load balancer.");
+			res.send(500, "There was an error registering the server with the load balancer. Missing server_id parameter.");
 		}
 
 	} else {
-		res.send(500, "There was an error registering the server with the load balancer.");
+		res.send(500, "There was an error registering the server with the load balancer. Missing tunnel parameter.");
 	}
 });
 
