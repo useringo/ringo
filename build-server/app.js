@@ -1541,7 +1541,6 @@ app.post('/create-ipa', function (req, res) {
     res.send({"Error": "Invalid parameters."});
   }
 
-
 });
 
 
@@ -1585,7 +1584,6 @@ process.on('SIGINT', function() {
               }); // end request
 
           }); // end serial
-
     }
 
 });
@@ -1614,11 +1612,8 @@ process.on('uncaughtException', function (uncaughterr) {
               });
           }
 
-
-
       }); // end getIP
   } // end typeof sendgrid
-
 
 });
 
@@ -1628,6 +1623,8 @@ process.on('uncaughtException', function (uncaughterr) {
 function getServerLoad(callback) {
   exec('uptime', function (err, out, stderror) {
     var uptimeStr = out;
+    var sysValues = uptimeStr.split(', ');
+
     // find the amount of stress being put on the server CPU
     var loadLastMin;
 
@@ -1641,11 +1638,8 @@ function getServerLoad(callback) {
     // find the number of CPUs
     exec('grep processor /proc/cpuinfo | wc -l', function (grepErr, grepOut, grepSTDError) {
       var numCPU = parseInt(grepOut.replace('\n', ''), 10);
-      // console.log("CPU load last minute: " + (loadLastMin/numCPU)*100);
 
       var loadPercentage = (loadLastMin/numCPU)*100;
-      console.log(loadPercentage);
-
       callback(loadPercentage); // return the load in a callback
 
     });
@@ -1653,7 +1647,6 @@ function getServerLoad(callback) {
   }); // end $ uptime
 
 } // end getServerLoad
-
 
 
 // function that invokes a crawl through all of the directories and files
