@@ -1,6 +1,5 @@
 // Copyright 2015 Gautam Mittal under MIT License
 
-
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
@@ -13,7 +12,6 @@ app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
-
 
 var servers = {};
 var ids = [];
@@ -100,7 +98,6 @@ app.post('/unregister-server', function (req, res) {
 		res.send(500, "Invalid parameters. Error unregistering server with load balancer.");
 	}
 });
-
 
 
 var server = app.listen(port, function () {
