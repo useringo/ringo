@@ -2,51 +2,16 @@
 var typingTimer;                //timer identifier
 var doneTypingInterval = 1000;  //time in ms, 5 second for example
 
-// IF YOU WANT TO USE YOUR OWN DEV SERVER RUNNING THE RINGO SERVER, SET HOSTNAME TO YOUR SERVERS ADDRESS
-var lb = "http://localhost:3001";
-var hostname = "";
+var lb = BALANCER_URL;
+var hostname = ""
 
 $.get(lb+"/get-server-url", function (server_tunnel) {
 	hostname = server_tunnel;
 });
 
-var project_id = ""; //prompt("Type your Ringo Project ID");
+var project_id = "";
 var project_name = "";
-var placeholderData = "// Welcome to Ringo \n\
-// A portable Xcode-based IDE in your browser \n\
-// Built by Gautam Mittal \n\n\
-// Ringo lets you do a ton of cool things, such as: \n\
-//	- Edit, modify, debug, and build iOS projects that you create or have already created \n\
-//	- Write iOS apps that use both Swift/Objective-C code \n\
-//	- Write and test Swift playgrounds in the browser \n\
-//  - View iOS apps through an online, in-browser iOS simulator \n\
-//  - Harness the power of Xcode without the need for expensive hardware and software (you could use this on the Chromebook, and get nearly identical performance) \n\
-\n\
-\n\
-// IF YOU HAVE QUESTIONS OR WANT TO LEARN MORE ABOUT RINGO, SEND AN EMAIL TO gautam@mittal.net \n\
-\n\
-\n\
-// GET STARTED BY HITTING ONE OF THE BUTTONS IN THE TOP RIGHT CORNER TO EITHER CREATE, GIT CLONE, OR UPLOAD AN XCODE PROJECT. \n\
-\n\
-//                  %%\n\
-//                 %%%\n\
-//                %%%%\n\
-//      %%%%%%*   %%%  *%%%%%%\n\
-//    %%%%%%%%%%% %% *%%%%%%%%%%%\n\
-//   !!!!!!!!!!!!!!!!!!!!!!!!!!!!\n\
-//  !!!!!!!!!!!!!!!!!!!!!!!!!!!\n\
-//  {{{{{{{{{{{{{{{{{{{{{{{{{{\n\
-//  {{{{{{{{{{{{{{{{{{{{{{{{{{\n\
-//  &&&&&&&&&&&&&&&&&&&&&&&&&&&\n\
-//  &&&&&&&&&&&&&&&&&&&&&&&&&&&&&\n\
-// 	$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n\
-//   $$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n\
-//    %%%%%%%%%%%%%%%%%%%%%%%%%%%\n\
-//     %%%%%%%%%%%%%%%%%%%%%%%%%\n\
-//      %%%%%%%%%*****%%%%%%%$\n\
-//         %%%%*       *%%%%\n\
-\
-";
+var placeholderData = PROJECT_PLACEHOLDER_DATA;
 
 var files = [{"name": "INTRODUCTION", "data": placeholderData}];
 var currentFile = "";
@@ -60,7 +25,6 @@ loadFiles(); // load the file menu
 $("#fileMenu").append("<div name=\"INTRODUCTION\" onclick=\"javascript: currentFile = $(this).attr('name'); $('#fileMenu div').css({'background-color': 'transparent', \'font-weight\': \'normal\', \'color\': \'white\'}); $(this).css({'background-color': 'rgb(14, 101, 227)', 'font-weight':'bold', 'color':'white'}); updateEditor();\">Getting Started.swift</div>");
 editor.setValue(files[0].data, -1);
 editor.scrollToLine(0);
-
 
 
 //on keyup, start the countdown

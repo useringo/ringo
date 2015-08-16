@@ -2,15 +2,15 @@
 var typingTimer;                //timer identifier
 var doneTypingInterval = 1000;  //time in ms, 5 second for example
 
-
-// IF YOU WANT TO USE YOUR OWN DEV SERVER RUNNING THE RINGO SERVER, SET HOSTNAME TO YOUR SERVERS ADDRESS
-var lb = "http://localhost:3001";
+var lb = BALANCER_URL;
 var hostname = "";
 
 $.get(lb+"/get-server-url", function (server_tunnel) {
 	hostname = server_tunnel;
 });
 
+// set the contents to placeholder data
+editor.setValue(SANDBOX_PLACEHOLDER_DATA, -1);
 
 //on keyup, start the countdown
 $('#editor').keyup(function(){
@@ -18,15 +18,12 @@ $('#editor').keyup(function(){
     typingTimer = setTimeout(doneTyping, doneTypingInterval);
 });
 
-
 //on keydown, clear the countdown
 $('#editor').keydown(function(){
     clearTimeout(typingTimer);
 });
 
 $("#statusTime").text(moment().calendar());
-
-// var contentType ="application/x-www-form-urlencoded; charset=utf-8";
 
 //user is "finished typing," do something
 function doneTyping () {
@@ -58,9 +55,6 @@ function doneTyping () {
 $(document).ready(function () {
 	setTimeout(doneTyping, 2000); // wait after 2 seconds
 });
-
-
-
 
 
 var marker;

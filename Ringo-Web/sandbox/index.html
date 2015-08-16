@@ -29,30 +29,8 @@
             <div class="status"><span id="statusValue">Ready</span> <span style="color:white; font-size: 11pt;">|</span> <span id="statusTime">Now</span></div>
         </div>
 
-
-        <div id="editor">
-// Sandbox (noun): a virtual space in which new or untested software can be run
-// Swift reference: http://apple.co/1M0bjSG
-
-println("Hello, world");
-// This is where you write code
-// Just start coding, and Ringo will automatically build your and test your code
-// The output will be displayed in the right pane
-</div>
-
-        <div id="outputArea">
-
-        </div>
-
-
-        <!-- <div style="position:relative; background-color: rgb(251, 255, 165);"> -->
-        <!-- <textarea id="codeArea" spellcheck="false">// Type your Swift code here!</textarea> -->
-  <!--       <span id="outputArea">
-        // Output goes here
-        </span> -->
-
-
-
+        <div id="editor"></div>
+        <div id="outputArea"></div>
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.3.min.js"><\/script>')</script>
@@ -69,6 +47,8 @@ println("Hello, world");
 
             editor.resize()
         </script>
+
+        <script src="../local_config.js"></script><!-- contains local config env variables -->
         <script src="js/main.js"></script>
 
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
