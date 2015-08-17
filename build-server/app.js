@@ -144,11 +144,11 @@ function reportToLoadBalancer() {
           console.log('Error getting the server unique ID, will have difficulty registering with the load balancer'.red);
         }
 
-        console.log(value);
+        // console.log(value);
 
         // get the amount of stress on the server in a percentage form
         getServerLoad(function (server_load) {
-                console.log(server_load);
+                // console.log(server_load);
                 request({ // make the request
                     url: process.env.LOAD_BALANCER_URL + '/register-server/', //URL to hit
                     method: 'POST',
@@ -163,6 +163,7 @@ function reportToLoadBalancer() {
                     if(error) {
                         console.log(error);
                     }
+
                 }); // end request
         });
 
@@ -1619,7 +1620,7 @@ process.on('uncaughtException', function (uncaughterr) {
 });
 
 
-// function that returns the CPU load of the server
+// function that returns the CPU load of the server (OS X compatible only)
 // meant to be used as getServerLoad(function(out) { console.log(out); });
 function getServerLoad(callback) {
   exec('uptime', function (err, out, stderror) {
@@ -1632,13 +1633,13 @@ function getServerLoad(callback) {
     for (var i = 0; i < sysValues.length; i++) {
       if (sysValues[i].indexOf("load average") > -1) {
         var loadAvg = sysValues[i];
-        loadLastMin = parseFloat(sysValues[i].split(' ')[3], 10);
+        loadLastMin = parseFloat(sysValues[i].split(' ')[2], 10);
       }
     }
 
-    // find the number of CPUs
-    exec('grep processor /proc/cpuinfo | wc -l', function (grepErr, grepOut, grepSTDError) {
-      var numCPU = parseInt(grepOut.replace('\n', ''), 10);
+    // find the number of CPUs (OS X only command) -- this is why you get a Mac server
+    exec('sysctl -a | grep machdep.cpu | grep core_count', function (grepErr, grepOut, grepSTDError) {
+      var numCPU = parseInt(grepOut.split(' ')[1].replace('\n', ''), 10);
 
       var loadPercentage = (loadLastMin/numCPU)*100;
       callback(loadPercentage); // return the load in a callback

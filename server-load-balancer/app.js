@@ -51,11 +51,17 @@ app.post('/register-server', function (req, res) {
 
           if (ids.indexOf(req.body.server_id) == -1) { // if it doesn't already exist
             ids.push(req.body.server_id);
-            loadStats.push(req.body.load);
-            loadStats.sort(function(a,b){return a-b}); // sort the server loads in ascending order
           }
 
-          console.log(servers);
+          loadStats = [];
+          for (var loadVal in servers) {
+            var tmpLoadVal = servers[loadVal].load;
+            loadStats.push(tmpLoadVal);
+          }
+
+          loadStats.sort(function(a,b){return a-b});
+
+          // console.log(servers);
           console.log(ids);
           console.log(loadStats);
           res.send("Successfully registered server in the load balancer.");
