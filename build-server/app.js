@@ -50,7 +50,7 @@ var reportBalancerTimer;
 var exec = require('child_process').exec; // running shell commands
 
 // open the localhost tunnel to the rest of the world!
-var ngrok = require('ngrok-daemon');
+var localtunnel = require('localtunnel');
 
 var app = express();
 app.use(bodyParser({limit: '50mb'}));
@@ -114,16 +114,13 @@ getIP(function (err, ip) {
 
 
 
-// initialize the ngrok tunnel
-ngrok.start(port).then(function (tunnel) {
+// initialize the localhost tunnel to expose server to the Internet
+var openTunnel = localtunnel(port, function (err, tunnel) {
   console.log("Tunnel open: " + (tunnel.url).red + " at "+ new Date());
 
   // rewrite the env variables
   process.env["SECURE_HOSTNAME"] = tunnel.url;
   process.env["HOSTNAME"] = tunnel.url.replace('https', 'http');
-
-  // grab the ngrok tunnel PID and write it to the env so we can kill the process later
-  process.env["NGROK_TUNNEL_PID"] = tunnel.pid;
 
   build_serverURL = process.env.HOSTNAME;
   secure_serverURL = process.env.SECURE_HOSTNAME;
@@ -1568,18 +1565,14 @@ process.on('SIGINT', function() {
                   if(error) {
                       console.log(error);
                       console.log("Uh oh! The load balancer is probably down. Or there was an issue on our end. Either way, something isn't right here.".red);
-                      if (process.env.NGROK_TUNNEL_PID) {
-                        ngrok.stop(process.env.NGROK_TUNNEL_PID);
-                      }
+                      openTunnel.close();
 
                       process.exit(); // kill the application
 
                   } else {
                       console.log((response.statusCode, body).green);
 
-                      if (process.env.NGROK_TUNNEL_PID) {
-                        ngrok.stop(process.env.NGROK_TUNNEL_PID);
-                      }
+                      openTunnel.close();
 
                       process.exit();
               }
