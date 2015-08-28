@@ -67,10 +67,17 @@ app.post('/register-server', function (req, res) {
 
           loadStats.sort(function(a,b){return a-b});
 
-          // console.log(servers);
-         
+          
+	  var prettyPrintOptions = {
+	      keysColor: 'magenta',
+	      dashColor: 'cyan',
+	      stringColor: 'green',
+	      numberColor: 'blue'
+	  };
+
+          jetty.clear();
 	  jetty.moveTo([0,0]);
-	  jetty.text("Ringo Server Load Balancer\n\n".bold.underline.white + "SERVER IDs: ".bold.white + JSON.stringify(ids).cyan + "\n" + "SERVER LOAD: ".bold.white + JSON.stringify(loadStats).green+"\n\n");
+	  jetty.text("Ringo Server Load Balancer\n\n".bold.underline.white + "SERVER IDs: ".bold.white + JSON.stringify(ids).cyan + "\n" + "SERVER LOAD: ".bold.white + JSON.stringify(loadStats).green+"\n\n" + "FULL SERVER STATS: ".white.bold + "\n" + prettyjson.render(servers, prettyPrintOptions).blue);
 	 
 	  
 
