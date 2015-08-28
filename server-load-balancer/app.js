@@ -6,6 +6,12 @@ dotenv.load();
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
+var colors = require('colors');
+var Jetty = require('jetty');
+var jetty = new Jetty(process.stdout);
+var prettyjson = require('prettyjson');
+
+jetty.clear(); // clear the console
 
 var port = 3001;
 
@@ -62,8 +68,12 @@ app.post('/register-server', function (req, res) {
           loadStats.sort(function(a,b){return a-b});
 
           // console.log(servers);
-          console.log(ids);
-          console.log(loadStats);
+         
+	  jetty.moveTo([0,0]);
+	  jetty.text("Ringo Server Load Balancer\n\n".bold.underline.white + "SERVER IDs: ".bold.white + JSON.stringify(ids).cyan + "\n" + "SERVER LOAD: ".bold.white + JSON.stringify(loadStats).green+"\n\n");
+	 
+	  
+
           res.send("Successfully registered server in the load balancer.");
         } else {
           res.send(500, "There was an error registering the server with the load balancer. Missing load parameter.");
@@ -119,5 +129,5 @@ var server = app.listen(port, function () {
   var host = server.address().address;
   var port = server.address().port;
 
-  console.log(('Ringo load balancer listening at http://0.0.0.0:'+ port));
+  //console.log(('Ringo load balancer listening at http://0.0.0.0:'+ port));
 });
