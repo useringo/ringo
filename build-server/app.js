@@ -277,7 +277,7 @@ exec('cd build-projects', function (err, out, stderror) {
       cd('build-projects');
 
       // download the great
-      exec('wget http://cdn.rawgit.com/gmittal/ringoPeripherals/master/cli-helpers/renameXcodeProject.sh && wget http://cdn.rawgit.com/gmittal/ringoPeripherals/master/cli-helpers/XcodeProjAdder', function (err, out, stderror) {
+      exec('wget http://cdn.rawgit.com/useringo/ringoPeripherals/master/cli-helpers/renameXcodeProject.sh && wget http://cdn.rawgit.com/useringo/ringoPeripherals/master/cli-helpers/XcodeProjAdder', function (err, out, stderror) {
         console.log(out);
 
         exec('chmod 755 renameXcodeProject.sh && chmod a+x XcodeProjAdder', function (err, out, stderror) {
@@ -436,19 +436,19 @@ app.post('/create-project', function(req, res) {
             var exec_cmd = ''; // there is a different command that needs to be executed based on the template the user chooses
 
             if (template == "game") { // generate a SpriteKit game
-              exec_cmd = 'git clone https://github.com/gmittal/ringoTemplate && .././renameXcodeProject.sh ringoTemplate "'+ projectName +'" && rm -rf ringoTemplate';
+              exec_cmd = 'git clone https://github.com/useringo/ringoTemplate && .././renameXcodeProject.sh ringoTemplate "'+ projectName +'" && rm -rf ringoTemplate';
 
             } else if (template == "mda") { // generates a Master-Detail application
-              exec_cmd = 'git clone https://github.com/gmittal/ringoMDATemplate && .././renameXcodeProject.sh ringoMDATemplate "'+ projectName +'" && rm -rf ringoMDATemplate';
+              exec_cmd = 'git clone https://github.com/useringo/ringoMDATemplate && .././renameXcodeProject.sh ringoMDATemplate "'+ projectName +'" && rm -rf ringoMDATemplate';
 
             } else if (template == "sva") { // generates a Single View application
-              exec_cmd = 'git clone https://github.com/gmittal/ringoSVATemplate && .././renameXcodeProject.sh ringoSVATemplate "'+ projectName +'" && rm -rf ringoSVATemplate';
+              exec_cmd = 'git clone https://github.com/useringo/ringoSVATemplate && .././renameXcodeProject.sh ringoSVATemplate "'+ projectName +'" && rm -rf ringoSVATemplate';
 
             } else if (template == "pba") { // generates a Page-based application
-              exec_cmd = 'git clone https://github.com/gmittal/ringoPBATemplate && .././renameXcodeProject.sh ringoPBATemplate "'+ projectName +'" && rm -rf ringoPBATemplate';
+              exec_cmd = 'git clone https://github.com/useringo/ringoPBATemplate && .././renameXcodeProject.sh ringoPBATemplate "'+ projectName +'" && rm -rf ringoPBATemplate';
 
             } else if (template == "ta") { // generates a Tabbed application
-              exec_cmd = 'git clone https://github.com/gmittal/ringoTATemplate && .././renameXcodeProject.sh ringoTATemplate "'+ projectName +'" && rm -rf ringoTATemplate';
+              exec_cmd = 'git clone https://github.com/useringo/ringoTATemplate && .././renameXcodeProject.sh ringoTATemplate "'+ projectName +'" && rm -rf ringoTATemplate';
 
             }
 
@@ -1200,7 +1200,7 @@ app.post('/add-file', function (req, res) {
     }
 
     // download a vanilla swift class file
-    exec('wget cdn.rawgit.com/gmittal/ringoPeripherals/master/new-class-templates/R6roHpOHU8qa3Z2TvHsG.swift', function (err, out, stderror) {
+    exec('wget cdn.rawgit.com/useringo/ringoPeripherals/master/new-class-templates/R6roHpOHU8qa3Z2TvHsG.swift', function (err, out, stderror) {
       // rename file after downloading from GitHub
       exec('mv "R6roHpOHU8qa3Z2TvHsG.swift" "'+ newFileName + '.swift"', function (err, out, stderror) {
         var filePath = xc_projName + "/" + newFileName + '.swift';
