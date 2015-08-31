@@ -1,6 +1,6 @@
-{
+B{
   "name": "ringo-load-balancer",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Decides which Mac server to route the user to.",
   "main": "app.js",
   "scripts": {
