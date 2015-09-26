@@ -1,6 +1,0 @@
-version: "Apple Swift version 1.2 (swiftlang-602.0.53.1 clang-602.0.53)"
-options: "c1a3e0c168afc0b413345dfef4e50f67"
-inputs: 
-- "/Users/gautam/Desktop/git-repos/ringo/Ringo-iOS/Ringo-iOS/ViewController.swift"
-- "/Users/gautam/Desktop/git-repos/ringo/Ringo-iOS/Ringo-iOS/AppDelegate.swift"
-- "/Users/gautam/Desktop/git-repos/ringo/Ringo-iOS/Ringo-iOS/SandboxViewController.swift"
