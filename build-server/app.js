@@ -50,7 +50,7 @@ var reportBalancerTimer;
 var exec = require('child_process').exec; // running shell commands
 
 // open the localhost tunnel to the rest of the world!
-var localtunnel = require('localtunnel');
+var ngrok = require('ngrok');
 
 var app = express();
 app.use(bodyParser({limit: '50mb'}));
@@ -114,13 +114,16 @@ getIP(function (err, ip) {
 
 
 
-// initialize the localhost tunnel to expose server to the Internet
-var openTunnel = localtunnel(port, function (err, tunnel) {
-  console.log("Tunnel open: " + (tunnel.url).red + " at "+ new Date());
+// initialize the ngrok tunnel
+ngrok.connect(port, function (err, url) {
+  console.log("Tunnel open: " + (url).red + " at "+ new Date());
 
   // rewrite the env variables
-  process.env["SECURE_HOSTNAME"] = tunnel.url;
-  process.env["HOSTNAME"] = tunnel.url.replace('https', 'http');
+  process.env["SECURE_HOSTNAME"] = url;
+  process.env["HOSTNAME"] = url.replace('https', 'http');
+
+  // grab the ngrok tunnel PID and write it to the env so we can kill the process later
+  // process.env["NGROK_TUNNEL_PID"] = tunnel.pid;
 
   build_serverURL = process.env.HOSTNAME;
   secure_serverURL = process.env.SECURE_HOSTNAME;
@@ -277,7 +280,7 @@ exec('cd build-projects', function (err, out, stderror) {
       cd('build-projects');
 
       // download the great
-      exec('wget http://cdn.rawgit.com/useringo/ringoPeripherals/master/cli-helpers/renameXcodeProject.sh && wget http://cdn.rawgit.com/useringo/ringoPeripherals/master/cli-helpers/XcodeProjAdder', function (err, out, stderror) {
+      exec('wget http://cdn.rawgit.com/gmittal/ringoPeripherals/master/cli-helpers/renameXcodeProject.sh && wget http://cdn.rawgit.com/gmittal/ringoPeripherals/master/cli-helpers/XcodeProjAdder', function (err, out, stderror) {
         console.log(out);
 
         exec('chmod 755 renameXcodeProject.sh && chmod a+x XcodeProjAdder', function (err, out, stderror) {
@@ -436,19 +439,19 @@ app.post('/create-project', function(req, res) {
             var exec_cmd = ''; // there is a different command that needs to be executed based on the template the user chooses
 
             if (template == "game") { // generate a SpriteKit game
-              exec_cmd = 'git clone https://github.com/useringo/ringoTemplate && .././renameXcodeProject.sh ringoTemplate "'+ projectName +'" && rm -rf ringoTemplate';
+              exec_cmd = 'git clone https://github.com/gmittal/ringoTemplate && .././renameXcodeProject.sh ringoTemplate "'+ projectName +'" && rm -rf ringoTemplate';
 
             } else if (template == "mda") { // generates a Master-Detail application
-              exec_cmd = 'git clone https://github.com/useringo/ringoMDATemplate && .././renameXcodeProject.sh ringoMDATemplate "'+ projectName +'" && rm -rf ringoMDATemplate';
+              exec_cmd = 'git clone https://github.com/gmittal/ringoMDATemplate && .././renameXcodeProject.sh ringoMDATemplate "'+ projectName +'" && rm -rf ringoMDATemplate';
 
             } else if (template == "sva") { // generates a Single View application
-              exec_cmd = 'git clone https://github.com/useringo/ringoSVATemplate && .././renameXcodeProject.sh ringoSVATemplate "'+ projectName +'" && rm -rf ringoSVATemplate';
+              exec_cmd = 'git clone https://github.com/gmittal/ringoSVATemplate && .././renameXcodeProject.sh ringoSVATemplate "'+ projectName +'" && rm -rf ringoSVATemplate';
 
             } else if (template == "pba") { // generates a Page-based application
-              exec_cmd = 'git clone https://github.com/useringo/ringoPBATemplate && .././renameXcodeProject.sh ringoPBATemplate "'+ projectName +'" && rm -rf ringoPBATemplate';
+              exec_cmd = 'git clone https://github.com/gmittal/ringoPBATemplate && .././renameXcodeProject.sh ringoPBATemplate "'+ projectName +'" && rm -rf ringoPBATemplate';
 
             } else if (template == "ta") { // generates a Tabbed application
-              exec_cmd = 'git clone https://github.com/useringo/ringoTATemplate && .././renameXcodeProject.sh ringoTATemplate "'+ projectName +'" && rm -rf ringoTATemplate';
+              exec_cmd = 'git clone https://github.com/gmittal/ringoTATemplate && .././renameXcodeProject.sh ringoTATemplate "'+ projectName +'" && rm -rf ringoTATemplate';
 
             }
 
@@ -1200,7 +1203,7 @@ app.post('/add-file', function (req, res) {
     }
 
     // download a vanilla swift class file
-    exec('wget cdn.rawgit.com/useringo/ringoPeripherals/master/new-class-templates/R6roHpOHU8qa3Z2TvHsG.swift', function (err, out, stderror) {
+    exec('wget cdn.rawgit.com/gmittal/ringoPeripherals/master/new-class-templates/R6roHpOHU8qa3Z2TvHsG.swift', function (err, out, stderror) {
       // rename file after downloading from GitHub
       exec('mv "R6roHpOHU8qa3Z2TvHsG.swift" "'+ newFileName + '.swift"', function (err, out, stderror) {
         var filePath = xc_projName + "/" + newFileName + '.swift';
@@ -1565,14 +1568,18 @@ process.on('SIGINT', function() {
                   if(error) {
                       console.log(error);
                       console.log("Uh oh! The load balancer is probably down. Or there was an issue on our end. Either way, something isn't right here.".red);
-                      openTunnel.close();
+                      if (process.env.NGROK_TUNNEL_PID) {
+                        // ngrok.stop(process.env.NGROK_TUNNEL_PID);
+                      }
 
                       process.exit(); // kill the application
 
                   } else {
                       console.log((response.statusCode, body).green);
 
-                      openTunnel.close();
+                      if (process.env.NGROK_TUNNEL_PID) {
+                        // ngrok.stop(process.env.NGROK_TUNNEL_PID);
+                      }
 
                       process.exit();
               }
