@@ -18,7 +18,7 @@ var Keen = require("keen.io"); // analytics
 var request = require('request'); // making requests to external sources
 var satelize = require('satelize'); // analytics
 var serialNumber = require('serial-number'); // unique server id, used for registration with the load balancer
-serialNumber.preferUUID = true; //
+serialNumber.preferUUID = true;
 require('shelljs/global'); // running shell commands
 
 // init internal error email reporting service
@@ -1381,8 +1381,6 @@ app.post('/build-project', function (req, res) {
         console.log('Normalized NAME: ' + normalized);
         // well this is important
         cd(projectID+"/"+id_dir + '/build/Release-iphonesimulator');
-        console.log(pwd());
-        console.log('zip -r "'+projectID+'" "'+xc_projName+'.app"'.green);
 
         // zip up the simulator executable
         exec('zip -r "'+projectID+'" "'+xc_projName+'.app"', function (err, out, stderror) {
@@ -1422,8 +1420,10 @@ app.post('/build-project', function (req, res) {
                           var public_key = (message.body.publicURL).split("/")[4];
                           console.log("Simulator Public Key: " + public_key.yellow);
 
-                          var screenEmbed = '<iframe src="https://appetize.io/embed/'+public_key+'?device=iphone6&scale=75&autoplay=false&orientation=portrait&deviceColor=black&screenOnly=true&xdocMsg=true" width="282px" height="501px" frameborder="0" scrolling="no"></iframe>';
-                          var deviceEmbed = '<iframe src="https://appetize.io/embed/'+public_key+'?device=iphone6&scale=75&autoplay=true&orientation=portrait&deviceColor=black&xdocMsg=true" width="312px" height="653px" frameborder="0" scrolling="no"></iframe>';
+                          var osVersion = "9.0"; // the version of iOS appetize should build for
+
+                          var screenEmbed = '<iframe src="https://appetize.io/embed/'+public_key+'?device=iphone6&scale=75&autoplay=false&orientation=portrait&deviceColor=black&screenOnly=true&xdocMsg=true&osVersion='+ osVersion.toString() +'" width="282px" height="501px" frameborder="0" scrolling="no"></iframe>';
+                          var deviceEmbed = '<iframe src="https://appetize.io/embed/'+public_key+'?device=iphone6&scale=75&autoplay=true&orientation=portrait&deviceColor=black&xdocMsg=true&osVersion='+ osVersion.toString() +'" width="312px" height="653px" frameborder="0" scrolling="no"></iframe>';
 
                           res.send({'simulatorURL': message.body.publicURL, "screenOnlyEmbedCode": screenEmbed, "fullDeviceEmbedCode": deviceEmbed, "console": xcode_out});
                         } else {
