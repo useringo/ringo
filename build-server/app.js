@@ -378,7 +378,7 @@ app.post('/create-project', function(req, res) {
           satelize.satelize({ip:ip}, function(err, geoData) {
               // if data is JSON, we may wrap it in js object
               if (err) {
-                console.log("There was an error getting the user's location.");
+                // console.log("There was an error getting the user's location.");
               } else {
                   // console.log(geoData);
 
@@ -417,7 +417,7 @@ app.post('/create-project', function(req, res) {
         var project_uid = generatePushID();
         project_uid = project_uid.substr(1, project_uid.length);
 
-        console.log(project_uid);
+        // console.log(project_uid);
 
         res.setHeader('Content-Type', 'application/json');
 
@@ -454,11 +454,11 @@ app.post('/create-project', function(req, res) {
 
 
             exec(exec_cmd, function (err, out, stderror) {
-              console.log(out);
-              console.log(err);
+              // console.log(out);
+              // console.log(err);
 
 
-              console.log('============================================== \n Successfully created '+project_uid+' at ' + new Date() + '\n');
+              console.log('Successfully created '+(project_uid).magenta+' at ' + new Date() + '\n');
 
               // don't send back the code until its actually done
               res.send({"uid": project_uid});
@@ -490,15 +490,15 @@ app.get('/download-project/:id', function (req, res) {
 
   // analytics
   var ip = req.connection.remoteAddress;
-  console.log("Request made from: " + ip);
+  // console.log("Request made from: " + ip);
 
   if (typeof client != "undefined") {
     satelize.satelize({ip:ip}, function(err, geoData) {
         // if data is JSON, we may wrap it in js object
         if (err) {
-          console.log("There was an error getting the user's location.");
+          // console.log("There was an error getting the user's location.");
         } else {
-            console.log(geoData);
+            // console.log(geoData);
 
             var obj = JSON.parse(geoData);
 
@@ -510,12 +510,12 @@ app.get('/download-project/:id', function (req, res) {
             // console.log(location);
 
 
-            client.addEvent("project_code_downloaded", {"location": location, "isp": isp, "country": country, "timezone": timezone, "project_id": req.param('id')}, function(err, res) {
-                if (err) {
-                    console.log("Oh no, an error logging project_code_downloaded".red);
-                } else {
-                    console.log("Event project_code_downloaded logged".green);
-                }
+            client.addEvent("project_code_downloaded", {"location": location, "isp": isp, "country": country, "timezone": timezone, "project_id": req.params.id}, function(err, res) {
+                // if (err) {
+                //     console.log("Oh no, an error logging project_code_downloaded".red);
+                // } else {
+                //     console.log("Event project_code_downloaded logged".green);
+                // }
             }); // end client addEvent
 
 
@@ -527,7 +527,7 @@ app.get('/download-project/:id', function (req, res) {
 
 
 
-  cd(req.param('id'));
+  cd(req.params.id);
 
 
   var name = ls()[0];
@@ -539,17 +539,17 @@ app.get('/download-project/:id', function (req, res) {
   // console.log(ls())
 
   exec('rm -rf build', function (err, out, stderror) {
-    console.log(out);
+    // console.log(out);
 
     console.log('Successfully cleaned up the build directory from the project that will be downloaded.');
 
     // now that we've removed the build projects directory, we need to move back up to the ID directory
-    cd(buildProjects_path + '/' + req.param('id'));
+    cd(buildProjects_path + '/' + req.params.id);
 
     exec('zip -r "'+name+'" "'+name+'"', function (err, out, stderror) {
-      console.log(out.cyan);
+      // console.log(out.cyan);
 
-      res.sendFile(buildProjects_path+"/"+req.param('id')+"/"+name+".zip");
+      res.sendFile(buildProjects_path+"/"+req.params.id+"/"+name+".zip");
 
 
     });
@@ -767,7 +767,7 @@ app.post('/update-project-contents', function (req, res) {
   var project_id = req.body.id;
   var files = req.body.files;
 
-  console.log(files.length + " files need to be saved.");
+  console.log(files.length + " files need to be saved for "+ project_id.magenta);
 
   cd(buildProjects_path);
 
@@ -780,7 +780,7 @@ app.post('/update-project-contents', function (req, res) {
     }
   }
 
-  console.log(('Xcode Project File Name: ' + xc_projName).red);
+  // console.log(('Xcode Project File Name: ' + xc_projName).red);
 
   var j = 0;
 
@@ -794,7 +794,7 @@ app.post('/update-project-contents', function (req, res) {
         return console.log(err);
       }
 
-      console.log(file.name +" was saved at "+ new Date());
+      // console.log(file.name +" was saved at "+ new Date());
 
       if (j < files.length-1) {
         j++;
@@ -825,7 +825,7 @@ app.post('/get-project-contents', function(req, res) {
     }
   }
 
-  console.log(('Xcode Project File Name: ' + xc_projName).red);
+  // console.log(('Xcode Project File Name: ' + xc_projName).red);
 
   // crawl the file tree
   walk(buildProjects_path + "/" + project_id+"/"+id_dir+"/"+xc_projName, function(err, results) {
@@ -900,7 +900,7 @@ app.post('/get-project-contents', function(req, res) {
         });
 
         fileChunks.on('end', function() {
-          console.log(file);
+          // console.log(file);
 
           if (i < files.length-1) {
               filesContents += JSON.stringify(contentForFile) + ", ";
@@ -941,7 +941,7 @@ app.post('/add-image-xcasset', function (req, res) {
       }
     }
 
-    console.log(('Xcode Project File Name: ' + xc_projName).red);
+    // console.log(('Xcode Project File Name: ' + xc_projName).red);
 
     var xcassetsDirName = "";
 
@@ -954,7 +954,7 @@ app.post('/add-image-xcasset', function (req, res) {
       }
     }
 
-    console.log(('.xcassets Directory Name: ' + xcassetsDirName).cyan);
+    // console.log(('.xcassets Directory Name: ' + xcassetsDirName).cyan);
 
     var base64Data = req.body.file.replace(/^data:image\/png;base64,/, "");
 
@@ -1027,7 +1027,6 @@ app.post('/add-image-xcasset', function (req, res) {
 app.post('/get-image-xcassets', function (req, res) {
   cd(buildProjects_path);
 
-  console.log("YOOOOO");
 
   if (req.body.id) {
       var project_id = req.body.id;
@@ -1041,7 +1040,7 @@ app.post('/get-image-xcassets', function (req, res) {
         }
       }
 
-      console.log(('Xcode Project File Name: ' + xc_projName).red);
+      // console.log(('Xcode Project File Name: ' + xc_projName).red);
 
       // crawl the file tree
       walk(buildProjects_path + "/" + project_id+"/"+id_dir+"/"+xc_projName, function(err, results) {
@@ -1126,8 +1125,8 @@ app.post('/get-image-xcassets', function (req, res) {
 
         res.setHeader('Content-Type', 'application/json');
 
-        console.log(filtered)
-        console.log(files);
+        // console.log(filtered)
+        // console.log(files);
 
         var filesContents = []; // final array of json data
         var i = 0;
@@ -1143,7 +1142,7 @@ app.post('/get-image-xcassets', function (req, res) {
 
         function loopFiles() {
             var file = files[i];
-            console.log(file);
+            // console.log(file);
 
               fs.readFile(project_id+"/"+id_dir+"/"+xc_projName+"/"+file, function (err, data) {
                 if (err) {
@@ -1214,7 +1213,7 @@ app.post('/add-file', function (req, res) {
         // now the important step: adding the file reference to the .xcodeproj file
         cd(buildProjects_path);
         exec('./XcodeProjAdder -XCP "'+xcpath+'" -SCSV "'+ filePath + '"', function (err, out, stderror) {
-          console.log(xcpath);
+          // console.log(xcpath);
           res.send({"Success":"Successfully added file named "+newFileName+".swift"});
 
         }); // end exec
@@ -1258,7 +1257,7 @@ app.post('/delete-file', function (req, res) {
         // delete the file (this is way simpler than adding a new file)
         exec('rm -rf "'+ deleteFileName +'"', function (err, out, stderror) {
           console.log(('Attempting to remove file named '+deleteFileName).cyan);
-          console.log(JSON.stringify(ls()).yellow);
+          // console.log(JSON.stringify(ls()).yellow);
 
           if (err) {
             res.statusCode = 500;
@@ -1322,13 +1321,13 @@ app.post('/build-project', function (req, res) {
   if (req.body.id) {
     // analytics
       var ip = req.connection.remoteAddress;
-      console.log("Request made from: " + ip);
+      // console.log("Request made from: " + ip);
 
       if (typeof client != "undefined") {
         satelize.satelize({ip:ip}, function(err, geoData) {
             // if data is JSON, we may wrap it in js object
             if (err) {
-              console.log("There was an error getting the user's location.");
+              // console.log("There was an error getting the user's location.");
             } else {
                 var obj = JSON.parse(geoData);
                 var location = obj.city + ", " + obj.region_code + ", " + obj.country_code3;
@@ -1337,11 +1336,11 @@ app.post('/build-project', function (req, res) {
                 var timezone = obj.timezone;
 
                 client.addEvent("built_project", {"location": location, "isp": isp, "country": country, "timezone": timezone, "project_id": req.body.id}, function(err, res) {
-                    if (err) {
-                        console.log("Oh no, an error logging built_project".red);
-                    } else {
-                        console.log("Event built_project logged".green);
-                    }
+                    // if (err) {
+                    //     console.log("Oh no, an error logging built_project".red);
+                    // } else {
+                    //     console.log("Event built_project logged".green);
+                    // }
                 }); // end client addEvent
 
             } // end error handling
@@ -1383,21 +1382,21 @@ app.post('/build-project', function (req, res) {
         }
 
         var normalized = xc_projName.split(' ').join('\ ');
-        console.log('Normalized NAME: ' + normalized);
+        // console.log('Normalized NAME: ' + normalized);
         // well this is important
         cd(projectID+"/"+id_dir + '/build/Release-iphonesimulator');
 
         // zip up the simulator executable
         exec('zip -r "'+projectID+'" "'+xc_projName+'.app"', function (err, out, stderror) {
           cd(buildProjects_path); // enter build-projects once again (using absolute paths!)
-          console.log(out.green);
+          // console.log(out.green);
 
           var path = projectID + "/" + id_dir + "/build/Release-iphonesimulator/" + projectID + ".zip";
-          console.log(buildProjects_path + path);
+          // console.log(buildProjects_path + path);
 
           var zip_dl_url = build_serverURL + "/" + path;
           console.log(".zip of simulator executable: " + zip_dl_url.cyan);
-          console.log(typeof xcode_out)
+          // console.log(typeof xcode_out)
 
           // check if the build succeeded
           if (xcode_out == "") { //.indexOf("** BUILD SUCCEEDED **") > -1) {
@@ -1418,8 +1417,8 @@ app.post('/build-project', function (req, res) {
 
                   } else {
                       // success
-                      console.log(message.body);
-                      console.log(message.body.publicURL != null);
+                      // console.log(message.body);
+                      // console.log(message.body.publicURL != null);
 
                       if (message.body.publicURL != null) {
                           var public_key = (message.body.publicURL).split("/")[4];
@@ -1472,7 +1471,7 @@ app.get('/get-project-details/:app_id', function (req, res) {
     }
   }
 
-  console.log(JSON.stringify({"project": {"name": xc_projName}}).green);
+  // console.log(JSON.stringify({"project": {"name": xc_projName}}).green);
   res.send({"project": {"name": xc_projName}});
 
 });
@@ -1504,8 +1503,8 @@ app.post('/create-ipa', function (req, res) {
         if (err) {
           res.send({"Error": "There was an error generating your IPA file. Please double check that there are no syntax errors or other issues with your code."});
         } else {
-          console.log(out);
-          console.log("\n");
+          // console.log(out);
+          // console.log("\n");
           var xc_projName = ""; // suprisingly enough, people like to name their repository name differently than their .xcodeproj name
 
           for (var z = 0; z < ls(project_id + "/" + id_dir).length; z++) {
@@ -1513,7 +1512,7 @@ app.post('/create-ipa', function (req, res) {
               xc_projName = ls(project_id + "/" + id_dir)[z].replace('.xcodeproj', '');
             }
           }
-          console.log(('Xcode Project File Name: ' + xc_projName).red);
+          // console.log(('Xcode Project File Name: ' + xc_projName).red);
           console.log('IPA for project '+ projectID + ' generated at '+ new Date());
           var ipa_path = projectID +"/"+ id_dir + "/" + xc_projName + ".ipa";
           var ipa_dl_url = secure_serverURL + "/" + ipa_path;
@@ -1526,7 +1525,7 @@ app.post('/create-ipa', function (req, res) {
               }
 
               var mainfest_plist_url = secure_serverURL + "/" + projectID +"/"+ id_dir + "/manifest.plist";
-              console.log(mainfest_plist_url);
+              // console.log(mainfest_plist_url);
 
               console.log('Successfully generated IPA manifest.plist.');
 
@@ -1551,13 +1550,13 @@ app.post('/create-ipa', function (req, res) {
 
 // what happens when someone kills the server
 process.on('SIGINT', function() {
-    console.log("Caught interrupt signal".red);
+    console.log("Killing Ringo Core server...".red);
 
     if (process.env.LOAD_BALANCER_URL) { // lets unregister this dead server
           clearInterval(reportBalancerTimer); // stop sending events to the load balancer
 
           serialNumber(function (err, value) { // basically for generating a unique id
-              console.log(value);
+              // console.log(value);
 
               request({
                   url: process.env.LOAD_BALANCER_URL + '/unregister-server/', //URL to hit
@@ -1570,7 +1569,7 @@ process.on('SIGINT', function() {
               }, function(error, response, body){
                   if(error) {
                       console.log(error);
-                      console.log("Uh oh! The load balancer is probably down. Or there was an issue on our end. Either way, something isn't right here.".red);
+                      console.log("Uh oh! The load balancer is probably down.".red);
                       if (process.env.NGROK_TUNNEL_PID) {
                         // ngrok.stop(process.env.NGROK_TUNNEL_PID);
                       }
@@ -1613,7 +1612,7 @@ process.on('uncaughtException', function (uncaughterr) {
                 text:     'The Ringo internal server error on machine with address ' + ip + ' ran into error: \n\n' + uncaughterr
               }, function(err, json) {
                 if (err) { return console.error(err); }
-                console.log(json);
+                // console.log(json);
               });
           }
 
