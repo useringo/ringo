@@ -33,7 +33,7 @@ if (process.env.REPORT_TO && process.env.SEND_REPORTS == "YES") {
 var client;
 
 if (process.env.KEEN_PROJECT_ID) {
-  console.log("Keen analytics starting up...");
+  console.log("Keen analytics starting up...".magenta);
 
   client = Keen.configure({
       projectId: process.env.KEEN_PROJECT_ID,
@@ -51,7 +51,8 @@ var exec = require('child_process').exec; // running shell commands
 var ngrok = require('ngrok');
 
 var app = express();
-app.use(bodyParser({limit: '50mb'}));
+app.use(bodyParser.json({limit: '50mb', extended: true}));
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 app.use(express.static(__dirname + '/build-projects')); // serve the files within build-projects
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -295,7 +296,7 @@ exec('cd build-projects', function (err, out, stderror) {
 
 
   } else {
-    console.log('build-projects directory was found.');
+    console.log('build-projects directory was found.'.green);
     cleanBuildProjects();
     setInterval(cleanBuildProjects, 60000); // clean the build-projects directory every one minute
 
@@ -369,11 +370,9 @@ app.post('/create-project', function(req, res) {
 
   // only execute if they specify the required parameters
   if (req.body.projectName) {
-
-
-        // analytics
+      // analytics
         var ip = req.connection.remoteAddress;
-        console.log("Request made from: " + ip);
+        // console.log("Request made from: " + ip);
 
         if (typeof client != "undefined") {
           satelize.satelize({ip:ip}, function(err, geoData) {
@@ -381,7 +380,7 @@ app.post('/create-project', function(req, res) {
               if (err) {
                 console.log("There was an error getting the user's location.");
               } else {
-                  console.log(geoData);
+                  // console.log(geoData);
 
                   var obj = JSON.parse(geoData);
 
@@ -395,11 +394,11 @@ app.post('/create-project', function(req, res) {
                   var project_nomen = req.body.projectName
 
                   client.addEvent("project_created", {"location": location, "isp": isp, "country": country, "timezone": timezone, "name": project_nomen}, function(err, res) {
-                      if (err) {
-                          console.log("Oh no, an error logging project_created".red);
-                      } else {
-                          console.log("Event project_created logged".green);
-                      }
+                      // if (err) {
+                      //     // console.log("Oh no, an error logging project_created".red);
+                      // } else {
+                      //     // console.log("Event project_created logged".green);
+                      // }
                   }); // end client addEvent
 
 
