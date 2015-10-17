@@ -317,8 +317,6 @@ function cleanBuildProjects() {
   // console.log("Checking the build-projects directory");
   var projects = ls();
 
-  console.log(JSON.stringify(projects).grey);
-
   var i = 0;
 
   loopProjects();
@@ -1030,10 +1028,11 @@ app.post('/add-image-xcasset', function (req, res) {
 app.post('/get-image-xcassets', function (req, res) {
   cd(buildProjects_path);
 
+  console.log("YOOOOO");
+
   if (req.body.id) {
       var project_id = req.body.id;
       var id_dir = ls(project_id)[0];
-      console.log(id_dir);
 
       var xc_projName = ""; // suprisingly enough, people like to name their repository name differently than their .xcodeproj name
 
@@ -1134,7 +1133,14 @@ app.post('/get-image-xcassets', function (req, res) {
         var filesContents = []; // final array of json data
         var i = 0;
 
-        loopFiles();
+        if (files.length > 0) {
+            loopFiles();
+        } else {
+          console.log("No Xcode image assets were found".cyan);
+          res.send({"files": []});
+          cd(buildProjects_path);
+        }
+
 
         function loopFiles() {
             var file = files[i];
