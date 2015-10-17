@@ -76,13 +76,13 @@ getIP(function (err, ip) {
         // every service in the list has failed
         console.log(err);
     }
-    console.log(("Server IP address: " + ip).cyan);
+    // console.log(("Server IP address: " + ip).cyan);
 
     if (typeof client != "undefined") { // only run if analytics are already set up
       satelize.satelize({ip:ip}, function(err, geoData) {
         // if data is JSON, we may wrap it in js object
         if (err) {
-          console.log("Error getting location.");
+          // console.log("Error getting location.");
         } else {
 
             var obj = JSON.parse(geoData);
@@ -92,14 +92,14 @@ getIP(function (err, ip) {
             var country = obj.country;
             var timezone = obj.timezone;
 
-            console.log(location);
+            // console.log(location);
 
             client.addEvent("on_start_server", {"location": location, "isp": isp, "country": country, "timezone": timezone}, function(err, res) {
-                if (err) {
-                    console.log("Oh no, an error logging on_start_server".red);
-                } else {
-                    console.log("Event on_start_server logged".green);
-                }
+                // if (err) {
+                //     console.log("Oh no, an error logging on_start_server".red);
+                // } else {
+                //     console.log("Event on_start_server logged".green);
+                // }
             }); // end client addEvent
 
 
@@ -159,7 +159,7 @@ function reportToLoadBalancer() {
                     }
                 }, function(error, response, body){
                     if(error) {
-                        console.log(error);
+                        // console.log(error);
                     }
 
                 }); // end request
@@ -195,9 +195,9 @@ app.post('/build-sandbox', function (req, res) {
         satelize.satelize({ip:ip}, function(err, geoData) {
           // if data is JSON, we may wrap it in js object
           if (err) {
-            console.log("There was an error getting the user's location.");
+            // console.log("There was an error getting the user's location.");
           } else {
-              console.log(geoData);
+              // console.log(geoData);
 
               var obj = JSON.parse(geoData);
 
@@ -211,11 +211,11 @@ app.post('/build-sandbox', function (req, res) {
               var lengthOfCode = (req.body.code).length
 
               client.addEvent("built_sandbox", {"location": location, "isp": isp, "country": country, "timezone": timezone, "code_length": lengthOfCode}, function(err, res) {
-                  if (err) {
-                      console.log("Oh no, an error logging built_sandbox".red);
-                  } else {
-                      console.log("Event built_sandbox logged".green);
-                  }
+                  // if (err) {
+                  //     console.log("Oh no, an error logging built_sandbox".red);
+                  // } else {
+                  //     console.log("Event built_sandbox logged".green);
+                  // }
               }); // end client addEvent
 
 
@@ -226,8 +226,8 @@ app.post('/build-sandbox', function (req, res) {
 
 
 
-        console.log('Following sandbox executed at '+ new Date());
-        console.log((req.body.code).blue);
+        console.log('Sandbox executed at '+ new Date());
+        // console.log((req.body.code).blue);
 
 
 
@@ -263,7 +263,7 @@ var buildProjects_path = ""; // thanks async
 
 exec('cd build-projects', function (err, out, stderror) {
   // set the build-projects path
-  console.log(("build-projects path:" + pwd() + "/build-projects").green);
+  // console.log(("build-projects path:" + pwd() + "/build-projects").green);
   process.env["BUILD_PROJECTS_PATH"] = pwd() + "/build-projects";
 
   buildProjects_path = process.env.BUILD_PROJECTS_PATH; // set the ever so important buildProjects_path variable
@@ -295,7 +295,7 @@ exec('cd build-projects', function (err, out, stderror) {
 
 
   } else {
-    console.log('build-projects directory was found at '+ new Date());
+    console.log('build-projects directory was found.');
     cleanBuildProjects();
     setInterval(cleanBuildProjects, 60000); // clean the build-projects directory every one minute
 
