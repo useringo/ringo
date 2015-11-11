@@ -39,6 +39,11 @@ Once all of that is complete, it should be fairly easy to get the server running
 The server should spit out an ngrok localhost tunnel which should allow you to access the server externally, allowing you to get up and running with hacking it.
 
 
+#### Ready to start hacking with Ringo? Read the docs.
+
+
+
+
 
 ### License
 
