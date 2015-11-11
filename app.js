@@ -288,12 +288,7 @@ function cleanBuildProjects() {
 // Request to make a new Xcode project
 // POST {'projectName':string, 'template':string}
 app.post('/create-project', function(req, res) {
-
-
   cd(buildProjects_path);
-
-
-
   // only execute if they specify the required parameters
   if (req.body.projectName) {
       // analytics
@@ -333,30 +328,17 @@ app.post('/create-project', function(req, res) {
             }); // end satelize
         }
 
-
-
-
-
-
-
         var projectName = req.body.projectName;
         var project_uid = generatePushID();
         project_uid = project_uid.substr(1, project_uid.length);
 
-        // console.log(project_uid);
-
         res.setHeader('Content-Type', 'application/json');
-
-        // console.log(ls()); // simple test
 
         // Using node's child_process.exec causes asynchronous issues... callbacks are my friend
         exec('mkdir '+ project_uid, function (err, out, stderror) {
-
-
             cd(project_uid);
 
             var template = req.body.template;
-
             var exec_cmd = ''; // there is a different command that needs to be executed based on the template the user chooses
 
             if (template == "game") { // generate a SpriteKit game
@@ -376,29 +358,20 @@ app.post('/create-project', function(req, res) {
 
             }
 
-
-
-
             exec(exec_cmd, function (err, out, stderror) {
               // console.log(out);
               // console.log(err);
-
               console.log('Successfully created '+(project_uid).magenta+' at ' + new Date() + '\n');
 
               // don't send back the code until its actually done
               res.send({"uid": project_uid});
 
             });
-
-
-
         });
   } else {
     res.statusCode = 500;
     res.send({"Error": "Invalid parameters."});
   }
-
-
 });
 
 
@@ -490,9 +463,6 @@ app.post('/upload-project-zip', function (req, res) {
 
   res.setHeader('Content-Type', 'application/json');
 
-
-
-
   if (req.body.file) {
 
     // analytics
@@ -530,15 +500,9 @@ app.post('/upload-project-zip', function (req, res) {
                   }
               }); // end client addEvent
 
-
-
           } // end error handling
         }); // end satelize
     } // end if undefined
-
-
-
-
 
     cd(buildProjects_path);
 
