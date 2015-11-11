@@ -286,7 +286,7 @@ function cleanBuildProjects() {
 
 
 // Request to make a new Xcode project
-// POST {'projectName':string}
+// POST {'projectName':string, 'template':string}
 app.post('/create-project', function(req, res) {
 
 
@@ -382,7 +382,6 @@ app.post('/create-project', function(req, res) {
             exec(exec_cmd, function (err, out, stderror) {
               // console.log(out);
               // console.log(err);
-
 
               console.log('Successfully created '+(project_uid).magenta+' at ' + new Date() + '\n');
 
@@ -811,6 +810,7 @@ app.post('/get-project-contents', function(req, res) {
 
     loopFiles();
 
+    res.write("{");
     // uses file streams to grab contents of each file without maxing out RAM
     function loopFiles() {
         var file = files[i];
@@ -836,7 +836,8 @@ app.post('/get-project-contents', function(req, res) {
             } else {
               filesContents += JSON.stringify(contentForFile);
               res.write(filesContents);
-              res.write(', {"count" : '+ files.length + '}');
+              res.write(', {"count" : '+ files.length + '}}');
+
               res.send();
               cd(buildProjects_path);
             }
