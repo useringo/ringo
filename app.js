@@ -126,8 +126,8 @@ function reportToLoadBalancer() {
   }
 }
 
-
-
+// Get the ngrok tunnel url
+// GET (no parameters)
 app.get('/get-secure-tunnel', function (req, res) {
   res.setHeader('Content-Type', 'application/json');
   res.send({"tunnel_url": process.env.HOSTNAME});
@@ -135,6 +135,7 @@ app.get('/get-secure-tunnel', function (req, res) {
 
 
 // Run an Xcode Swift sandbox
+// POST {'code':string}
 app.post('/build-sandbox', function (req, res) {
   cd(buildProjects_path);
 
@@ -285,6 +286,7 @@ function cleanBuildProjects() {
 
 
 // Request to make a new Xcode project
+// POST {'projectName':string}
 app.post('/create-project', function(req, res) {
 
 
@@ -402,12 +404,8 @@ app.post('/create-project', function(req, res) {
 
 
 
-
-
-
-// Handle download, upload, git cloning, and creation of Xcode project code
-
 // download your project code in a ZIP file
+// GET /download/project/{ID_STRING}
 app.get('/download-project/:id', function (req, res) {
   cd(buildProjects_path);
 
@@ -486,7 +484,8 @@ app.get('/download-project/:id', function (req, res) {
 
 
 
-
+// Upload an Xcode project to be edited
+// POST {'file':base64_file_string}
 app.post('/upload-project-zip', function (req, res) {
   cd(buildProjects_path);
 
@@ -606,7 +605,8 @@ app.post('/upload-project-zip', function (req, res) {
 });
 
 
-
+// Clone a git project to edited
+// POST {'url':string}
 app.post('/clone-git-project', function (req, res) {
   cd(buildProjects_path);
   res.setHeader('Content-Type', 'application/json');
@@ -685,6 +685,7 @@ app.post('/clone-git-project', function (req, res) {
 
 
 // Save the files with updated content -- assumes end user has already made a request to /get-project-contents
+// POST {'id':string, 'files':object_array}
 app.post('/update-project-contents', function (req, res) {
   cd(buildProjects_path);
 
@@ -735,7 +736,8 @@ app.post('/update-project-contents', function (req, res) {
 
 
 
-// GET all of the files and their contents within an Xcode project
+// Get all of the files and their contents within an Xcode project
+// POST {'id':string}
 app.post('/get-project-contents', function(req, res) {
   cd(buildProjects_path);
 
@@ -849,6 +851,7 @@ app.post('/get-project-contents', function(req, res) {
 
 
 // allows you to add a new Xcode image asset to the project asset catalog (requires PNG file)
+// POST {'id':string, 'assetName':string, 'file':base64_file_string}
 app.post('/add-image-xcasset', function (req, res) {
   cd(buildProjects_path); // always need this
 
@@ -948,6 +951,7 @@ app.post('/add-image-xcasset', function (req, res) {
 
 
 // get the xcasset files
+// POST {'id':string}
 app.post('/get-image-xcassets', function (req, res) {
   cd(buildProjects_path);
 
@@ -1095,6 +1099,7 @@ app.post('/get-image-xcassets', function (req, res) {
 
 
 // add new files to the project directory
+// POST {'id':string, 'fileName':string}
 app.post('/add-file', function (req, res) {
   cd(buildProjects_path);
   res.setHeader('Content-Type', 'application/json');
@@ -1158,6 +1163,7 @@ app.post('/add-file', function (req, res) {
 
 
 // Delete a file from the Xcode project directory
+// POST {'id':string, 'fileName':string}
 app.post('/delete-file', function (req, res) {
     cd(buildProjects_path);
     res.setHeader('Content-Type', 'application/json');
@@ -1238,6 +1244,7 @@ app.post('/delete-file', function (req, res) {
 
 
 // Build an Xcode Project using the appetize.io on-screen simulator
+// POST {'id':string}
 app.post('/build-project', function (req, res) {
   // take the app back to the build-projects directory, as another route may have thrown the build server into a project directory instead
   cd(buildProjects_path);
@@ -1380,6 +1387,7 @@ app.post('/build-project', function (req, res) {
 
 
 // allow user to grab project information such as name, bundle ID, etc.
+// GET /get-project-details/{ID_STRING}
 app.get('/get-project-details/:app_id', function (req, res) {
   cd(buildProjects_path);
   res.setHeader('Content-Type', 'application/json');
@@ -1403,6 +1411,7 @@ app.get('/get-project-details/:app_id', function (req, res) {
 
 
 // Route that generates an ad-hoc IPA file for the user to download onto their device (is this against Apple's terms?)
+// POST {'id':string}
 app.post('/create-ipa', function (req, res) {
   // $ ipa build
   // take the app back to the build-projects directory, as another route may have thrown the build server into a project directory instead
@@ -1492,8 +1501,8 @@ process.on('SIGINT', function() {
                   }
               }, function(error, response, body){
                   if(error) {
-                      console.log(error);
-                      console.log("Uh oh! The load balancer is probably down.".red);
+                      // console.log(error);
+                      console.log("Uh oh! The load balancer is probably down. Exiting anyway...".red);
                       if (process.env.NGROK_TUNNEL_PID) {
                         // ngrok.stop(process.env.NGROK_TUNNEL_PID);
                       }
