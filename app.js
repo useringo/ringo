@@ -814,7 +814,6 @@ app.post('/get-project-contents', function(req, res) {
     // uses file streams to grab contents of each file without maxing out RAM
     function loopFiles() {
         var file = files[i];
-
         var contentForFile = {};
         contentForFile["name"] = file;
         contentForFile["data"] = "";
@@ -826,21 +825,24 @@ app.post('/get-project-contents', function(req, res) {
         });
 
         fileChunks.on('end', function() {
-          // console.log(file);
+          console.log(contentForFile.name);
+
 
           if (i < files.length-1) {
-              filesContents += JSON.stringify(contentForFile) + ", ";
-              res.write(filesContents);
+              // filesContents += JSON.stringify(contentForFile) + ", ";
+              res.write(JSON.stringify(contentForFile)+", ");
               i++;
               loopFiles();
             } else {
-              filesContents += JSON.stringify(contentForFile);
-              res.write(filesContents);
+              // filesContents += JSON.stringify(contentForFile);
+              res.write(JSON.stringify(contentForFile));
               res.write(', {"count" : '+ files.length + '}}');
 
               res.send();
               cd(buildProjects_path);
             }
+
+
         });
 
     }
