@@ -805,7 +805,6 @@ app.post('/get-project-contents', function(req, res) {
 
     res.setHeader('Content-Type', 'application/json');
 
-    var filesContents = ""; // final stringified array of json data
     var i = 0;
 
     loopFiles();
@@ -829,12 +828,10 @@ app.post('/get-project-contents', function(req, res) {
 
 
           if (i < files.length-1) {
-              // filesContents += JSON.stringify(contentForFile) + ", ";
               res.write(JSON.stringify(contentForFile)+", ");
               i++;
               loopFiles();
             } else {
-              // filesContents += JSON.stringify(contentForFile);
               res.write(JSON.stringify(contentForFile));
               res.write(', {"count" : '+ files.length + '}}');
 
@@ -1395,7 +1392,7 @@ app.get('/get-project-details/:app_id', function (req, res) {
   cd(buildProjects_path);
   res.setHeader('Content-Type', 'application/json');
 
-  var project_id = req.param('app_id');
+  var project_id = req.params.app_id;
   var id_dir = ls(project_id)[0]; // project directory
 
   var xc_projName = ""; // suprisingly enough, people like to name their repository name differently than their .xcodeproj name
@@ -1406,7 +1403,6 @@ app.get('/get-project-details/:app_id', function (req, res) {
     }
   }
 
-  // console.log(JSON.stringify({"project": {"name": xc_projName}}).green);
   res.send({"project": {"name": xc_projName}});
 
 });
