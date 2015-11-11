@@ -1,53 +1,40 @@
+// Ringo Core Build Server
 // Copyright 2015 Gautam Mittal under MIT License
-/*
-  Dependencies:
-  NODE.JS + Xcode 7
 
-  You will also need to populate the .env file with the necessary environment variables in order for this script to run effectively
-*/
+//  Dependencies: NODE.JS + Xcode 7
+//  You will also need to populate the .env file with the necessary environment variables in order for this script to run effectively
 
 var dotenv = require('dotenv');
 dotenv.load();
-
-var bodyParser = require('body-parser'); // parsing post request data
-var colors = require('colors'); // colorful terminal messages
-var express = require('express'); // spin up the webserver
-var fs = require('fs'); // access the file system
-var getIP = require('external-ip')(); // analytics
-var Keen = require("keen.io"); // analytics
-var request = require('request'); // making requests to external sources
-var satelize = require('satelize'); // analytics
-var serialNumber = require('serial-number'); // unique server id, used for registration with the load balancer
+var bodyParser = require('body-parser');
+var colors = require('colors');
+var express = require('express');
+var fs = require('fs');
+var getIP = require('external-ip')();
+var Keen = require("keen.io");
+var request = require('request');
+var satelize = require('satelize');
+var serialNumber = require('serial-number');
 serialNumber.preferUUID = true;
-require('shelljs/global'); // running shell commands
+require('shelljs/global');
 
-// init internal error email reporting service
+
 var sendgrid;
-
 if (process.env.REPORT_TO && process.env.SEND_REPORTS == "YES") {
   sendgrid = require('sendgrid')(process.env.SENDGRID_KEY);
 }
-
-
-// internal analytics service
 var client;
-
 if (process.env.KEEN_PROJECT_ID) {
   console.log("Keen analytics starting up...".magenta);
-
   client = Keen.configure({
       projectId: process.env.KEEN_PROJECT_ID,
       writeKey: process.env.KEEN_WRITE_KEY
   });
-
 }
 
-// init load balancer timer
+
 var reportBalancerTimer;
-
-var exec = require('child_process').exec; // running shell commands
-
-// open the localhost tunnel to the rest of the world!
+var exec = require('child_process').exec;
 var ngrok = require('ngrok');
 
 var app = express();
@@ -60,9 +47,8 @@ app.use(function(req, res, next) {
   next();
 });
 
-var port = 3000; // port which the server will run on
+var port = 3000;
 
-// fire up the http server!
 var server = app.listen(port, function () {
   var host = server.address().address;
   var port = server.address().port;
@@ -74,16 +60,13 @@ var secure_serverURL = process.env.SECURE_HOSTNAME;
 
 getIP(function (err, ip) {
     if (err) {
-        // every service in the list has failed
         console.log(err);
     }
-    // console.log(("Server IP address: " + ip).cyan);
 
-    if (typeof client != "undefined") { // only run if analytics are already set up
+    if (typeof client != "undefined") {
       satelize.satelize({ip:ip}, function(err, geoData) {
-        // if data is JSON, we may wrap it in js object
         if (err) {
-          // console.log("Error getting location.");
+          // do something
         } else {
 
             var obj = JSON.parse(geoData);
@@ -92,66 +75,40 @@ getIP(function (err, ip) {
             var isp = obj.isp;
             var country = obj.country;
             var timezone = obj.timezone;
-
-            // console.log(location);
-
-            client.addEvent("on_start_server", {"location": location, "isp": isp, "country": country, "timezone": timezone}, function(err, res) {
-                // if (err) {
-                //     console.log("Oh no, an error logging on_start_server".red);
-                // } else {
-                //     console.log("Event on_start_server logged".green);
-                // }
-            }); // end client addEvent
+            client.addEvent("on_start_server", {"location": location, "isp": isp, "country": country, "timezone": timezone});
 
 
-          } // end if err
-        }); // end satelize
-
+          }
+        });
     }
-
-}); // end getIP
-
-
-
-// initialize the ngrok tunnel
-ngrok.connect(port, function (err, url) {
-  console.log("Tunnel open: " + (url).red + " at "+ new Date());
-
-  // rewrite the env variables
-  process.env["SECURE_HOSTNAME"] = url;
-  process.env["HOSTNAME"] = url.replace('https', 'http');
-
-  // grab the ngrok tunnel PID and write it to the env so we can kill the process later
-  // process.env["NGROK_TUNNEL_PID"] = tunnel.pid;
-
-  build_serverURL = process.env.HOSTNAME;
-  secure_serverURL = process.env.SECURE_HOSTNAME;
-
-  // report to load balancer every 1 second
-  reportBalancerTimer = setInterval(reportToLoadBalancer, 1000);
-
-
-
 });
 
 
-// load balancer reporting function
+
+ngrok.connect(port, function (err, url) {
+  console.log("Tunnel open: " + (url).red + " at "+ new Date());
+  process.env["SECURE_HOSTNAME"] = url;
+  process.env["HOSTNAME"] = url.replace('https', 'http');
+  build_serverURL = process.env.HOSTNAME;
+  secure_serverURL = process.env.SECURE_HOSTNAME;
+
+  reportBalancerTimer = setInterval(reportToLoadBalancer, 1000); // send data to load balancer
+});
+
+
+
 function reportToLoadBalancer() {
-  if (process.env.LOAD_BALANCER_URL) { // only connect to the load balancer if the env has said to do so, which should only be if you want to run several of these servers for production
-    serialNumber(function (err, value) { // basically for generating a unique id
+  if (process.env.LOAD_BALANCER_URL) {
+    serialNumber(function (err, value) {
         if (err) {
           console.log('Error getting the server unique ID, will have difficulty registering with the load balancer'.red);
         }
 
-        // console.log(value);
-
-        // get the amount of stress on the server in a percentage form
+        // get the amount of stress on the server
         getServerLoad(function (server_load) {
-                // console.log(server_load);
-                request({ // make the request
+                request({
                     url: process.env.LOAD_BALANCER_URL + '/register-server/', //URL to hit
                     method: 'POST',
-                    //Lets post the following key/values as form
                     json: {
                         server_id: value,
                         tunnel: process.env.HOSTNAME,
@@ -163,10 +120,8 @@ function reportToLoadBalancer() {
                         // console.log(error);
                     }
 
-                }); // end request
+                });
         });
-
-
     });
   }
 }
@@ -175,23 +130,16 @@ function reportToLoadBalancer() {
 
 app.get('/get-secure-tunnel', function (req, res) {
   res.setHeader('Content-Type', 'application/json');
-
-  // send the tunnel url upon request
   res.send({"tunnel_url": process.env.HOSTNAME});
 });
 
 
-// Run an Xcode sandbox
-// Try running a while true loop :P
-// This has automatic handling to prevent a user from running infinite loops, the system just stops the script from running after a while.
+// Run an Xcode Swift sandbox
 app.post('/build-sandbox', function (req, res) {
-
   cd(buildProjects_path);
 
   if (req.body.code && (req.body.code).length != 0) {
-
       var ip = req.connection.remoteAddress;
-
       if (typeof client != "undefined") { // only run if the user has set up analytics
         satelize.satelize({ip:ip}, function(err, geoData) {
           // if data is JSON, we may wrap it in js object
@@ -201,36 +149,19 @@ app.post('/build-sandbox', function (req, res) {
               // console.log(geoData);
 
               var obj = JSON.parse(geoData);
-
               var location = obj.city + ", " + obj.region_code + ", " + obj.country_code3;
               var isp = obj.isp;
               var country = obj.country;
               var timezone = obj.timezone;
-
-              // console.log(location);
-
               var lengthOfCode = (req.body.code).length
 
-              client.addEvent("built_sandbox", {"location": location, "isp": isp, "country": country, "timezone": timezone, "code_length": lengthOfCode}, function(err, res) {
-                  // if (err) {
-                  //     console.log("Oh no, an error logging built_sandbox".red);
-                  // } else {
-                  //     console.log("Event built_sandbox logged".green);
-                  // }
-              }); // end client addEvent
-
-
-
+              client.addEvent("built_sandbox", {"location": location, "isp": isp, "country": country, "timezone": timezone, "code_length": lengthOfCode});
           } // end error handling
         }); // end satelize
       }
 
 
-
-        console.log('Sandbox executed at '+ new Date());
-        // console.log((req.body.code).blue);
-
-
+    console.log('Sandbox executed at '+ new Date());
 
 
   	fs.writeFile("code.swift", req.body.code, function(err) {
@@ -244,7 +175,6 @@ app.post('/build-sandbox', function (req, res) {
         } else { // if user doesn't, show them the given output
           res.send(out);
         }
-
       });
 
 
@@ -253,22 +183,16 @@ app.post('/build-sandbox', function (req, res) {
   } else {
   	res.send("Nothing to compile.");
   }
-
 });
 
 
 
-var buildProjects_path = ""; // thanks async
-
-// This is where we want to store the generated Xcode projects
-
+var buildProjects_path = "";
 exec('cd build-projects', function (err, out, stderror) {
   // set the build-projects path
-  // console.log(("build-projects path:" + pwd() + "/build-projects").green);
   process.env["BUILD_PROJECTS_PATH"] = pwd() + "/build-projects";
 
-  buildProjects_path = process.env.BUILD_PROJECTS_PATH; // set the ever so important buildProjects_path variable
-
+  buildProjects_path = process.env.BUILD_PROJECTS_PATH;
 
   if (err) { // if error, assume that the directory is non-existent
     console.log('build-projects directory does not exist! creating one instead.'.red);
