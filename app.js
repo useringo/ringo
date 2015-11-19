@@ -476,7 +476,7 @@ app.post('/upload-project-zip', function (req, res) {
           if (err) {
             console.log("There was an error getting the user's location.");
           } else {
-              console.log(geoData);
+              // console.log(geoData);
 
               var obj = JSON.parse(geoData);
 
@@ -490,7 +490,7 @@ app.post('/upload-project-zip', function (req, res) {
               var fileSize = ((req.body.file.length*3)/4)/1000000;
               fileSize = Math.round(fileSize*2)/2;
 
-              console.log(fileSize + "MB");
+              // console.log(fileSize + "MB");
 
               client.addEvent("upload_project_zip", {"location": location, "isp": isp, "country": country, "timezone": timezone, "size_mb": fileSize}, function(err, res) {
                   if (err) {
