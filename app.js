@@ -598,13 +598,13 @@ app.post('/clone-git-project', function (req, res) {
                   source = (req.body.url).split("/")[2];
                 }
 
-                console.log(source);
+                // console.log(source);
 
                 client.addEvent("clone_git_project", {"location": location, "isp": isp, "country": country, "timezone": timezone, "source": source}, function(err, res) {
                     if (err) {
-                        console.log("Oh no, an error logging clone_git_project".red);
+                        // console.log("Oh no, an error logging clone_git_project".red);
                     } else {
-                        console.log("Event clone_git_project logged".green);
+                        // console.log("Event clone_git_project logged".green);
                     }
                 }); // end client addEvent
             } // end error handling
@@ -667,8 +667,6 @@ app.post('/update-project-contents', function (req, res) {
       xc_projName = ls(project_id + "/" + id_dir)[z].replace('.xcodeproj', '');
     }
   }
-
-  // console.log(('Xcode Project File Name: ' + xc_projName).red);
 
   var j = 0;
 
