@@ -795,7 +795,7 @@ app.post('/get-project-contents', function(req, res) {
               loopFiles();
             } else {
               res.write(JSON.stringify(contentForFile));
-              res.write(', {"count" : '+ files.length + '}}');
+              res.write(', {"count": '+ files.length + '}}');
 
               res.send();
               cd(buildProjects_path);
