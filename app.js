@@ -1413,9 +1413,9 @@ app.post('/create-ipa', function (req, res) {
           // console.log("\n");
           var xc_projName = ""; // suprisingly enough, people like to name their repository name differently than their .xcodeproj name
 
-          for (var z = 0; z < ls(project_id + "/" + id_dir).length; z++) {
-            if (ls(project_id + "/" + id_dir)[z].indexOf('.xcodeproj') > -1) {
-              xc_projName = ls(project_id + "/" + id_dir)[z].replace('.xcodeproj', '');
+          for (var z = 0; z < ls(projectID + "/" + id_dir).length; z++) {
+            if (ls(projectID + "/" + id_dir)[z].indexOf('.xcodeproj') > -1) {
+              xc_projName = ls(projectID + "/" + id_dir)[z].replace('.xcodeproj', '');
             }
           }
           // console.log(('Xcode Project File Name: ' + xc_projName).red);
