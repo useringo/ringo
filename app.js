@@ -1365,7 +1365,19 @@ app.get('/get-project-details/:app_id', function (req, res) {
     }
   }
 
-  res.send({"project": {"name": xc_projName}});
+  var fileList = ls(project_id + "/" + id_dir + "/" + xc_projName);
+  var assetCatalogDirname = "";
+  for (var x = 0; x < fileList.length; x++) {
+    var fileobj = fileList[x];
+    if (fileobj.indexOf(".xcassets") > -1) {
+      assetCatalogDirname = fileList[x];
+      fileList.splice(x, 1);
+    }
+  }
+
+  var assetCatalogList = ls(project_id + "/" + id_dir + "/" + xc_projName + "/" + assetCatalogDirname);
+
+  res.send({"project": {"name": xc_projName, "file_count": fileList.length, "asset_count": assetCatalogList.length}});
 
 });
 
