@@ -1,7 +1,7 @@
 // Ringo Core Build Server
 // Copyright 2015 Gautam Mittal under MIT License
 
-//  Dependencies: NODE.JS + Xcode 7
+//  Dependencies: NODE.JS + Xcode
 //  You will also need to populate the .env file with the necessary environment variables in order for this script to run effectively
 
 var dotenv = require('dotenv');
