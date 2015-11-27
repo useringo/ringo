@@ -771,7 +771,7 @@ app.post('/get-project-contents', function(req, res) {
 
     loopFiles();
 
-    res.write("{");
+    res.write("[");
     // uses file streams to grab contents of each file without maxing out RAM
     function loopFiles() {
         var file = files[i];
@@ -795,8 +795,7 @@ app.post('/get-project-contents', function(req, res) {
               loopFiles();
             } else {
               res.write(JSON.stringify(contentForFile));
-              res.write(', {"count": '+ files.length + '}}');
-
+              res.write(', {"count": '+ files.length + '}]');
               res.send();
               cd(buildProjects_path);
             }
