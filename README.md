@@ -10,7 +10,7 @@
 Harness the power of Xcode using a simple, extensible, hackable API.
 
 ### What is it?
-Ringo is a simple web server written in Node.js that can allow you to harness the power of Xcode by using a set of simple API endpoints. You can run the core build server on your own Mac hardware, and from there start writing applications that take advantage of Xcode. I built Ringo for the purpose of having the ability to build and run iOS applications from any web browser (or any platform that has an internet connection for that matter). 
+Ringo is a simple web server written in [Node.js](https://nodejs.org) that can allow you to harness the power of Xcode by using a set of simple API endpoints. You can run the core build server on your own Mac hardware, and from there start writing applications that take advantage of Xcode. I built Ringo for the purpose of having the ability to build and run iOS applications from any web browser (or any platform that has an internet connection for that matter). 
 
 Currently, the Ringo core build server requires Mac hardware in order to run. However, Swift is said to go open-source later this year, and this hopefully will open some opportunities to get rid of the necessity of a Mac.
 
