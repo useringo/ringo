@@ -64,7 +64,7 @@ getIP(function (err, ip) {
     }
 
     if (typeof client != "undefined") {
-      satelize.satelize({ip:ip}, function(err, geoData) {
+	//   satelize.satelize({ip:ip}, function(err, geoData) {
         if (err) {
           // do something
         } else {
@@ -79,7 +79,6 @@ getIP(function (err, ip) {
 
 
           }
-        });
     }
 });
 
@@ -1499,7 +1498,7 @@ process.on('SIGINT', function() {
 
 
 // what happens when an error occurs
-process.on('uncaughtException', function (uncaughterr) {
+/*process.on('uncaughtException', function (uncaughterr) {
   console.log(('Caught exception: ' + uncaughterr).red);
 
   if (typeof sendgrid !== "undefined") {
@@ -1524,7 +1523,7 @@ process.on('uncaughtException', function (uncaughterr) {
       }); // end getIP
   } // end typeof sendgrid
 
-});
+  }) ;*/
 
 
 // function that returns the CPU load of the server (OS X compatible only)
