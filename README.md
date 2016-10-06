@@ -14,6 +14,9 @@ Ringo is a simple web server written in [Node.js](https://nodejs.org) that can a
 
 Currently, the Ringo core build server requires Mac hardware in order to run. However, Swift is said to go open-source later this year, and this hopefully will open some opportunities to get rid of the necessity of a Mac.
 
+### Who made it?
+[Gautam Mittal](http://gautam.cc), a 15-year-old student and developer from California.
+
 ### Installation
 Firstly, you're going to need to have Xcode installed on your Mac. Once you have that installed you're going to need the Xcode command line tools, which allow Ringo to interface with Xcode easily. Type the following into your command line to install them:
 
