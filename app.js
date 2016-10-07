@@ -35,7 +35,7 @@ if (process.env.KEEN_PROJECT_ID) {
 
 var reportBalancerTimer;
 var exec = require('child_process').exec;
-var ngrok = require('ngrok');
+//var ngrok = require('ngrok');
 
 var app = express();
 app.use(bodyParser.json({limit: '50mb', extended: true}));
@@ -84,15 +84,15 @@ getIP(function (err, ip) {
 
 
 
-ngrok.connect(port, function (err, url) {
-  console.log("Tunnel open: " + (url).red + " at "+ new Date());
-  process.env["SECURE_HOSTNAME"] = url;
-  process.env["HOSTNAME"] = url.replace('https', 'http');
-  build_serverURL = process.env.HOSTNAME;
-  secure_serverURL = process.env.SECURE_HOSTNAME;
+//ngrok.connect(port, function (err, url) {
+//  console.log("Tunnel open: " + (url).red + " at "+ new Date());
+//  process.env["SECURE_HOSTNAME"] = url;
+//  process.env["HOSTNAME"] = url.replace('https', 'http');
+//  build_serverURL = process.env.HOSTNAME;
+//  secure_serverURL = process.env.SECURE_HOSTNAME;
 
   reportBalancerTimer = setInterval(reportToLoadBalancer, 1000); // send data to load balancer
-});
+//});
 
 
 
@@ -1260,7 +1260,7 @@ app.post('/build-project', function (req, res) {
 
       // build using Xcode
       exec('xcodebuild -sdk iphonesimulator -configuration Release -verbose | grep -A 5 error:', function (err, xcode_out, stderror) {
-        cd('build/Release-iphonesimulator');
+        //cd('build/'+id_dir+'.build/Release-iphonesimulator');
         console.log(xcode_out.green);
 
         cd(buildProjects_path);
@@ -1275,7 +1275,7 @@ app.post('/build-project', function (req, res) {
         var normalized = xc_projName.split(' ').join('\ ');
         // console.log('Normalized NAME: ' + normalized);
         // well this is important
-        cd(projectID+"/"+id_dir + '/build/Release-iphonesimulator');
+        cd(projectID+"/"+id_dir +'/build/Release-iphonesimulator');
 
         // zip up the simulator executable
         exec('zip -r "'+projectID+'" "'+xc_projName+'.app"', function (err, out, stderror) {
