@@ -30,9 +30,14 @@ Install the various dependencies:
 
 ``` $ npm install && brew install wget && gem install nomad-cli```
 
+Install [ngrok](http://ngrok.com) and run the following:
+``` $ ngrok http 3000 ```
+
 You're also going to need to populate your environment variables (stored in a .env file) with some important information. For now, Ringo uses [Appetize](http://www.appetize.io) to run your iOS apps in an in-browser simulator. That does require an API key, but they are free and easy to get ahold of. 
 ```
 APPETIZE_TOKEN=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+HOSTNAME=http://YOUR_NGROK.ngrok.io
+SECURE_HOSTNAME=https://YOUR_NGROK.ngrok.io
 ```
 
 Once all of that is complete, it should be fairly easy to get the server running:
